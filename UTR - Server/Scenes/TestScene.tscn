@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://cwoghforoie1r"]
+
+[ext_resource type="Script" path="res://Scripts/ServerManager.cs" id="1_ucraw"]
+
+[node name="TestScene" type="Node2D"]
+
+[node name="ServerManager" type="Node" parent="."]
+script = ExtResource("1_ucraw")
