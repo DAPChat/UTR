@@ -16,4 +16,4 @@ config/icon="res://icon.svg"
 
 [dotnet]
 
-project/assembly_name="UTM - Client"
+project/assembly_name="UTR - Client"
