@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Net;
 using System.Net.Sockets;
 using System.Text;
 using System.Threading.Tasks;
@@ -10,10 +11,9 @@ public class Client
 	//private Player player;
 	//private Account account;
 
-	public Client(TcpClient _tcpClient, int _id)
+	public Client()
 	{
-		tcp = new(_tcpClient, this);
-		id = _id;
+		tcp = new(this);
 	}
 
 	private class TCP
@@ -22,18 +22,37 @@ public class Client
 		TcpClient tcpClient;
 		NetworkStream stream;
 
+		IPEndPoint end = new(IPAddress.Parse("127.1.1.0"), 6666);
+
 		byte[] buffer;
 
-		public TCP(TcpClient _tcpClient, Client _instance)
+		public TCP(Client _instance)
 		{
 			instance = _instance;
-			tcpClient = _tcpClient;
-
-			buffer = new byte[4096];
-
-			stream = tcpClient.GetStream();
 			
-			ReadStreamAsync();
+			tcpClient = new();
+
+			Connect();
+		}
+
+		private async Task Connect()
+		{
+			try
+			{
+				await tcpClient.ConnectAsync(end);
+
+				ClientManager.Print("Connected");
+
+				buffer = new byte[4096];
+
+				stream = tcpClient.GetStream();
+
+				ReadStreamAsync();
+			}
+			catch (Exception)
+			{
+				Connect();
+			}
 		}
 
 		private async Task ReadStreamAsync()
