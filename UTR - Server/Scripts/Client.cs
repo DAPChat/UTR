@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Net;
 using System.Net.Sockets;
 using System.Text;
 using System.Threading.Tasks;
@@ -6,6 +7,7 @@ using System.Threading.Tasks;
 public class Client
 {
 	private TCP tcp;
+	private UDP udp;
 	private int id;
 	//private Player player;
 	//private Account account;
@@ -13,6 +15,7 @@ public class Client
 	public Client(TcpClient _tcpClient, int _id)
 	{
 		tcp = new(_tcpClient, this);
+		udp = new(_tcpClient.Client.RemoteEndPoint as IPEndPoint, this);
 		id = _id;
 	}
 
@@ -29,7 +32,7 @@ public class Client
 			instance = _instance;
 			tcpClient = _tcpClient;
 
-			buffer = new byte[4096];
+			buffer = new byte[512];
 
 			stream = tcpClient.GetStream();
 			
@@ -61,6 +64,44 @@ public class Client
 				// Disconnect
 				return;
 			}
+		}
+	}
+
+	private class UDP
+	{
+		Client instance;
+		UdpClient udpClient;
+
+		public UDP(IPEndPoint _end, Client _instance)
+		{
+			instance = _instance;
+
+			udpClient = new();
+			udpClient.Client.SetSocketOption(SocketOptionLevel.Socket, SocketOptionName.ReuseAddress, true);
+
+			udpClient.Connect(_end);
+
+			ServerManager.Print(_end.ToString());
+
+			Read();
+		}
+
+		private async Task Read()
+		{
+			try
+			{
+				byte[] buffer = (await udpClient.ReceiveAsync()).Buffer;
+
+				ServerManager.Print(Encoding.ASCII.GetString(buffer));
+			}
+			catch (Exception)
+			{
+				// Disconnect
+
+				return;
+			}
+
+			Read();
 		}
 	}
 }

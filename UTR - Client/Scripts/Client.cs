@@ -7,9 +7,12 @@ using System.Threading.Tasks;
 public class Client
 {
 	private TCP tcp;
+	private UDP udp;
 	private int id;
 	//private Player player;
 	//private Account account;
+
+	public IPEndPoint end = new(IPAddress.Parse("127.1.1.0"), 6666);
 
 	public Client()
 	{
@@ -21,8 +24,6 @@ public class Client
 		Client instance;
 		TcpClient tcpClient;
 		NetworkStream stream;
-
-		IPEndPoint end = new(IPAddress.Parse("127.1.1.0"), 6666);
 
 		byte[] buffer;
 
@@ -39,11 +40,13 @@ public class Client
 		{
 			try
 			{
-				await tcpClient.ConnectAsync(end);
+				await tcpClient.ConnectAsync(instance.end);
+
+				instance.udp = new(instance);
 
 				ClientManager.Print("Connected");
 
-				buffer = new byte[4096];
+				buffer = new byte[512];
 
 				stream = tcpClient.GetStream();
 
@@ -80,6 +83,48 @@ public class Client
 				// Disconnect
 				return;
 			}
+		}
+	}
+
+	private class UDP
+	{
+		Client instance;
+		UdpClient udpClient;
+
+		public UDP(Client _instance)
+		{
+			instance = _instance;
+
+			udpClient = new();
+			udpClient.Client.SetSocketOption(SocketOptionLevel.Socket, SocketOptionName.ReuseAddress, true);
+
+			udpClient.Connect(instance.end);
+
+			ClientManager.Print(instance.end.ToString());
+
+			udpClient.SendAsync(Encoding.ASCII.GetBytes("Hello There"), "Hello There".Length);
+
+			Read();
+		}
+
+		private async Task Read()
+		{
+			try
+			{
+				byte[] buffer = (await udpClient.ReceiveAsync()).Buffer;
+
+				ClientManager.Print("There");
+
+				ClientManager.Print(Encoding.ASCII.GetString(buffer));
+			}
+			catch (Exception)
+			{
+				// Disconnect
+
+				return;
+			}
+
+			Read();
 		}
 	}
 }
