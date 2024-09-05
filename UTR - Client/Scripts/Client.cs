@@ -95,14 +95,14 @@ public class Client
 		{
 			instance = _instance;
 
-			udpClient = new();
+			udpClient = new(instance.end);
 			udpClient.Client.SetSocketOption(SocketOptionLevel.Socket, SocketOptionName.ReuseAddress, true);
 
 			udpClient.Connect(instance.end);
 
 			ClientManager.Print(instance.end.ToString());
 
-			udpClient.SendAsync(Encoding.ASCII.GetBytes("Hello There"), "Hello There".Length);
+			udpClient.SendAsync(Encoding.ASCII.GetBytes("Hello From Client"), "Hello From Client".Length);
 
 			Read();
 		}
@@ -112,8 +112,6 @@ public class Client
 			try
 			{
 				byte[] buffer = (await udpClient.ReceiveAsync()).Buffer;
-
-				ClientManager.Print("There");
 
 				ClientManager.Print(Encoding.ASCII.GetString(buffer));
 			}
