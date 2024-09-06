@@ -15,7 +15,7 @@ public class Client
 	public Client(TcpClient _tcpClient, int _id)
 	{
 		tcp = new(_tcpClient, this);
-		udp = new(_tcpClient.Client.RemoteEndPoint as IPEndPoint, this);
+		udp = new(_tcpClient.Client, this);
 		id = _id;
 	}
 
@@ -72,40 +72,30 @@ public class Client
 		Client instance;
 		UdpClient udpClient;
 		IPEndPoint end;
+		IPEndPoint local;
 
-		public UDP(IPEndPoint _end, Client _instance)
+		public UDP(Socket _client, Client _instance)
 		{
 			instance = _instance;
-			end = _end;
+			end = /*new(IPAddress.Parse("127.1.1.0"), 6664);*/_client.RemoteEndPoint as IPEndPoint;
+			local = _client.LocalEndPoint as IPEndPoint;
 
-			udpClient = new(end);
-			udpClient.Client.SetSocketOption(SocketOptionLevel.Socket, SocketOptionName.ReuseAddress, true);
+			ServerManager.Print(local.ToString() + ": " + end.ToString());
 
+			udpClient = new(local);
 			udpClient.Connect(end);
 
-			ServerManager.Print(end.ToString());
+			udpClient.Client.SetSocketOption(SocketOptionLevel.Socket, SocketOptionName.ReuseAddress, true);
 
-			udpClient.SendAsync(Encoding.ASCII.GetBytes("Hello From Server"), "Hello From Server".Length);
-
-			Read();
+			udpClient.BeginReceive(ReceiveCallback, null);
 		}
 
-		private async Task Read()
+		private void ReceiveCallback(IAsyncResult result)
 		{
-			try
-			{
-				byte[] buffer = udpClient.Receive(ref end);//(await udpClient.ReceiveAsync()).Buffer;
+			byte[] data = udpClient.EndReceive(result, ref end);
+			udpClient.BeginReceive(ReceiveCallback, null);
 
-				ServerManager.Print(Encoding.ASCII.GetString(buffer));
-			}
-			catch (Exception)
-			{
-				// Disconnect
-
-				return;
-			}
-
-			Read();
+			ServerManager.Print(Encoding.ASCII.GetString(data));
 		}
 	}
 }

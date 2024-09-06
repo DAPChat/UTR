@@ -1,7 +1,9 @@
-﻿using System;
+﻿using Godot;
+using System;
 using System.Net;
 using System.Net.Sockets;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 public class Client
@@ -42,7 +44,7 @@ public class Client
 			{
 				await tcpClient.ConnectAsync(instance.end);
 
-				instance.udp = new(instance);
+				instance.udp = new(tcpClient.Client, instance);
 
 				ClientManager.Print("Connected");
 
@@ -90,39 +92,42 @@ public class Client
 	{
 		Client instance;
 		UdpClient udpClient;
+		IPEndPoint end;
+		IPEndPoint local;
 
-		public UDP(Client _instance)
+		public UDP(Socket _client, Client _instance)
 		{
 			instance = _instance;
+			end = _client.RemoteEndPoint as IPEndPoint;
+			local = (IPEndPoint)_client.LocalEndPoint;
 
-			udpClient = new(instance.end);
-			udpClient.Client.SetSocketOption(SocketOptionLevel.Socket, SocketOptionName.ReuseAddress, true);
+			local.Address = local.Address.MapToIPv4();
+			end.Address = end.Address.MapToIPv4();
 
-			udpClient.Connect(instance.end);
-
-			ClientManager.Print(instance.end.ToString());
-
-			udpClient.SendAsync(Encoding.ASCII.GetBytes("Hello From Client"), "Hello From Client".Length);
-
-			Read();
-		}
-
-		private async Task Read()
-		{
 			try
 			{
-				byte[] buffer = (await udpClient.ReceiveAsync()).Buffer;
-
-				ClientManager.Print(Encoding.ASCII.GetString(buffer));
+				udpClient = new(local);
 			}
-			catch (Exception)
+			catch (Exception e)
 			{
-				// Disconnect
-
+				ClientManager.Print(e.ToString());
 				return;
 			}
 
-			Read();
+			udpClient.Client.SetSocketOption(SocketOptionLevel.Socket, SocketOptionName.ReuseAddress, true);
+			udpClient.Connect(end);
+
+			udpClient.BeginReceive(ReceiveCallback, null);
+
+			udpClient.Send(Encoding.ASCII.GetBytes("Hello From Client"));
+		}
+
+		private void ReceiveCallback(IAsyncResult result)
+		{
+			byte[] data = udpClient.EndReceive(result, ref end);
+			udpClient.BeginReceive(ReceiveCallback, null);
+
+			ClientManager.Print(Encoding.ASCII.GetString(data));
 		}
 	}
 }
