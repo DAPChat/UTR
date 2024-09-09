@@ -79,6 +79,14 @@ public partial class ServerManager : Node
 		}
 	}
 
+	public static void DisconnectClient(int _id)
+	{
+		playerCount--;
+
+		clients.Remove(_id);
+		ids.Remove(_id);
+	}
+
 	public static void Print(string message)
 	{
 		GD.Print(message);
