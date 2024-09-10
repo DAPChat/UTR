@@ -1,28 +1,29 @@
 ﻿using System.IO;
-using System.Xml.Linq;
 
-public class ActionPacket : Packet
+namespace packets
 {
-	public float x, y;
-	public ActionPacket(Buffer buff) : base(buff)
+	public class ActionPacket(Buffer _buff) : Packet(_buff)
 	{
-		x = buff.ReadFloat();
-		y = buff.ReadFloat();
+		public float x, y;
 
-		ServerManager.Print(x + " : " + y);
-	}
-
-	public override byte[] Serialize()
-	{
-		using (MemoryStream m = new MemoryStream())
+		public override byte[] Serialize()
 		{
-			using (BinaryWriter writer = new BinaryWriter(m))
+			using (MemoryStream m = new MemoryStream())
 			{
-				writer.Write(0);
-				writer.Write(x);
-				writer.Write(y);
+				using (BinaryWriter writer = new BinaryWriter(m))
+				{
+					writer.Write(0);
+					writer.Write(x);
+					writer.Write(y);
+				}
+				return m.ToArray();
 			}
-			return m.ToArray();
+		}
+
+		public override void Deserialize(Buffer buff)
+		{
+			x = (float)buff.ReadFloat();
+			y = (float)buff.ReadFloat();
 		}
 	}
 }

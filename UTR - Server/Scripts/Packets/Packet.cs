@@ -1,14 +1,14 @@
-﻿using System.IO;
-using System.Xml.Linq;
-
-public abstract class Packet
+﻿namespace packets
 {
-	Buffer buffer;
-
-	public Packet(Buffer _buff)
+	public abstract class Packet
 	{
-		buffer = _buff;
-	}
+		public Packet(Buffer _buff)
+		{
+			Deserialize(_buff);
+		}
 
-	public abstract byte[] Serialize();
+		public abstract byte[] Serialize();
+
+		public abstract void Deserialize(Buffer buff);
+	}
 }

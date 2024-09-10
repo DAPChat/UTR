@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq.Expressions;
 
+using packets;
+
 public static class PacketManager
 {
 	private static Dictionary<int, Func<Buffer, object>> packets = new();
@@ -22,10 +24,7 @@ public static class PacketManager
 	public static object CreatePacket(byte[] buff)
 	{
 		Buffer _tempBuff = new(buff);
-		int _packetId = _tempBuff.ReadInt();
 
-		ServerManager.Print(_packetId.ToString());
-
-		return packets[_packetId](_tempBuff);
+		return packets[_tempBuff.ReadInt()](_tempBuff);
 	}
 }

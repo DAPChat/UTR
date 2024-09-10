@@ -1,16 +1,9 @@
 ﻿using System;
 
-public class Buffer
+public class Buffer(byte[] _buff)
 {
-	byte[] data;
-	int pos;
-
-
-	public Buffer(byte[] _buff)
-	{
-		data = _buff;
-		pos = 0;
-	}
+	byte[] data = _buff;
+	int pos = 0;
 
 	public int ReadInt()
 	{
