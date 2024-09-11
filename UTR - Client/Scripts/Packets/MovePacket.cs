@@ -2,17 +2,18 @@
 
 namespace packets
 {
-	public class ActionPacket(Buffer _buff) : Packet(_buff)
+	public class MovePacket(Buffer _buff) : Packet(_buff)
 	{
 		public float x, y;
 
 		public override byte[] Serialize()
 		{
-			using (MemoryStream m = new MemoryStream())
+			using (MemoryStream m = new())
 			{
-				using (BinaryWriter writer = new BinaryWriter(m))
+				using (BinaryWriter writer = new(m))
 				{
 					writer.Write(0);
+					writer.Write(playerId);
 					writer.Write(x);
 					writer.Write(y);
 				}
@@ -22,6 +23,7 @@ namespace packets
 
 		public override void Deserialize(Buffer buff)
 		{
+			playerId = (int)buff.ReadInt();
 			x = (float)buff.ReadFloat();
 			y = (float)buff.ReadFloat();
 		}

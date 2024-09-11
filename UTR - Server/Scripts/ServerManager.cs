@@ -21,7 +21,7 @@ public partial class ServerManager : Node
 	{
 		PacketManager.CompileAll();
 
-		PacketManager.CreatePacket((BitConverter.GetBytes(0).Concat(BitConverter.GetBytes((float)6.77)).Concat(BitConverter.GetBytes((float)5.5)).ToArray()));
+		PacketManager.CreatePacket(new packets.MovePacket(new Buffer(new byte[10])) { x = 5.5f, y = 3.75f, name = "Hello"}.Serialize());
 
 		return;
 
