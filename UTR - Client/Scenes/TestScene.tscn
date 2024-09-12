@@ -1,3 +1,37 @@
-[gd_scene format=3 uid="uid://cf10amu8jbh4x"]
+[gd_scene load_steps=2 format=3 uid="uid://cf10amu8jbh4x"]
 
-[node name="TestScene" type="Node2D"]
+[ext_resource type="Script" path="res://Scripts/TitleScene.cs" id="1_22tra"]
+
+[node name="TitleScene" type="Node2D"]
+script = ExtResource("1_22tra")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="StartText" type="Label" parent="CanvasLayer"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -22.5
+offset_top = -11.5
+offset_right = 22.5
+offset_bottom = 11.5
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+text = "Start?"
+
+[node name="StartBtn" type="Button" parent="CanvasLayer"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -43.5
+offset_top = 21.0
+offset_right = 43.5
+offset_bottom = 52.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Join Game"

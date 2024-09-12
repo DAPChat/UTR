@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://doaccr1k3qtwt"]
+
+[ext_resource type="Script" path="res://Scripts/ClientManager.cs" id="1_vpr8p"]
+
+[node name="GameScene" type="Node2D"]
+script = ExtResource("1_vpr8p")

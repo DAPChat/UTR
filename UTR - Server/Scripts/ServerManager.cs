@@ -1,7 +1,6 @@
 using Godot;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Net;
 using System.Net.Sockets;
 using System.Threading.Tasks;
@@ -13,19 +12,17 @@ public partial class ServerManager : Node
 	private static int playerCount = 0;
 
 	private static List<int> ids = new();
+	private static List<int> gameIds = new();
 	private static Dictionary<int, Client> clients = new();
+	private static Dictionary<int, Game> games = new();
 
 	private static List<TcpClient> tcpClientQueue = new();
 
 	public override void _Ready()
 	{
-		PacketManager.CompileAll();
-
-		PacketManager.CreatePacket(new packets.MovePacket(new Buffer(new byte[10])) { x = 5.5f, y = 3.75f, name = "Hello"}.Serialize());
-
-		return;
-
 		base._Ready();
+
+		PacketManager.CompileAll();
 
 		listener = new(IPAddress.Any, 6666);
 
@@ -71,13 +68,21 @@ public partial class ServerManager : Node
 			int _id = 0;
 
 			while (ids.Contains(_id))
-			{
 				_id++;
-			}
 
 			Client _tempClient = new(_curClient, _id);
 			clients.Add(_id, _tempClient);
-			
+			ids.Add(_id);
+
+			int _gameId = 0;
+
+			while (gameIds.Contains(_gameId))
+				_gameId++;
+
+			Game _tempGame = new(_gameId, [clients[_id]]);
+			games.Add(_gameId, _tempGame);
+			gameIds.Add(_gameId);
+
 			playerCount++;
 
 			tcpClientQueue.RemoveAt(0);

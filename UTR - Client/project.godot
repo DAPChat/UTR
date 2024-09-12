@@ -15,10 +15,15 @@ run/main_scene="res://Scenes/TestScene.tscn"
 config/features=PackedStringArray("4.3", "C#", "Forward Plus")
 config/icon="res://icon.svg"
 
-[autoload]
+[display]
 
-ClientManager="*res://Scripts/ClientManager.cs"
+window/stretch/mode="canvas_items"
+window/stretch/aspect="expand"
 
 [dotnet]
 
 project/assembly_name="UTR - Client"
+
+[rendering]
+
+textures/canvas_textures/default_texture_filter=0
