@@ -5,6 +5,8 @@ using System.Net;
 using System.Net.Sockets;
 using System.Threading.Tasks;
 
+using game;
+
 public partial class ServerManager : Node
 {
 	private static TcpListener listener;

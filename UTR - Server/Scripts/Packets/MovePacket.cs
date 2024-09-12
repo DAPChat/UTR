@@ -2,9 +2,17 @@
 
 namespace packets
 {
-	public class MovePacket(Buffer _buff) : Packet(_buff)
+	public class MovePacket : Packet
 	{
 		public float x, y;
+
+		public MovePacket(Buffer _buff) : base(_buff) { }
+
+		public MovePacket(int _id, float _x, float _y) : base(_id)
+		{
+			x = _x;
+			y = _y;
+		}
 
 		public override byte[] Serialize()
 		{

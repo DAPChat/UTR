@@ -9,6 +9,11 @@
 			Deserialize(_buff);
 		}
 
+		public Packet(int _id)
+		{
+			playerId = _id;
+		}
+
 		public abstract byte[] Serialize();
 
 		public abstract void Deserialize(Buffer buff);
