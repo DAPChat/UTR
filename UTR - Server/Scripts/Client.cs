@@ -10,6 +10,8 @@ public class Client
 	private readonly UDP udp;
 	private readonly int id;
 
+	private int gameId;
+
 	public bool active;
 	//private Player player;
 	//private Account account;
@@ -41,6 +43,11 @@ public class Client
 
 		tcp.Disconnect();
 		udp.Disconnect();
+	}
+
+	public void SetGame(int _gId)
+	{
+		gameId = _gId;
 	}
 
 	private class TCP
@@ -147,7 +154,7 @@ public class Client
 				byte[] data = udpClient.EndReceive(result, ref end);
 				udpClient.BeginReceive(ReceiveCallback, null);
 
-				// Handle Data
+				ServerManager.AddPacket((packets.Packet)PacketManager.CreatePacket(data), instance.gameId);
 			}
 			catch (Exception e)
 			{

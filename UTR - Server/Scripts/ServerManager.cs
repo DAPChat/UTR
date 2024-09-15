@@ -76,19 +76,31 @@ public partial class ServerManager : Node
 			clients.Add(_id, _tempClient);
 			ids.Add(_id);
 
+			tcpClientQueue.RemoveAt(0);
+
 			int _gameId = 0;
 
 			while (gameIds.Contains(_gameId))
 				_gameId++;
 
-			Game _tempGame = new(_gameId, [clients[_id]]);
+			Node _tempGameScene = ResourceLoader.Load<PackedScene>("res://Scenes/GameRoom.tscn").Instantiate().Duplicate();
+
+			Game _tempGame = _tempGameScene as Game;
+
+			_tempGame.Instantiate(_gameId, [_tempClient]);
+
 			games.Add(_gameId, _tempGame);
 			gameIds.Add(_gameId);
 
-			playerCount++;
+			_tempClient.SetGame(_gameId);
 
-			tcpClientQueue.RemoveAt(0);
+			playerCount++;
 		}
+	}
+
+	public static void AddPacket(packets.Packet _packet, int _gId)
+	{
+		games[_gId].AddToQueue(_packet);
 	}
 
 	public static void DisconnectClient(int _id)
