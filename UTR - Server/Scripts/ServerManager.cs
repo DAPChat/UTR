@@ -20,9 +20,13 @@ public partial class ServerManager : Node
 
 	private static List<TcpClient> tcpClientQueue = new();
 
+	private static ServerManager tree;
+
 	public override void _Ready()
 	{
 		base._Ready();
+
+		tree = this;
 
 		PacketManager.CompileAll();
 
@@ -84,7 +88,8 @@ public partial class ServerManager : Node
 				_gameId++;
 
 			Node _tempGameScene = ResourceLoader.Load<PackedScene>("res://Scenes/GameRoom.tscn").Instantiate().Duplicate();
-
+			Node curScene = tree.GetNode("/root/MainScene/Games");
+			curScene.AddChild(_tempGameScene);
 			Game _tempGame = _tempGameScene as Game;
 
 			_tempGame.Instantiate(_gameId, [_tempClient]);
