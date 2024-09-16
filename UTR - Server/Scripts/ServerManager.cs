@@ -93,6 +93,8 @@ public partial class ServerManager : Node
 			Node _tempGameScene = ResourceLoader.Load<PackedScene>("res://Scenes/GameRoom.tscn").Instantiate().Duplicate();
 			Node curScene = tree.GetNode("/root/MainScene/Games");//tree.GetTree().Root;
 
+			Print("Here");
+
 			Window win = new();
 
 			curScene.AddChild(win.Duplicate());
