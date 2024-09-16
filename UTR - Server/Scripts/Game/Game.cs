@@ -29,6 +29,8 @@ namespace game
 		{
 			base._PhysicsProcess(delta);
 
+			ServerManager.Print("Why here");
+
 			GD.Print(gameId);
 
 			if (packetQueue.Count > 0)

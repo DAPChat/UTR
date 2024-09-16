@@ -50,6 +50,7 @@ public partial class ServerManager : Node
 		}
 		catch (Exception)
 		{
+			Print("Failure");
 			AcceptTcpClient();
 			return;
 		}
@@ -61,16 +62,19 @@ public partial class ServerManager : Node
 
 	public override void _Process(double delta)
 	{
+		base._Process(delta);
+		if (checkingQueue) Print("Processes");
 		if (tcpClientQueue.Count > 0 && !checkingQueue)
 		{
-			ClientQueueManage();
+			Print("Processing");
 			checkingQueue = true;
+			ClientQueueManage();
 		}
 	}
 
 	private static void ClientQueueManage()
 	{
-		while (tcpClientQueue.Count > 0)
+		while (tcpClientQueue.Count != 0)
 		{
 			TcpClient _curClient = tcpClientQueue[0];
 
@@ -83,17 +87,15 @@ public partial class ServerManager : Node
 			clients.Add(_id, _tempClient);
 			ids.Add(_id);
 
-			tcpClientQueue.RemoveAt(0);
-
 			int _gameId = 0;
+
+			tcpClientQueue.Remove(tcpClientQueue[0]);
 
 			while (gameIds.Contains(_gameId))
 				_gameId++;
 
 			Node _tempGameScene = ResourceLoader.Load<PackedScene>("res://Scenes/GameRoom.tscn").Instantiate().Duplicate();
 			Node curScene = tree.GetNode("/root/MainScene/Games");//tree.GetTree().Root;
-
-			Print("Here");
 
 			Window win = new();
 
