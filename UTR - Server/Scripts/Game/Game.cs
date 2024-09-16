@@ -25,11 +25,15 @@ namespace game
 			packetQueue.Add(_packet);
 		}
 
-		public override void _Process(double delta)
+		public override void _PhysicsProcess(double delta)
 		{
-			base._Process(delta);
+			base._PhysicsProcess(delta);
 
-			GD.Print("Hello");
+			GD.Print(gameId);
+
+			if (packetQueue.Count > 0)
+			{
+			}
 		}
 	}
 }

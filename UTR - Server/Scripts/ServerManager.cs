@@ -22,6 +22,8 @@ public partial class ServerManager : Node
 
 	private static ServerManager tree;
 
+	private static bool checkingQueue = false;
+
 	public override void _Ready()
 	{
 		base._Ready();
@@ -59,9 +61,10 @@ public partial class ServerManager : Node
 
 	public override void _Process(double delta)
 	{
-		if (tcpClientQueue.Count > 0)
+		if (tcpClientQueue.Count > 0 && !checkingQueue)
 		{
 			ClientQueueManage();
+			checkingQueue = true;
 		}
 	}
 
@@ -88,11 +91,18 @@ public partial class ServerManager : Node
 				_gameId++;
 
 			Node _tempGameScene = ResourceLoader.Load<PackedScene>("res://Scenes/GameRoom.tscn").Instantiate().Duplicate();
-			Node curScene = tree.GetNode("/root/MainScene/Games");
-			curScene.AddChild(_tempGameScene);
+			Node curScene = tree.GetNode("/root/MainScene/Games");//tree.GetTree().Root;
+
+			Window win = new();
+
+			curScene.AddChild(win.Duplicate());
+			win.Name = _gameId.ToString();
+			win.Show();
 			Game _tempGame = _tempGameScene as Game;
 
 			_tempGame.Instantiate(_gameId, [_tempClient]);
+
+			win.AddChild(_tempGameScene);
 
 			games.Add(_gameId, _tempGame);
 			gameIds.Add(_gameId);
@@ -101,6 +111,7 @@ public partial class ServerManager : Node
 
 			playerCount++;
 		}
+		checkingQueue = false;
 	}
 
 	public static void AddPacket(packets.Packet _packet, int _gId)
