@@ -26,6 +26,8 @@ namespace packets
 			playerId = (int)buff.ReadInt();
 			x = (float)buff.ReadFloat();
 			y = (float)buff.ReadFloat();
+
+			ClientManager.MovePlayer(this);
 		}
 	}
 }

@@ -9,12 +9,16 @@ public partial class ClientManager : Node
 
 	static ClientManager sceneTree;
 
+	static Sprite2D player;
+
 	public override void _Ready()
 	{
 		base._Ready();
 
 		client = new();
 		sceneTree = this;
+
+		player = sceneTree.GetNode<Sprite2D>("Player");
 	}
 
 	public static void Print(string message)
@@ -33,15 +37,15 @@ public partial class ClientManager : Node
 		if (Input.IsActionPressed("right"))
 			_inputVect.X += 1;
 		if (Input.IsActionPressed("down"))
-			_inputVect.Y -= 1;
-		if (Input.IsActionPressed("up"))
 			_inputVect.Y += 1;
+		if (Input.IsActionPressed("up"))
+			_inputVect.Y -= 1;
 
 		client.SendUDP(new InputPacket(_inputVect).Serialize());
 	}
 
 	public static void MovePlayer(MovePacket _move)
 	{
-		sceneTree.GetNode<Sprite2D>("Player").Position = new Vector2(_move.x, _move.y);
+		player.SetDeferred(Sprite2D.PropertyName.Position,new Vector2(_move.x, _move.y));
 	}
 }

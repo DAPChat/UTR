@@ -24,7 +24,7 @@ namespace packets
 			{
 				using (BinaryWriter writer = new(m))
 				{
-					writer.Write(0);
+					writer.Write(1);
 					writer.Write(playerId);
 					writer.Write(inVect.X);
 					writer.Write(inVect.Y);

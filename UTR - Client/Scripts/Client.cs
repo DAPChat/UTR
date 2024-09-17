@@ -26,11 +26,13 @@ public class Client
 
 	public void SendTCP(byte[] msg)
 	{
+		if (!active) return;
 		tcp.Send(msg);
 	}
 
 	public void SendUDP(byte[] msg)
 	{
+		if (!active) return;
 		udp.Send(msg);
 	}
 
@@ -88,7 +90,7 @@ public class Client
 		{
 			try
 			{
-				int _readLength = await stream.ReadAsync(buffer, 0, buffer.Length, new (instance.active));
+				int _readLength = await stream.ReadAsync(buffer, 0, buffer.Length);
 
 				if (!instance.active) return;
 
@@ -106,10 +108,11 @@ public class Client
 					sb.Append(Encoding.ASCII.GetString(buffer, 0, _readLength));
 				}
 
-				// Handle Data
+				PacketManager.CreatePacket(buffer);
 			}
-			catch (Exception)
+			catch (Exception e)
 			{
+				ClientManager.Print(e.ToString());
 				instance.Disconnect();
 				return;
 			}
@@ -178,7 +181,8 @@ public class Client
 				byte[] data = udpClient.EndReceive(result, ref end);
 				udpClient.BeginReceive(ReceiveCallback, null);
 
-				// Handle Data
+				
+				PacketManager.CreatePacket(data);
 			}catch (Exception e)
 			{
 				ClientManager.Print(e.ToString());

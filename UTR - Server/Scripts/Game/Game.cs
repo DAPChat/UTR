@@ -47,6 +47,17 @@ namespace game
 			while (packetQueue.Count > 0)
 			{
 				packetQueue[0].Run(this);
+				packetQueue.RemoveAt(0);
+			}
+
+			readingQueue = false;
+		}
+
+		public void SendAll(byte[] _msg)
+		{
+			foreach (Client _client in clients)
+			{
+				_client.SendUDP(_msg);
 			}
 		}
 	}

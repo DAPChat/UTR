@@ -6,11 +6,12 @@ using packets;
 
 public static class PacketManager
 {
-	private static Dictionary<int, Func<Buffer, object>> packets = new();
+	private static Dictionary<int, Func<Buffer, object>> packetL = new();
 
 	public static void CompileAll()
 	{
-		packets[0] = CreateCreator<Buffer, MovePacket>();
+		packetL[0] = CreateCreator<Buffer, MovePacket>();
+		packetL[1] = CreateCreator<Buffer, InputPacket>();
 	}
 
 	static Func<TArg, T> CreateCreator<TArg, T>()
@@ -25,6 +26,6 @@ public static class PacketManager
 	{
 		Buffer _tempBuff = new(buff);
 
-		return packets[_tempBuff.ReadInt()](_tempBuff);
+		return packetL[_tempBuff.ReadInt()](_tempBuff);
 	}
 }

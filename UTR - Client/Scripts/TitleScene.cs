@@ -9,6 +9,8 @@ public partial class TitleScene : Node2D
 	{
 		base._Ready();
 
+		PacketManager.CompileAll();
+
 		btn = (Button)GetNode("CanvasLayer/StartBtn");
 
 		btn.Pressed += () => {
