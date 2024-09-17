@@ -63,10 +63,9 @@ public partial class ServerManager : Node
 	public override void _Process(double delta)
 	{
 		base._Process(delta);
-		if (checkingQueue) Print("Processes");
+
 		if (tcpClientQueue.Count > 0 && !checkingQueue)
 		{
-			Print("Processing");
 			checkingQueue = true;
 			ClientQueueManage();
 		}
@@ -95,11 +94,11 @@ public partial class ServerManager : Node
 				_gameId++;
 
 			Node _tempGameScene = ResourceLoader.Load<PackedScene>("res://Scenes/GameRoom.tscn").Instantiate().Duplicate();
-			Node curScene = tree.GetNode("/root/MainScene/Games");//tree.GetTree().Root;
+			Node curScene = tree.GetTree().Root;//tree.GetNode("/root/MainScene/Games");
 
 			Window win = new();
 
-			curScene.AddChild(win.Duplicate());
+			curScene.AddChild(win);
 			win.Name = _gameId.ToString();
 			win.Show();
 			Game _tempGame = _tempGameScene as Game;

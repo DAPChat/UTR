@@ -17,7 +17,7 @@ config/icon="res://icon.svg"
 
 [autoload]
 
-ServerManager="res://Scripts/ServerManager.cs"
+ServerManager="*res://Scripts/ServerManager.cs"
 
 [display]
 

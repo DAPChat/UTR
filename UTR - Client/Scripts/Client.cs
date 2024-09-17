@@ -150,12 +150,13 @@ public class Client
 			{
 				udpClient = new(local);
 
+				udpClient.Client.SetSocketOption(SocketOptionLevel.Socket, SocketOptionName.ReuseAddress, true);
+
 				uint IOC_IN = 0x80000000;
 				uint IOC_VENDOR = 0x18000000;
 				uint SIO_UDP_CONNRESET = IOC_IN | IOC_VENDOR | 12;
 				udpClient.Client.IOControl((int)SIO_UDP_CONNRESET, [Convert.ToByte(false)], null);
 
-				udpClient.Client.SetSocketOption(SocketOptionLevel.Socket, SocketOptionName.ReuseAddress, true);
 				udpClient.Connect(end);
 			}
 			catch (Exception e)
