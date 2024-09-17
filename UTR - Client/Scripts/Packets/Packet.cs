@@ -9,6 +9,8 @@
 			Deserialize(_buff);
 		}
 
+		public Packet() { }
+
 		public abstract byte[] Serialize();
 
 		public abstract void Deserialize(Buffer buff);

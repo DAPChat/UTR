@@ -1,5 +1,0 @@
-[gd_scene format=3 uid="uid://c5w1okosl0pix"]
-
-[node name="TestScene" type="Node2D"]
-
-[node name="ServerManager" type="Node" parent="."]

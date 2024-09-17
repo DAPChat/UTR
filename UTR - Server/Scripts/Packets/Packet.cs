@@ -14,6 +14,8 @@
 			playerId = _id;
 		}
 
+		public abstract void Run(game.Game _game);
+
 		public abstract byte[] Serialize();
 
 		public abstract void Deserialize(Buffer buff);

@@ -12,10 +12,16 @@ namespace game
 		private List<Client> clients = new();
 		private List<Packet> packetQueue = new();
 
+		public CharacterBody2D player;
+
+		private bool readingQueue = false;
+
 		public void Instantiate(int _gameId, Client[] _clients)
 		{
 			gameId = _gameId;
 			clients.AddRange(_clients);
+
+			player = GetNode<CharacterBody2D>("Player");
 
 			dun = new(10);
 		}
@@ -29,8 +35,18 @@ namespace game
 		{
 			base._PhysicsProcess(delta);
 
-			if (packetQueue.Count > 0)
+			if (packetQueue.Count > 0 && !readingQueue)
 			{
+				readingQueue = true;
+				ReadQueue();
+			}
+		}
+
+		private void ReadQueue()
+		{
+			while (packetQueue.Count > 0)
+			{
+				packetQueue[0].Run(this);
 			}
 		}
 	}

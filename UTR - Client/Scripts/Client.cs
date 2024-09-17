@@ -9,10 +9,11 @@ using System.Threading.Tasks;
 public class Client
 {
 	private readonly TCP tcp;
-	private readonly int id;
 
 	private UDP udp;
 	public bool active;
+
+	public readonly int id;
 	//private Player player;
 	//private Account account;
 

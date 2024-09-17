@@ -14,6 +14,8 @@ namespace packets
 			y = _y;
 		}
 
+		public override void Run(game.Game _game) { }
+
 		public override byte[] Serialize()
 		{
 			using (MemoryStream m = new())
@@ -31,9 +33,9 @@ namespace packets
 
 		public override void Deserialize(Buffer buff)
 		{
-			playerId = (int)buff.ReadInt();
-			x = (float)buff.ReadFloat();
-			y = (float)buff.ReadFloat();
+			playerId = buff.ReadInt();
+			x = buff.ReadFloat();
+			y = buff.ReadFloat();
 		}
 	}
 }
