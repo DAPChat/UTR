@@ -13,27 +13,33 @@ namespace packets
 			inVect = _inVect;
 		}
 
-		public override void Run(game.Game _game)
-		{
-			_game.player.Velocity = inVect*100;
-			ServerManager.Print(_game.player.MoveAndSlide() ? ("Yes") : ("No"));
-			_game.SendAll(new MovePacket(playerId, (float)_game.player.Position.X, (float)_game.player.Position.Y).Serialize());
-		}
-
 		public override void Deserialize(Buffer buff)
 		{
-			Vector2I _tempVect = new();
+			inVect = new();
 
 			playerId = buff.ReadInt();
-			_tempVect.X = buff.ReadInt();
-			_tempVect.Y = buff.ReadInt();
+			inVect.X = buff.ReadInt();
+			inVect.Y = buff.ReadInt();
+		}
 
-			inVect = _tempVect;
+		public override void Run(int _gId)
+		{
+			throw new System.NotImplementedException();
 		}
 
 		public override byte[] Serialize()
 		{
-			throw new System.NotImplementedException();
+			using (MemoryStream m = new())
+			{
+				using (BinaryWriter writer = new(m))
+				{
+					writer.Write(1);
+					writer.Write(playerId);
+					writer.Write(inVect.X);
+					writer.Write(inVect.Y);
+				}
+				return m.ToArray();
+			}
 		}
 	}
 }

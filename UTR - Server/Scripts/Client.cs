@@ -42,13 +42,14 @@ public class Client
 		active = false;
 
 		tcp.Disconnect();
-		udp.Disconnect();
 	}
 
 	public void SetGame(int _gId)
 	{
 		gameId = _gId;
 	}
+
+	public int GetGameId() { return gameId; }
 
 	private class TCP
 	{
@@ -93,7 +94,7 @@ public class Client
 					sb.Append(Encoding.ASCII.GetString(buffer, 0, _readLength));
 				}
 
-				// Handle Data
+				PacketManager.CreatePacket(buffer);
 			}
 			catch (Exception)
 			{
@@ -120,59 +121,22 @@ public class Client
 	private class UDP
 	{
 		private readonly Client instance;
-		private readonly UdpClient udpClient;
 
-		private readonly IPEndPoint local;
 		private IPEndPoint end;
 
 		public UDP(Socket _client, Client _instance)
 		{
 			instance = _instance;
 			end = _client.RemoteEndPoint as IPEndPoint;
-			local = _client.LocalEndPoint as IPEndPoint;
 
-			udpClient = new(local);
-
-			udpClient.Client.SetSocketOption(SocketOptionLevel.Socket, SocketOptionName.ReuseAddress, true);
-
-			uint IOC_IN = 0x80000000;
-			uint IOC_VENDOR = 0x18000000;
-			uint SIO_UDP_CONNRESET = IOC_IN | IOC_VENDOR | 12;
-			udpClient.Client.IOControl((int)SIO_UDP_CONNRESET, [Convert.ToByte(false)], null);
-
-			udpClient.Connect(end);
-
-			udpClient.BeginReceive(ReceiveCallback, null);
-		}
-
-		private void ReceiveCallback(IAsyncResult result)
-		{
-			try
-			{
-				if (!instance.active) return;
-
-				byte[] data = udpClient.EndReceive(result, ref end);
-				udpClient.BeginReceive(ReceiveCallback, null);
-
-				ServerManager.AddPacket((packets.Packet)PacketManager.CreatePacket(data), instance.gameId);
-			}
-			catch (Exception e)
-			{
-				ServerManager.Print(e.ToString());
-			}
+			Send(new packets.Packet(instance.id).Serialize());
 		}
 
 		public void Send(byte[] msg)
 		{
 			if (!instance.active) return;
 
-			udpClient.BeginSend(msg, msg.Length, null, null);
-		}
-
-		public void Disconnect()
-		{
-			udpClient.Close();
-			udpClient.Dispose();
+			ServerManager.SendUDP(msg, end);
 		}
 	}
 }

@@ -9,7 +9,7 @@ public partial class ClientManager : Node
 
 	static ClientManager sceneTree;
 
-	static Sprite2D player;
+	public static bool active = false;
 
 	public override void _Ready()
 	{
@@ -17,18 +17,13 @@ public partial class ClientManager : Node
 
 		client = new();
 		sceneTree = this;
-
-		player = sceneTree.GetNode<Sprite2D>("Player");
-	}
-
-	public static void Print(string message)
-	{
-		GD.Print(message);
 	}
 
 	public override void _PhysicsProcess(double delta)
 	{
 		base._PhysicsProcess(delta);
+
+		if (!active) return;
 
 		Vector2I _inputVect = Vector2I.Zero;
 
@@ -40,12 +35,16 @@ public partial class ClientManager : Node
 			_inputVect.Y += 1;
 		if (Input.IsActionPressed("up"))
 			_inputVect.Y -= 1;
-
-		client.SendUDP(new InputPacket(_inputVect).Serialize());
 	}
 
-	public static void MovePlayer(MovePacket _move)
+	public static void Print(string message)
 	{
-		player.SetDeferred(Sprite2D.PropertyName.Position,new Vector2(_move.x, _move.y));
+		GD.Print(message);
+	}
+
+	public static void SetClient(Packet _packet)
+	{
+		client.id = _packet.playerId;
+		active = true;
 	}
 }

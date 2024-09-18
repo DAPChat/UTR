@@ -8,12 +8,21 @@ namespace packets
 		public Vector2I inVect;
 
 		public InputPacket(Buffer _buff) : base(_buff) { }
-		public InputPacket(Vector2I _inVect) 
+		public InputPacket(int id, Vector2I _inVect) : base(id)
 		{
 			inVect = _inVect;
 		}
 
 		public override void Deserialize(Buffer buff)
+		{
+			inVect = new();
+
+			playerId = buff.ReadInt();
+			inVect.X = buff.ReadInt();
+			inVect.Y = buff.ReadInt();
+		}
+
+		public override void Run()
 		{
 			throw new System.NotImplementedException();
 		}

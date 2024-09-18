@@ -11,6 +11,8 @@ public partial class ServerManager : Node
 {
 	private static TcpListener listener;
 
+	public static UdpClient udpClient;
+
 	private static int playerCount = 0;
 
 	private static List<int> ids = new();
@@ -34,10 +36,38 @@ public partial class ServerManager : Node
 
 		listener = new(IPAddress.Any, 6666);
 
+		udpClient = new(listener.LocalEndpoint as IPEndPoint);
+
+		udpClient.Client.SetSocketOption(SocketOptionLevel.Socket, SocketOptionName.ReuseAddress, true);
+
+		uint IOC_IN = 0x80000000;
+		uint IOC_VENDOR = 0x18000000;
+		uint SIO_UDP_CONNRESET = IOC_IN | IOC_VENDOR | 12;
+		udpClient.Client.IOControl((int)SIO_UDP_CONNRESET, [Convert.ToByte(false)], null);
+
 		listener.Start();
 		AcceptTcpClient();
 
+		udpClient.BeginReceive(ReceiveCallback, null);
+
 		Print("Started");
+	}
+
+	private static void ReceiveCallback(IAsyncResult result)
+	{
+		try
+		{
+			IPEndPoint _cliendEnd = new IPEndPoint(IPAddress.Any, 0);
+			byte[] data = udpClient.EndReceive(result, ref _cliendEnd);
+			udpClient.BeginReceive(ReceiveCallback, null);
+
+			packets.Packet _p = PacketManager.CreatePacket(data);
+			AddPacket(_p, clients[_p.playerId].GetGameId());
+		}
+		catch (Exception e)
+		{
+			Print(e.ToString());
+		}
 	}
 
 	private static async Task AcceptTcpClient()
@@ -94,7 +124,7 @@ public partial class ServerManager : Node
 				_gameId++;
 
 			Node _tempGameScene = ResourceLoader.Load<PackedScene>("res://Scenes/GameRoom.tscn").Instantiate().Duplicate();
-			Node curScene = tree.GetTree().Root;//tree.GetNode("/root/MainScene/Games");
+			Node curScene = tree.GetTree().Root;
 
 			Window win = new();
 
@@ -122,12 +152,22 @@ public partial class ServerManager : Node
 		games[_gId].AddToQueue(_packet);
 	}
 
+	public static Game GetGame(int _gId)
+	{
+		return games[_gId];
+	}
+
 	public static void DisconnectClient(int _id)
 	{
 		playerCount--;
 
 		clients.Remove(_id);
 		ids.Remove(_id);
+	}
+
+	public static void SendUDP(byte[] _msg, IPEndPoint _refEnd)
+	{
+		udpClient.BeginSend(_msg, _msg.Length, _refEnd, null, null);
 	}
 
 	public static void Print(string message)

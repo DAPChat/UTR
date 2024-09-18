@@ -2,9 +2,17 @@
 
 namespace packets
 {
-	public class MovePacket(Buffer _buff) : Packet(_buff)
+	public class MovePacket : Packet
 	{
 		public float x, y;
+
+		public MovePacket(Buffer _buff) : base(_buff) { }
+
+		public MovePacket(int _id, float _x, float _y) : base(_id)
+		{
+			x = _x;
+			y = _y;
+		}
 
 		public override byte[] Serialize()
 		{
@@ -12,7 +20,7 @@ namespace packets
 			{
 				using (BinaryWriter writer = new(m))
 				{
-					writer.Write(0);
+					writer.Write(1);
 					writer.Write(playerId);
 					writer.Write(x);
 					writer.Write(y);
@@ -23,11 +31,14 @@ namespace packets
 
 		public override void Deserialize(Buffer buff)
 		{
-			playerId = (int)buff.ReadInt();
-			x = (float)buff.ReadFloat();
-			y = (float)buff.ReadFloat();
+			playerId = buff.ReadInt();
+			x = buff.ReadFloat();
+			y = buff.ReadFloat();
+		}
 
-			ClientManager.MovePlayer(this);
+		public override void Run()
+		{
+			throw new System.NotImplementedException();
 		}
 	}
 }

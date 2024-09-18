@@ -9,11 +9,11 @@ using System.Threading.Tasks;
 public class Client
 {
 	private readonly TCP tcp;
-
 	private UDP udp;
-	public bool active;
 
-	public readonly int id;
+	public bool active;
+	public int id;
+
 	//private Player player;
 	//private Account account;
 
@@ -39,6 +39,7 @@ public class Client
 	public void Disconnect()
 	{
 		active = false;
+		ClientManager.active = false;
 
 		tcp.Disconnect();
 		udp.Disconnect();
@@ -112,7 +113,7 @@ public class Client
 			}
 			catch (Exception e)
 			{
-				ClientManager.Print(e.ToString());
+				//ClientManager.Print(e.ToString());
 				instance.Disconnect();
 				return;
 			}
@@ -181,8 +182,8 @@ public class Client
 				byte[] data = udpClient.EndReceive(result, ref end);
 				udpClient.BeginReceive(ReceiveCallback, null);
 
-				
-				PacketManager.CreatePacket(data);
+
+				PacketManager.CreatePacket(data).Run();
 			}catch (Exception e)
 			{
 				ClientManager.Print(e.ToString());

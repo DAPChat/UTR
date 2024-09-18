@@ -6,12 +6,13 @@ using packets;
 
 public static class PacketManager
 {
-	private static Dictionary<int, Func<Buffer, object>> packetL = new();
+	private static Dictionary<int, Func<Buffer, Packet>> packetL = new();
 
 	public static void CompileAll()
 	{
-		packetL[0] = CreateCreator<Buffer, MovePacket>();
-		packetL[1] = CreateCreator<Buffer, InputPacket>();
+		packetL[0] = CreateCreator<Buffer, Packet>();
+		packetL[1] = CreateCreator<Buffer, MovePacket>();
+		packetL[2] = CreateCreator<Buffer, InputPacket>();
 	}
 
 	static Func<TArg, T> CreateCreator<TArg, T>()
@@ -22,7 +23,7 @@ public static class PacketManager
 		return creatorExpression.Compile();
 	}
 
-	public static object CreatePacket(byte[] buff)
+	public static Packet CreatePacket(byte[] buff)
 	{
 		Buffer _tempBuff = new(buff);
 

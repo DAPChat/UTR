@@ -1,6 +1,8 @@
-﻿namespace packets
+﻿using System.IO;
+
+namespace packets
 {
-	public abstract class Packet
+	public class Packet
 	{
 		public int playerId;
 
@@ -9,10 +11,32 @@
 			Deserialize(_buff);
 		}
 
-		public Packet() { }
+		public Packet(int _id) 
+		{
+			playerId = _id;
+		}
 
-		public abstract byte[] Serialize();
+		public virtual void Run()
+		{
+			ClientManager.SetClient(this);
+		}
 
-		public abstract void Deserialize(Buffer buff);
+		public virtual byte[] Serialize()
+		{
+			using (MemoryStream m = new())
+			{
+				using (BinaryWriter writer = new(m))
+				{
+					writer.Write(0);
+					writer.Write(playerId);
+				}
+				return m.ToArray();
+			}
+		}
+
+		public virtual void Deserialize(Buffer buff)
+		{
+			playerId = buff.ReadInt();
+		}
 	}
 }

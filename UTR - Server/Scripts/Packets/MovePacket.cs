@@ -14,15 +14,13 @@ namespace packets
 			y = _y;
 		}
 
-		public override void Run(game.Game _game) { }
-
 		public override byte[] Serialize()
 		{
 			using (MemoryStream m = new())
 			{
 				using (BinaryWriter writer = new(m))
 				{
-					writer.Write(0);
+					writer.Write(1);
 					writer.Write(playerId);
 					writer.Write(x);
 					writer.Write(y);
@@ -36,6 +34,11 @@ namespace packets
 			playerId = buff.ReadInt();
 			x = buff.ReadFloat();
 			y = buff.ReadFloat();
+		}
+
+		public override void Run(int _gId)
+		{
+			throw new System.NotImplementedException();
 		}
 	}
 }
