@@ -1,26 +1,25 @@
-[gd_scene load_steps=2 format=3 uid="uid://cf10amu8jbh4x"]
+[gd_scene load_steps=9 format=3 uid="uid://cf10amu8jbh4x"]
 
 [ext_resource type="Script" path="res://Scripts/TitleScene.cs" id="1_22tra"]
+[ext_resource type="FontFile" uid="uid://dr4b7ulxi2rc0" path="res://fonts/MinimalPixelFont.ttf" id="2_bpuxe"]
+[ext_resource type="Texture2D" uid="uid://cgr6nug4tcad3" path="res://Assets/pixil-frame-0 (5).png" id="3_ul0t0"]
+[ext_resource type="Texture2D" uid="uid://cd753prxsdw4w" path="res://Assets/pixil-frame-0 (7).png" id="4_dsih5"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ljah3"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_dkd6b"]
+texture = ExtResource("3_ul0t0")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_m5dvs"]
+texture = ExtResource("4_dsih5")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_jxuip"]
+texture = ExtResource("3_ul0t0")
 
 [node name="TitleScene" type="Node2D"]
 script = ExtResource("1_22tra")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
-
-[node name="StartText" type="Label" parent="CanvasLayer"]
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -22.5
-offset_top = -11.5
-offset_right = 22.5
-offset_bottom = 11.5
-grow_horizontal = 2
-grow_vertical = 2
-size_flags_horizontal = 4
-text = "Start?"
 
 [node name="StartBtn" type="Button" parent="CanvasLayer"]
 anchors_preset = 8
@@ -28,10 +27,35 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -43.5
-offset_top = 21.0
-offset_right = 43.5
+offset_left = -47.0
+offset_top = 19.0
+offset_right = 9943.0
+offset_bottom = 4681.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.01, 0.01)
+mouse_default_cursor_shape = 2
+theme_override_fonts/font = ExtResource("2_bpuxe")
+theme_override_font_sizes/font_size = 32
+theme_override_styles/focus = SubResource("StyleBoxEmpty_ljah3")
+theme_override_styles/hover = SubResource("StyleBoxTexture_dkd6b")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_m5dvs")
+theme_override_styles/normal = SubResource("StyleBoxTexture_jxuip")
+
+[node name="StartText" type="Label" parent="CanvasLayer"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -30.0
+offset_top = 20.0
+offset_right = 39.0
 offset_bottom = 52.0
 grow_horizontal = 2
 grow_vertical = 2
-text = "Join Game"
+size_flags_horizontal = 4
+theme_override_fonts/font = ExtResource("2_bpuxe")
+theme_override_font_sizes/font_size = 48
+text = "Start?"
+horizontal_alignment = 1

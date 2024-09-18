@@ -1,0 +1,48 @@
+[gd_scene load_steps=7 format=3 uid="uid://63705to3iolp"]
+
+[ext_resource type="Texture2D" uid="uid://dw7qksnxntx2s" path="res://Assets/pixil-frame-0 (11).png" id="1_7vvn4"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_smbrv"]
+atlas = ExtResource("1_7vvn4")
+region = Rect2(209, 22, 36, 44)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ep1jm"]
+atlas = ExtResource("1_7vvn4")
+region = Rect2(253, 22, 36, 44)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fpv3q"]
+atlas = ExtResource("1_7vvn4")
+region = Rect2(297, 22, 36, 44)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hbsae"]
+atlas = ExtResource("1_7vvn4")
+region = Rect2(341, 22, 36, 44)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_1jmi2"]
+animations = [{
+"frames": [],
+"loop": true,
+"name": &"chase",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_smbrv")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ep1jm")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fpv3q")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hbsae")
+}],
+"loop": true,
+"name": &"stay",
+"speed": 5.0
+}]
+
+[node name="Skele" type="AnimatedSprite2D"]
+sprite_frames = SubResource("SpriteFrames_1jmi2")
+animation = &"stay"
