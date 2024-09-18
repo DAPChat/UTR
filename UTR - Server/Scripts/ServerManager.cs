@@ -36,7 +36,7 @@ public partial class ServerManager : Node
 
 		listener = new(IPAddress.Any, 6666);
 
-		udpClient = new(listener.LocalEndpoint as IPEndPoint);
+		udpClient = new(6666);
 
 		udpClient.Client.SetSocketOption(SocketOptionLevel.Socket, SocketOptionName.ReuseAddress, true);
 

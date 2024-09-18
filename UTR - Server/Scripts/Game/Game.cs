@@ -19,7 +19,22 @@ namespace game
 			gameId = _gameId;
 			clients.AddRange(_clients);
 
+			foreach (Client _c in clients)
+			{
+				CreateClient(_c);
+			}
+
 			dun = new(10);
+		}
+
+		private void CreateClient(Client _c)
+		{
+			CharacterBody2D _tempPlayer = (CharacterBody2D)ResourceLoader.Load<PackedScene>("res://Scenes/player.tscn").Instantiate().Duplicate();
+			GetNode<Node>("Players").AddChild(_tempPlayer);
+			_tempPlayer.Position = new(50, 500);
+			_c.SetPlayer(_tempPlayer as Player);
+
+			SendAll(new MovePacket(_c.id, _tempPlayer.Position.X, _tempPlayer.Position.Y).Serialize());
 		}
 
 		public void AddToQueue(Packet _packet)

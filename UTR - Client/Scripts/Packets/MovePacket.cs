@@ -38,7 +38,7 @@ namespace packets
 
 		public override void Run()
 		{
-			throw new System.NotImplementedException();
+			ClientManager.MovePlayer(this);
 		}
 	}
 }

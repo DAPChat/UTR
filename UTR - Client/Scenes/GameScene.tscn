@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=3 uid="uid://doaccr1k3qtwt"]
+[gd_scene load_steps=5 format=3 uid="uid://doaccr1k3qtwt"]
 
 [ext_resource type="Script" path="res://Scripts/ClientManager.cs" id="1_vpr8p"]
 
@@ -10,13 +10,8 @@ gradient = SubResource("Gradient_tnwpx")
 width = 20
 height = 600
 
-[sub_resource type="Gradient" id="Gradient_hd0av"]
-colors = PackedColorArray(0, 0, 0, 1, 0, 0, 0, 1)
-
-[sub_resource type="GradientTexture2D" id="GradientTexture2D_nnfrr"]
-gradient = SubResource("Gradient_hd0av")
-width = 20
-height = 20
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_526m5"]
+size = Vector2(20, 600)
 
 [node name="GameScene" type="Node2D"]
 script = ExtResource("1_vpr8p")
@@ -25,6 +20,9 @@ script = ExtResource("1_vpr8p")
 position = Vector2(0, 300)
 texture = SubResource("GradientTexture2D_6hyup")
 
-[node name="Player" type="Sprite2D" parent="."]
-position = Vector2(50, 500)
-texture = SubResource("GradientTexture2D_nnfrr")
+[node name="StaticBody2D" type="StaticBody2D" parent="Sprite2D"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Sprite2D/StaticBody2D"]
+shape = SubResource("RectangleShape2D_526m5")
+
+[node name="Players" type="Node" parent="."]

@@ -22,6 +22,7 @@ public class Client
 	public Client()
 	{
 		tcp = new(this);
+		udp = new(this);
 	}
 
 	public void SendTCP(byte[] msg)
@@ -68,14 +69,10 @@ public class Client
 			try
 			{
 				await tcpClient.ConnectAsync(instance.end);
-
-				instance.udp = new(tcpClient.Client, instance);
-
+				instance.active = true;
 				ClientManager.Print("Connected");
 
 				buffer = new byte[512];
-
-				instance.active = true;
 
 				stream = tcpClient.GetStream();
 
@@ -113,7 +110,7 @@ public class Client
 			}
 			catch (Exception e)
 			{
-				//ClientManager.Print(e.ToString());
+				ClientManager.Print(e.ToString());
 				instance.Disconnect();
 				return;
 			}
@@ -139,21 +136,19 @@ public class Client
 		private readonly Client instance;
 		private readonly UdpClient udpClient;
 
-		private readonly IPEndPoint local;
 		private IPEndPoint end;
 
-		public UDP(Socket _client, Client _instance)
+		public UDP(Client _instance)
 		{
 			instance = _instance;
-			end = _client.RemoteEndPoint as IPEndPoint;
-			local = _client.LocalEndPoint as IPEndPoint;
 
-			local.Address = local.Address.MapToIPv4();
+			end = instance.end;
+
 			end.Address = end.Address.MapToIPv4();
 
 			try
 			{
-				udpClient = new(local);
+				udpClient = new();
 
 				udpClient.Client.SetSocketOption(SocketOptionLevel.Socket, SocketOptionName.ReuseAddress, true);
 
@@ -182,6 +177,7 @@ public class Client
 				byte[] data = udpClient.EndReceive(result, ref end);
 				udpClient.BeginReceive(ReceiveCallback, null);
 
+				ClientManager.Print("That");
 
 				PacketManager.CreatePacket(data).Run();
 			}catch (Exception e)
