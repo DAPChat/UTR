@@ -15,12 +15,8 @@ public partial class ServerManager : Node
 
 	private static int playerCount = 0;
 
-	private static List<int> ids = new();
-	private static List<int> gameIds = new();
 	private static Dictionary<int, Client> clients = new();
 	private static Dictionary<int, Game> games = new();
-
-	private static List<TcpClient> tcpClientQueue = new();
 
 	private static ServerManager tree;
 
@@ -37,7 +33,6 @@ public partial class ServerManager : Node
 		listener = new(IPAddress.Any, 6666);
 
 		udpClient = new(6666);
-
 		udpClient.Client.SetSocketOption(SocketOptionLevel.Socket, SocketOptionName.ReuseAddress, true);
 
 		uint IOC_IN = 0x80000000;
@@ -57,12 +52,20 @@ public partial class ServerManager : Node
 	{
 		try
 		{
-			IPEndPoint _cliendEnd = new IPEndPoint(IPAddress.Any, 0);
-			byte[] data = udpClient.EndReceive(result, ref _cliendEnd);
+			IPEndPoint _clientEnd = new IPEndPoint(IPAddress.Any, 0);
+			byte[] data = udpClient.EndReceive(result, ref _clientEnd);
 			udpClient.BeginReceive(ReceiveCallback, null);
 
 			packets.Packet _p = PacketManager.CreatePacket(data);
-			AddPacket(_p, clients[_p.playerId].GetGameId());
+
+			if (clients[_p.playerId].udp.end == null)
+			{
+				clients[_p.playerId].udp.Connect(_clientEnd);
+				AddToGame(_p.playerId);
+				return;
+			}
+
+			_p.Run(clients[_p.playerId].gameId);
 		}
 		catch (Exception e)
 		{
@@ -77,74 +80,58 @@ public partial class ServerManager : Node
 		try
 		{
 			_tempTcpClient = await listener.AcceptTcpClientAsync();
+			AddClient(_tempTcpClient);
 		}
 		catch (Exception)
 		{
 			Print("Failure");
-			AcceptTcpClient();
-			return;
 		}
-
-		tcpClientQueue.Add(_tempTcpClient);
-
 		AcceptTcpClient();
 	}
 
 	public override void _Process(double delta)
 	{
 		base._Process(delta);
-
-		if (tcpClientQueue.Count > 0 && !checkingQueue)
-		{
-			checkingQueue = true;
-			ClientQueueManage();
-		}
 	}
 
-	private static void ClientQueueManage()
+	private static void AddClient(TcpClient _client)
 	{
-		while (tcpClientQueue.Count != 0)
-		{
-			TcpClient _curClient = tcpClientQueue[0];
+		int _id = 0;
 
-			int _id = 0;
+		while (clients.Keys.Contains(_id))
+			_id++;
 
-			while (ids.Contains(_id))
-				_id++;
+		Client _tempClient = new(_client, _id);
+		clients.Add(_id, _tempClient);
 
-			Client _tempClient = new(_curClient, _id);
-			clients.Add(_id, _tempClient);
-			ids.Add(_id);
+		playerCount++;
+	}
 
-			int _gameId = 0;
+	private static void AddToGame(int _pId)
+	{
+		int _gameId = 0;
+		Client _tempClient = clients[_pId];
 
-			tcpClientQueue.Remove(tcpClientQueue[0]);
+		while (games.Keys.Contains(_gameId))
+			_gameId++;
 
-			while (gameIds.Contains(_gameId))
-				_gameId++;
+		Node _tempGameScene = ResourceLoader.Load<PackedScene>("res://Scenes/GameRoom.tscn").Instantiate().Duplicate();
+		Node curScene = tree.GetTree().Root;
 
-			Node _tempGameScene = ResourceLoader.Load<PackedScene>("res://Scenes/GameRoom.tscn").Instantiate().Duplicate();
-			Node curScene = tree.GetTree().Root;
+		Window win = new();
 
-			Window win = new();
+		curScene.CallDeferred(Node.MethodName.AddChild, win);
+		win.Name = _gameId.ToString();
+		win.Show();
+		Game _tempGame = _tempGameScene as Game;
 
-			curScene.AddChild(win);
-			win.Name = _gameId.ToString();
-			win.Show();
-			Game _tempGame = _tempGameScene as Game;
+		_tempGame.Instantiate(_gameId, [_tempClient]);
 
-			_tempGame.Instantiate(_gameId, [_tempClient]);
+		win.CallDeferred(Node.MethodName.AddChild, _tempGameScene);
 
-			win.AddChild(_tempGameScene);
+		games.Add(_gameId, _tempGame);
 
-			games.Add(_gameId, _tempGame);
-			gameIds.Add(_gameId);
-
-			_tempClient.SetGame(_gameId);
-
-			playerCount++;
-		}
-		checkingQueue = false;
+		_tempClient.gameId = _gameId;
 	}
 
 	public static void AddPacket(packets.Packet _packet, int _gId)
@@ -162,11 +149,12 @@ public partial class ServerManager : Node
 		playerCount--;
 
 		clients.Remove(_id);
-		ids.Remove(_id);
 	}
 
 	public static void SendUDP(byte[] _msg, IPEndPoint _refEnd)
 	{
+		Print("this");
+		Print(_refEnd.ToString());
 		udpClient.BeginSend(_msg, _msg.Length, _refEnd, null, null);
 	}
 

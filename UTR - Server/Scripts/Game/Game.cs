@@ -32,7 +32,7 @@ namespace game
 			CharacterBody2D _tempPlayer = (CharacterBody2D)ResourceLoader.Load<PackedScene>("res://Scenes/player.tscn").Instantiate().Duplicate();
 			GetNode<Node>("Players").AddChild(_tempPlayer);
 			_tempPlayer.Position = new(50, 500);
-			_c.SetPlayer(_tempPlayer as Player);
+			_c.player = _tempPlayer as Player;
 
 			SendAll(new MovePacket(_c.id, _tempPlayer.Position.X, _tempPlayer.Position.Y).Serialize());
 		}
@@ -66,7 +66,7 @@ namespace game
 		{
 			foreach (Client _client in clients)
 			{
-				_client.SendUDP(_msg);
+				_client.udp.Send(_msg);
 			}
 		}
 	}

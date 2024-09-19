@@ -6,14 +6,14 @@ using System.Threading.Tasks;
 
 public class Client
 {
-	private readonly TCP tcp;
-	private readonly UDP udp;
+	public readonly TCP tcp;
+	public readonly UDP udp;
 	public readonly int id;
 
-	private int gameId;
+	public int gameId;
 
 	public bool active;
-	private Player player;
+	public Player player;
 	//private Account account;
 
 	public Client(TcpClient _tcpClient, int _id)
@@ -21,18 +21,8 @@ public class Client
 		active = true;
 
 		tcp = new(_tcpClient, this);
-		udp = new(_tcpClient.Client, this);
+		udp = new(this);
 		id = _id;
-	}
-
-	public void SendTCP(byte[] msg)
-	{
-		tcp.Send(msg);
-	}
-
-	public void SendUDP(byte[] msg)
-	{
-		udp.Send(msg);
 	}
 
 	public void Disconnect()
@@ -44,21 +34,7 @@ public class Client
 		tcp.Disconnect();
 	}
 
-	public void SetGame(int _gId)
-	{
-		gameId = _gId;
-	}
-
-	public void SetPlayer(Player _player)
-	{
-		player = _player;
-	}
-
-	public int GetGameId() { return gameId; }
-
-	public Player GetPlayer() { return player; }
-
-	private class TCP
+	public class TCP
 	{
 		private readonly Client instance;
 		private readonly TcpClient tcpClient;
@@ -75,6 +51,8 @@ public class Client
 			buffer = new byte[512];
 
 			stream = tcpClient.GetStream();
+
+			Send(new packets.Packet(instance.id).Serialize());
 			
 			ReadStreamAsync();
 		}
@@ -101,7 +79,7 @@ public class Client
 					sb.Append(Encoding.ASCII.GetString(buffer, 0, _readLength));
 				}
 
-				PacketManager.CreatePacket(buffer);
+				PacketManager.CreatePacket(buffer).Run(instance.gameId);
 			}
 			catch (Exception)
 			{
@@ -125,18 +103,20 @@ public class Client
 		}
 	}
 
-	private class UDP
+	public class UDP
 	{
 		private readonly Client instance;
 
-		private IPEndPoint end;
+		public IPEndPoint end;
 
-		public UDP(Socket _client, Client _instance)
+		public UDP(Client _instance)
 		{
 			instance = _instance;
-			end = _client.RemoteEndPoint as IPEndPoint;
+		}
 
-			Send(new packets.Packet(instance.id).Serialize());
+		public void Connect(IPEndPoint _end)
+		{
+			end = _end;
 		}
 
 		public void Send(byte[] msg)

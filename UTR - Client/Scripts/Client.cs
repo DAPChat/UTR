@@ -8,8 +8,8 @@ using System.Threading.Tasks;
 
 public class Client
 {
-	private readonly TCP tcp;
-	private UDP udp;
+	public readonly TCP tcp;
+	public UDP udp;
 
 	public bool active;
 	public int id;
@@ -21,20 +21,10 @@ public class Client
 
 	public Client()
 	{
+		active = true;
+
 		tcp = new(this);
 		udp = new(this);
-	}
-
-	public void SendTCP(byte[] msg)
-	{
-		if (!active) return;
-		tcp.Send(msg);
-	}
-
-	public void SendUDP(byte[] msg)
-	{
-		if (!active) return;
-		udp.Send(msg);
 	}
 
 	public void Disconnect()
@@ -46,10 +36,10 @@ public class Client
 		udp.Disconnect();
 	}
 
-	private class TCP
+	public class TCP
 	{
 		private readonly Client instance;
-		private readonly TcpClient tcpClient;
+		public readonly TcpClient tcpClient;
 
 		private NetworkStream stream;
 
@@ -69,7 +59,6 @@ public class Client
 			try
 			{
 				await tcpClient.ConnectAsync(instance.end);
-				instance.active = true;
 				ClientManager.Print("Connected");
 
 				buffer = new byte[512];
@@ -106,11 +95,11 @@ public class Client
 					sb.Append(Encoding.ASCII.GetString(buffer, 0, _readLength));
 				}
 
-				PacketManager.CreatePacket(buffer);
+				PacketManager.CreatePacket(buffer).Run();
 			}
 			catch (Exception e)
 			{
-				ClientManager.Print(e.ToString());
+				//ClientManager.Print(e.ToString());
 				instance.Disconnect();
 				return;
 			}
@@ -131,7 +120,7 @@ public class Client
 		}
 	}
 
-	private class UDP
+	public class UDP
 	{
 		private readonly Client instance;
 		private readonly UdpClient udpClient;
@@ -148,7 +137,9 @@ public class Client
 
 			try
 			{
-				udpClient = new();
+				IPEndPoint _locEnd = (IPEndPoint)instance.tcp.tcpClient.Client.LocalEndPoint;
+				_locEnd.Address = _locEnd.Address.MapToIPv4();
+				udpClient = new(_locEnd);
 
 				udpClient.Client.SetSocketOption(SocketOptionLevel.Socket, SocketOptionName.ReuseAddress, true);
 
@@ -156,6 +147,8 @@ public class Client
 				uint IOC_VENDOR = 0x18000000;
 				uint SIO_UDP_CONNRESET = IOC_IN | IOC_VENDOR | 12;
 				udpClient.Client.IOControl((int)SIO_UDP_CONNRESET, [Convert.ToByte(false)], null);
+
+				ClientManager.Print(udpClient.Client.LocalEndPoint.ToString());
 
 				udpClient.Connect(end);
 			}
@@ -165,6 +158,8 @@ public class Client
 				return;
 			}
 
+			ClientManager.Print("waiting");
+
 			udpClient.BeginReceive(ReceiveCallback, null);
 		}
 
@@ -172,6 +167,7 @@ public class Client
 		{
 			try
 			{
+				ClientManager.Print("This");
 				if (!instance.active) return;
 
 				byte[] data = udpClient.EndReceive(result, ref end);

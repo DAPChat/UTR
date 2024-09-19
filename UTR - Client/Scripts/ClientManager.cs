@@ -62,5 +62,7 @@ public partial class ClientManager : Node
 	{
 		client.id = _packet.playerId;
 		active = true;
+
+		client.udp.Send(_packet.Serialize());
 	}
 }

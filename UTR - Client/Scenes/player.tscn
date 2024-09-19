@@ -46,3 +46,5 @@ shape = SubResource("CapsuleShape2D_5fpqd")
 [node name="PlayerView" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_mo3nh")
 animation = &"running"
+frame = 2
+frame_progress = 0.284077
