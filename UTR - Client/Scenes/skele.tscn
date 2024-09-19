@@ -1,6 +1,30 @@
-[gd_scene load_steps=7 format=3 uid="uid://63705to3iolp"]
+[gd_scene load_steps=13 format=3 uid="uid://63705to3iolp"]
 
 [ext_resource type="Texture2D" uid="uid://dw7qksnxntx2s" path="res://Assets/pixil-frame-0 (11).png" id="1_7vvn4"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gf8ki"]
+atlas = ExtResource("1_7vvn4")
+region = Rect2(21, 90, 36, 44)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_k2i0l"]
+atlas = ExtResource("1_7vvn4")
+region = Rect2(65, 90, 36, 44)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cod7l"]
+atlas = ExtResource("1_7vvn4")
+region = Rect2(109, 90, 36, 44)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_avwtt"]
+atlas = ExtResource("1_7vvn4")
+region = Rect2(153, 90, 36, 44)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_q55yh"]
+atlas = ExtResource("1_7vvn4")
+region = Rect2(249, 90, 36, 44)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7ttrx"]
+atlas = ExtResource("1_7vvn4")
+region = Rect2(293, 90, 36, 44)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_smbrv"]
 atlas = ExtResource("1_7vvn4")
@@ -20,10 +44,34 @@ region = Rect2(341, 22, 36, 44)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_1jmi2"]
 animations = [{
-"frames": [],
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_gf8ki")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_k2i0l")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cod7l")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_avwtt")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_gf8ki")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_q55yh")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7ttrx")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_q55yh")
+}],
 "loop": true,
 "name": &"chase",
-"speed": 5.0
+"speed": 10.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -45,4 +93,5 @@ animations = [{
 
 [node name="Skele" type="AnimatedSprite2D"]
 sprite_frames = SubResource("SpriteFrames_1jmi2")
-animation = &"stay"
+animation = &"chase"
+frame_progress = 0.0361802
