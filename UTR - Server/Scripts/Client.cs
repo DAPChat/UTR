@@ -8,21 +8,21 @@ public class Client
 {
 	private readonly TCP tcp;
 	private readonly UDP udp;
-	private readonly int id;
+	public readonly int id;
 
 	private int gameId;
 
 	public bool active;
-	//private Player player;
+	private Player player;
 	//private Account account;
 
 	public Client(TcpClient _tcpClient, int _id)
 	{
+		active = true;
+
 		tcp = new(_tcpClient, this);
 		udp = new(_tcpClient.Client, this);
 		id = _id;
-
-		active = true;
 	}
 
 	public void SendTCP(byte[] msg)
@@ -49,7 +49,14 @@ public class Client
 		gameId = _gId;
 	}
 
+	public void SetPlayer(Player _player)
+	{
+		player = _player;
+	}
+
 	public int GetGameId() { return gameId; }
+
+	public Player GetPlayer() { return player; }
 
 	private class TCP
 	{
@@ -76,7 +83,7 @@ public class Client
 		{
 			try
 			{
-				int _readLength = await stream.ReadAsync(buffer, 0, buffer.Length, new (instance.active));
+				int _readLength = await stream.ReadAsync(buffer, 0, buffer.Length);
 
 				if (!instance.active) return;
 

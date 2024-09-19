@@ -2,12 +2,15 @@ using Godot;
 using System;
 
 using packets;
+using System.Collections.Generic;
 
 public partial class ClientManager : Node
 {
 	static Client client;
 
 	static ClientManager sceneTree;
+
+	static Dictionary<int, Player> players = new();
 
 	public static bool active = false;
 
@@ -35,6 +38,19 @@ public partial class ClientManager : Node
 			_inputVect.Y += 1;
 		if (Input.IsActionPressed("up"))
 			_inputVect.Y -= 1;
+	}
+
+	public static void MovePlayer(MovePacket _move)
+	{
+		if (!players.ContainsKey(_move.playerId))
+		{
+			CharacterBody2D _tempPlayer = (CharacterBody2D)ResourceLoader.Load<PackedScene>("res://Scenes/player.tscn").Instantiate().Duplicate();
+			sceneTree.GetNode<Node>("Players").AddChild(_tempPlayer);
+
+			players[_move.playerId] = _tempPlayer as Player;
+		}
+
+		players[_move.playerId].Position = new Vector2(_move.x, _move.y);
 	}
 
 	public static void Print(string message)

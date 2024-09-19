@@ -1,11 +1,9 @@
-[gd_scene load_steps=4 format=3 uid="uid://covs3s8f0furv"]
+[gd_scene load_steps=3 format=3 uid="uid://covs3s8f0furv"]
 
 [ext_resource type="Script" path="res://Scripts/Game/Game.cs" id="1_6w0mk"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_8ss8v"]
 size = Vector2(20, 600)
-
-[sub_resource type="CircleShape2D" id="CircleShape2D_qd2d7"]
 
 [node name="GameRoom" type="Node2D"]
 script = ExtResource("1_6w0mk")
@@ -16,8 +14,4 @@ script = ExtResource("1_6w0mk")
 position = Vector2(0, 300)
 shape = SubResource("RectangleShape2D_8ss8v")
 
-[node name="Player" type="CharacterBody2D" parent="."]
-position = Vector2(50, 500)
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Player"]
-shape = SubResource("CircleShape2D_qd2d7")
+[node name="Players" type="Node" parent="."]
