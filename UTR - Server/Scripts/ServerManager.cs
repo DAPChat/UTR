@@ -153,7 +153,13 @@ public partial class ServerManager : Node
 	{
 		playerCount--;
 
+		games[clients[_id].gameId].Destroy();
 		clients.Remove(_id);
+	}
+
+	public static void RemoveGame(int _gId)
+	{
+		games.Remove(_gId);
 	}
 
 	public static void SendUDP(byte[] _msg, IPEndPoint _refEnd)

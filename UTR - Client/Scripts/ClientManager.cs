@@ -49,10 +49,7 @@ public partial class ClientManager : Node
 		try
 		{
 			players[client.id].MoveAndSlide();
-		}catch (Exception)
-		{
-
-		}
+		}catch (Exception){ }
 	}
 
 	public static void MovePlayer(MovePacket _move)

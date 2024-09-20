@@ -62,6 +62,12 @@ namespace game
 			}
 		}
 
+		public void Destroy()
+		{
+			ServerManager.RemoveGame(gameId);
+			GetParent().QueueFree();
+		}
+
 		private void ReadQueue()
 		{
 			while (packetQueue.Count > 0)
