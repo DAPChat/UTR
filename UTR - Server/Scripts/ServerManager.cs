@@ -6,6 +6,7 @@ using System.Net.Sockets;
 using System.Threading.Tasks;
 
 using game;
+using System.Linq;
 
 public partial class ServerManager : Node
 {
@@ -114,6 +115,13 @@ public partial class ServerManager : Node
 
 	private static void AddToGame(int _pId)
 	{
+		if (games.Count > 0)
+		{
+			games.First().Value.createQ.Add(GetClient(_pId));
+			GetClient(_pId).gameId = games.First().Key;
+			return;
+		}
+
 		int _gameId = 0;
 		Client _tempClient = clients[_pId];
 

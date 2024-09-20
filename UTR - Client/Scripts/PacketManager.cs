@@ -26,7 +26,7 @@ public static class PacketManager
 	public static Packet CreatePacket(byte[] buff)
 	{
 		Buffer _tempBuff = new(buff);
-
+		
 		return packetL[_tempBuff.ReadInt()](_tempBuff);
 	}
 }

@@ -16,6 +16,10 @@ public partial class ClientManager : Node
 
 	public static int curId;
 
+	public static List<Packet> packetQ = new();
+
+	private static bool readingQueue = false;
+
 	public override void _Ready()
 	{
 		base._Ready();
@@ -29,6 +33,12 @@ public partial class ClientManager : Node
 	public override void _Process(double delta)
 	{
 		base._Process(delta);
+
+		if (packetQ.Count != 0 && !readingQueue)
+		{
+			readingQueue = true;
+			ReadQueue();
+		}
 
 		if (!active) return;
 
@@ -45,11 +55,25 @@ public partial class ClientManager : Node
 
 		client.udp.Send(new InputPacket(client.id, _inputVect).Serialize());
 
-		players[client.id].Velocity = ((Vector2)_inputVect).Normalized() * (float)delta * 1000;
+		players[client.id].Velocity = ((Vector2)_inputVect).Normalized() * (float)delta * 10000;
 		try
 		{
 			players[client.id].MoveAndSlide();
 		}catch (Exception){ }
+	}
+
+	private static void ReadQueue()
+	{
+		while (packetQ.Count != 0)
+		{
+			if (packetQ[0] != null)
+			{
+				packetQ[0].Run();
+				packetQ.RemoveAt(0);
+			}
+			else packetQ.RemoveAt(0);
+		}
+		readingQueue = false;
 	}
 
 	public static void MovePlayer(MovePacket _move)
@@ -57,7 +81,7 @@ public partial class ClientManager : Node
 		if (!players.ContainsKey(_move.playerId))
 		{
 			CharacterBody2D _tempPlayer = (CharacterBody2D)ResourceLoader.Load<PackedScene>("res://Scenes/player.tscn").Instantiate().Duplicate();
-			sceneTree.GetNode<Node>("Players").CallDeferred(Node.MethodName.AddChild, _tempPlayer);
+			sceneTree.GetNode<Node>("Players").AddChild(_tempPlayer);
 
 			players[_move.playerId] = _tempPlayer as Player;
 

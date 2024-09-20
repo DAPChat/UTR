@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using Godot;
 using packets;
 
@@ -12,14 +14,16 @@ namespace game
 		private List<Client> clients = new();
 		private List<Packet> packetQueue = new();
 
+		public List<Client> createQ = new();
+
 		private bool readingQueue = false;
+		private bool createQC = false;
 
 		public void Instantiate(int _gameId, Client[] _clients)
 		{
 			gameId = _gameId;
-			clients.AddRange(_clients);
 
-			foreach (Client _c in clients)
+			foreach (Client _c in _clients)
 			{
 				CreateClient(_c);
 			}
@@ -27,12 +31,14 @@ namespace game
 			dun = new(10);
 		}
 
-		private void CreateClient(Client _c)
+		public void CreateClient(Client _c)
 		{
 			CharacterBody2D _tempPlayer = (CharacterBody2D)ResourceLoader.Load<PackedScene>("res://Scenes/player.tscn").Instantiate().Duplicate();
 			GetNode<Node>("Players").AddChild(_tempPlayer);
-			_tempPlayer.Position = new(50, 500);
+			_tempPlayer.Position = new (50, 500);
 			_c.player = _tempPlayer as Player;
+
+			clients.Add(_c);
 
 			SendAll(new MovePacket(_c.id, _tempPlayer.Position.X, _tempPlayer.Position.Y).Serialize());
 		}
@@ -40,10 +46,7 @@ namespace game
 		public void Move(InputPacket _pa)
 		{
 			Player _p = ServerManager.GetClient(_pa.playerId).player;
-			_p.Velocity = ((Vector2)_pa.inVect).Normalized() * (float)GetPhysicsProcessDeltaTime() * 1000;
-			_p.MoveAndSlide();
-
-			SendAll(new MovePacket(_pa.playerId, _p.Position.X, _p.Position.Y).Serialize());
+			_p.Velocity = ((Vector2)_pa.inVect).Normalized() * (float)GetPhysicsProcessDeltaTime() * 10000;
 		}
 
 		public void AddToQueue(Packet _packet)
@@ -60,6 +63,24 @@ namespace game
 				readingQueue = true;
 				ReadQueue();
 			}
+
+			if (createQ.Count > 0 && !createQC)
+			{
+				createQC = true;
+				CreateQueue();
+			}
+
+			foreach (Client _c in clients)
+			{
+				Player _p = _c.player;
+				try
+				{
+					_p.MoveAndSlide();
+				}
+				catch (Exception) { }
+				
+				SendAll(new MovePacket(_c.id, _p.Position.X, _p.Position.Y).Serialize());
+			}
 		}
 
 		public void Destroy()
@@ -68,17 +89,31 @@ namespace game
 			GetParent().QueueFree();
 		}
 
+		private void CreateQueue()
+		{
+			while (createQ.Count != 0)
+			{
+				if (createQ[0] != null)
+				{
+					CreateClient(createQ[0]);
+					createQ.RemoveAt(0);
+				}
+				else createQ.RemoveAt(0);
+			}
+
+			createQC = false;
+		}
+
 		private void ReadQueue()
 		{
 			while (packetQueue.Count > 0)
 			{
-				if (packetQueue[0] == null)
+				if (packetQueue[0] != null)
 				{
+					packetQueue[0].Run(gameId);
 					packetQueue.RemoveAt(0);
-					continue;
 				}
-				packetQueue[0].Run(gameId);
-				packetQueue.RemoveAt(0);
+				else packetQueue.RemoveAt(0);
 			}
 			readingQueue = false;
 		}
