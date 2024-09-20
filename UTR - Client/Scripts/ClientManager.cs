@@ -45,7 +45,7 @@ public partial class ClientManager : Node
 
 		client.udp.Send(new InputPacket(client.id, _inputVect).Serialize());
 
-		players[client.id].Velocity = ((Vector2)_inputVect).Normalized()*100;
+		players[client.id].Velocity = ((Vector2)_inputVect).Normalized() * (float)delta * 1000;
 		try
 		{
 			players[client.id].MoveAndSlide();
