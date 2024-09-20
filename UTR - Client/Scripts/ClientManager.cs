@@ -14,9 +14,13 @@ public partial class ClientManager : Node
 
 	public static bool active = false;
 
+	public static int curId;
+
 	public override void _Ready()
 	{
 		base._Ready();
+
+		curId = GD.RandRange(1,999);
 
 		client = new();
 		sceneTree = this;
@@ -45,7 +49,7 @@ public partial class ClientManager : Node
 		if (!players.ContainsKey(_move.playerId))
 		{
 			CharacterBody2D _tempPlayer = (CharacterBody2D)ResourceLoader.Load<PackedScene>("res://Scenes/player.tscn").Instantiate().Duplicate();
-			sceneTree.GetNode<Node>("Players").AddChild(_tempPlayer);
+			sceneTree.GetNode<Node>("Players").CallDeferred(Node.MethodName.AddChild, _tempPlayer);
 
 			players[_move.playerId] = _tempPlayer as Player;
 		}

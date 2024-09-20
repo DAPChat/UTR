@@ -20,9 +20,10 @@ public class Client
 	{
 		active = true;
 
+		id = _id;
+
 		tcp = new(_tcpClient, this);
 		udp = new(this);
-		id = _id;
 	}
 
 	public void Disconnect()

@@ -97,7 +97,7 @@ public class Client
 
 				PacketManager.CreatePacket(buffer).Run();
 			}
-			catch (Exception e)
+			catch (Exception)
 			{
 				//ClientManager.Print(e.ToString());
 				instance.Disconnect();
@@ -148,8 +148,6 @@ public class Client
 				uint SIO_UDP_CONNRESET = IOC_IN | IOC_VENDOR | 12;
 				udpClient.Client.IOControl((int)SIO_UDP_CONNRESET, [Convert.ToByte(false)], null);
 
-				ClientManager.Print(udpClient.Client.LocalEndPoint.ToString());
-
 				udpClient.Connect(end);
 			}
 			catch (Exception e)
@@ -158,8 +156,6 @@ public class Client
 				return;
 			}
 
-			ClientManager.Print("waiting");
-
 			udpClient.BeginReceive(ReceiveCallback, null);
 		}
 
@@ -167,13 +163,10 @@ public class Client
 		{
 			try
 			{
-				ClientManager.Print("This");
 				if (!instance.active) return;
 
 				byte[] data = udpClient.EndReceive(result, ref end);
 				udpClient.BeginReceive(ReceiveCallback, null);
-
-				ClientManager.Print("That");
 
 				PacketManager.CreatePacket(data).Run();
 			}catch (Exception e)

@@ -98,7 +98,7 @@ public partial class ServerManager : Node
 	{
 		int _id = 0;
 
-		while (clients.Keys.Contains(_id))
+		while (clients.ContainsKey(_id))
 			_id++;
 
 		Client _tempClient = new(_client, _id);
@@ -153,8 +153,6 @@ public partial class ServerManager : Node
 
 	public static void SendUDP(byte[] _msg, IPEndPoint _refEnd)
 	{
-		Print("this");
-		Print(_refEnd.ToString());
 		udpClient.BeginSend(_msg, _msg.Length, _refEnd, null, null);
 	}
 
