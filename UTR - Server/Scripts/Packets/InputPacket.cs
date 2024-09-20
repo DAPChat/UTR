@@ -24,11 +24,7 @@ namespace packets
 
 		public override void Run(int _gId)
 		{
-			Player _p = ServerManager.GetClient(playerId).player;
-			_p.Velocity = inVect * 100;
-			_p.MoveAndSlide();
-
-			ServerManager.GetGame(_gId).SendAll(new MovePacket(playerId, _p.Position.X, _p.Position.Y).Serialize());
+			ServerManager.GetGame(_gId).Move(this);
 		}
 
 		public override byte[] Serialize()
@@ -37,7 +33,7 @@ namespace packets
 			{
 				using (BinaryWriter writer = new(m))
 				{
-					writer.Write(1);
+					writer.Write(2);
 					writer.Write(playerId);
 					writer.Write(inVect.X);
 					writer.Write(inVect.Y);

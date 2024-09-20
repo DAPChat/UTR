@@ -37,6 +37,15 @@ namespace game
 			SendAll(new MovePacket(_c.id, _tempPlayer.Position.X, _tempPlayer.Position.Y).Serialize());
 		}
 
+		public void Move(InputPacket _pa)
+		{
+			Player _p = ServerManager.GetClient(_pa.playerId).player;
+			_p.Velocity = ((Vector2)_pa.inVect).Normalized() * 100;
+			_p.MoveAndSlide();
+
+			SendAll(new MovePacket(_pa.playerId, _p.Position.X, _p.Position.Y).Serialize());
+		}
+
 		public void AddToQueue(Packet _packet)
 		{
 			packetQueue.Add(_packet);
@@ -57,6 +66,11 @@ namespace game
 		{
 			while (packetQueue.Count > 0)
 			{
+				if (packetQueue[0] == null)
+				{
+					packetQueue.RemoveAt(0);
+					continue;
+				}
 				packetQueue[0].Run(gameId);
 				packetQueue.RemoveAt(0);
 			}

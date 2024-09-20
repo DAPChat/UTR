@@ -26,9 +26,9 @@ public partial class ClientManager : Node
 		sceneTree = this;
 	}
 
-	public override void _PhysicsProcess(double delta)
+	public override void _Process(double delta)
 	{
-		base._PhysicsProcess(delta);
+		base._Process(delta);
 
 		if (!active) return;
 
@@ -44,6 +44,15 @@ public partial class ClientManager : Node
 			_inputVect.Y -= 1;
 
 		client.udp.Send(new InputPacket(client.id, _inputVect).Serialize());
+
+		players[client.id].Velocity = ((Vector2)_inputVect).Normalized()*100;
+		try
+		{
+			players[client.id].MoveAndSlide();
+		}catch (Exception)
+		{
+
+		}
 	}
 
 	public static void MovePlayer(MovePacket _move)
@@ -54,9 +63,11 @@ public partial class ClientManager : Node
 			sceneTree.GetNode<Node>("Players").CallDeferred(Node.MethodName.AddChild, _tempPlayer);
 
 			players[_move.playerId] = _tempPlayer as Player;
+
+			if (_move.playerId == client.id) active = true;
 		}
 
-		players[_move.playerId].Position = new Vector2(_move.x, _move.y);
+		players[_move.playerId].SetDeferred(Node2D.PropertyName.Position, new Vector2(_move.x, _move.y));
 	}
 
 	public static void Print(string message)
@@ -67,7 +78,6 @@ public partial class ClientManager : Node
 	public static void SetClient(Packet _packet)
 	{
 		client.id = _packet.playerId;
-		active = true;
 
 		client.udp.Send(_packet.Serialize());
 	}
