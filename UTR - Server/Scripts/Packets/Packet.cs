@@ -6,6 +6,8 @@ namespace packets
 	{
 		public int playerId;
 
+		public int gameId;
+
 		public Packet(Buffer _buff)
 		{
 			Deserialize(_buff);
@@ -34,6 +36,7 @@ namespace packets
 		public virtual void Deserialize(Buffer buff)
 		{
 			playerId = buff.ReadInt();
+			gameId = buff.ReadInt();
 		}
 	}
 }

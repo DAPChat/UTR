@@ -5,6 +5,7 @@ namespace packets
 	public class Packet
 	{
 		public int playerId;
+		public int gameId;
 
 		public Packet(Buffer _buff)
 		{
@@ -29,6 +30,7 @@ namespace packets
 				{
 					writer.Write(0);
 					writer.Write(playerId);
+					writer.Write(gameId);
 				}
 				return m.ToArray();
 			}
@@ -37,6 +39,7 @@ namespace packets
 		public virtual void Deserialize(Buffer buff)
 		{
 			playerId = buff.ReadInt();
+			gameId = buff.ReadInt();
 		}
 	}
 }

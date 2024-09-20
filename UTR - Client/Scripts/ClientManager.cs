@@ -13,9 +13,7 @@ public partial class ClientManager : Node
 	static Dictionary<int, Player> players = new();
 
 	public static bool active = false;
-
 	public static int curId;
-
 	public static List<Packet> packetQ = new();
 
 	private static bool readingQueue = false;
@@ -100,6 +98,8 @@ public partial class ClientManager : Node
 	public static void SetClient(Packet _packet)
 	{
 		client.id = _packet.playerId;
+
+		_packet.gameId = TitleScene.reqId;
 
 		client.udp.Send(_packet.Serialize());
 	}

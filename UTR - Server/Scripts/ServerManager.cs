@@ -62,7 +62,7 @@ public partial class ServerManager : Node
 			if (clients[_p.playerId].udp.end == null)
 			{
 				clients[_p.playerId].udp.Connect(_clientEnd);
-				AddToGame(_p.playerId);
+				AddToGame(_p);
 				return;
 			}
 
@@ -113,12 +113,14 @@ public partial class ServerManager : Node
 		return clients[_cId];
 	}
 
-	private static void AddToGame(int _pId)
+	private static void AddToGame(packets.Packet _packet)
 	{
-		if (games.Count > 0)
+		int _pId = _packet.playerId;
+
+		if (_packet.gameId != -1 && games.ContainsKey(_packet.gameId))
 		{
-			games.First().Value.createQ.Add(GetClient(_pId));
-			GetClient(_pId).gameId = games.First().Key;
+			games[_packet.gameId].createQ.Add(GetClient(_pId));
+			GetClient(_pId).gameId = _packet.gameId;
 			return;
 		}
 
@@ -134,7 +136,7 @@ public partial class ServerManager : Node
 		Window win = new();
 
 		curScene.CallDeferred(Node.MethodName.AddChild, win);
-		win.Name = _gameId.ToString();
+		//win.SetDeferred(win.Name, _gameId.ToString());
 		win.Show();
 		Game _tempGame = _tempGameScene as Game;
 
@@ -161,7 +163,7 @@ public partial class ServerManager : Node
 	{
 		playerCount--;
 
-		games[clients[_id].gameId].Destroy();
+		games[clients[_id].gameId].Destroy(_id);
 		clients.Remove(_id);
 	}
 

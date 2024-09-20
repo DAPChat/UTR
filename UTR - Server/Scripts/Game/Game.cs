@@ -11,7 +11,7 @@ namespace game
 		private int gameId;
 
 		private Dungeon dun;
-		private List<Client> clients = new();
+		private Dictionary<int, Client> clients = new();
 		private List<Packet> packetQueue = new();
 
 		public List<Client> createQ = new();
@@ -38,7 +38,7 @@ namespace game
 			_tempPlayer.Position = new (50, 500);
 			_c.player = _tempPlayer as Player;
 
-			clients.Add(_c);
+			clients.Add(_c.id, _c);
 
 			SendAll(new MovePacket(_c.id, _tempPlayer.Position.X, _tempPlayer.Position.Y).Serialize());
 		}
@@ -70,7 +70,7 @@ namespace game
 				CreateQueue();
 			}
 
-			foreach (Client _c in clients)
+			foreach (Client _c in clients.Values)
 			{
 				Player _p = _c.player;
 				try
@@ -83,8 +83,12 @@ namespace game
 			}
 		}
 
-		public void Destroy()
+		public void Destroy(int _cId)
 		{
+			clients.Remove(_cId);
+
+			if (clients.Count != 0) return;
+
 			ServerManager.RemoveGame(gameId);
 			GetParent().QueueFree();
 		}
@@ -120,7 +124,7 @@ namespace game
 
 		public void SendAll(byte[] _msg)
 		{
-			foreach (Client _client in clients)
+			foreach (Client _client in clients.Values)
 			{
 				_client.udp.Send(_msg);
 			}
