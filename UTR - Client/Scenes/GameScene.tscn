@@ -21,6 +21,8 @@ position = Vector2(0, 300)
 texture = SubResource("GradientTexture2D_6hyup")
 
 [node name="StaticBody2D" type="StaticBody2D" parent="Sprite2D"]
+collision_layer = 2
+collision_mask = 7
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Sprite2D/StaticBody2D"]
 shape = SubResource("RectangleShape2D_526m5")

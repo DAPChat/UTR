@@ -59,7 +59,8 @@ public partial class ClientManager : Node
 		try
 		{
 			players[client.id].MoveAndSlide();
-		}catch (Exception){ }
+		}
+		catch (Exception){ }
 	}
 
 	private static void ReadQueue()

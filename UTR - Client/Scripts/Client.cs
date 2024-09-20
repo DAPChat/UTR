@@ -17,7 +17,7 @@ public class Client
 	//private Player player;
 	//private Account account;
 
-	public IPEndPoint end = new(IPAddress.Parse("127.1.1.0"), 6666);
+	public IPEndPoint end = new(IPAddress.Parse("10.72.101.156"), 6666);
 
 	public Client()
 	{
@@ -95,7 +95,7 @@ public class Client
 					sb.Append(Encoding.ASCII.GetString(buffer, 0, _readLength));
 				}
 
-				PacketManager.CreatePacket(buffer).Run();
+				ClientManager.packetQ.Add(PacketManager.CreatePacket(buffer));
 			}
 			catch (Exception)
 			{
