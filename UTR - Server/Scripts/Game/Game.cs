@@ -57,7 +57,8 @@ namespace game
 		{
 			while (packetQueue.Count > 0)
 			{
-
+				packetQueue[0].Run(gameId);
+				packetQueue.RemoveAt(0);
 			}
 			readingQueue = false;
 		}

@@ -38,7 +38,7 @@ namespace packets
 
 		public override void Run(int _gId)
 		{
-			throw new System.NotImplementedException();
+			return;
 		}
 	}
 }

@@ -42,6 +42,8 @@ public partial class ClientManager : Node
 			_inputVect.Y += 1;
 		if (Input.IsActionPressed("up"))
 			_inputVect.Y -= 1;
+
+		client.udp.Send(new InputPacket(client.id, _inputVect).Serialize());
 	}
 
 	public static void MovePlayer(MovePacket _move)

@@ -24,7 +24,11 @@ namespace packets
 
 		public override void Run(int _gId)
 		{
-			throw new System.NotImplementedException();
+			Player _p = ServerManager.GetClient(playerId).player;
+			_p.Velocity = inVect * 100;
+			_p.MoveAndSlide();
+
+			ServerManager.GetGame(_gId).SendAll(new MovePacket(playerId, _p.Position.X, _p.Position.Y).Serialize());
 		}
 
 		public override byte[] Serialize()

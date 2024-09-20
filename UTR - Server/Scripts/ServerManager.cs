@@ -52,7 +52,7 @@ public partial class ServerManager : Node
 	{
 		try
 		{
-			IPEndPoint _clientEnd = new IPEndPoint(IPAddress.Any, 0);
+			IPEndPoint _clientEnd = new(IPAddress.Any, 0);
 			byte[] data = udpClient.EndReceive(result, ref _clientEnd);
 			udpClient.BeginReceive(ReceiveCallback, null);
 
@@ -65,7 +65,7 @@ public partial class ServerManager : Node
 				return;
 			}
 
-			_p.Run(clients[_p.playerId].gameId);
+			games[clients[_p.playerId].gameId].AddToQueue(_p);
 		}
 		catch (Exception e)
 		{
@@ -105,6 +105,11 @@ public partial class ServerManager : Node
 		clients.Add(_id, _tempClient);
 
 		playerCount++;
+	}
+
+	public static Client GetClient(int _cId)
+	{
+		return clients[_cId];
 	}
 
 	private static void AddToGame(int _pId)
