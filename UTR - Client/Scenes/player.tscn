@@ -42,7 +42,7 @@ animations = [{
 }],
 "loop": true,
 "name": &"run_accel",
-"speed": 5.0
+"speed": 2.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -59,7 +59,7 @@ animations = [{
 }],
 "loop": true,
 "name": &"run_max",
-"speed": 5.0
+"speed": 8.0
 }]
 
 [node name="Player" type="CharacterBody2D"]
@@ -76,3 +76,4 @@ shape = SubResource("CapsuleShape2D_5fpqd")
 [node name="PlayerView" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_mo3nh")
 animation = &"run_accel"
+frame_progress = 0.805626

@@ -42,14 +42,34 @@ public partial class ClientManager : Node
 
 		Vector2I _inputVect = Vector2I.Zero;
 
-		if (Input.IsActionPressed("left"))
-			_inputVect.X -= 1;
-		if (Input.IsActionPressed("right"))
-			_inputVect.X += 1;
+		AnimatedSprite2D _sprite = players[client.id].GetNode<AnimatedSprite2D>("PlayerView");
+
+		if (!_sprite.IsPlaying()) _sprite.Play("run_accel");
+
 		if (Input.IsActionPressed("down"))
 			_inputVect.Y += 1;
 		if (Input.IsActionPressed("up"))
 			_inputVect.Y -= 1;
+		if (Input.IsActionPressed("left"))
+		{
+			_inputVect.X -= 1;
+			_sprite.FlipH = false;
+		}
+		if (Input.IsActionPressed("right"))
+		{
+			_inputVect.X += 1;
+			_sprite.FlipH = true;
+		}
+
+		if (_inputVect == Vector2I.Zero)
+		{
+			if (_sprite.Animation != "run_accel")
+				_sprite.Play("run_accel");
+		}
+		else
+		{
+			_sprite.Play("run_max");
+		}
 
 		client.udp.Send(new InputPacket(client.id, _inputVect).Serialize());
 
