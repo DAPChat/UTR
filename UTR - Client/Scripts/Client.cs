@@ -168,8 +168,9 @@ public class Client
 				byte[] data = udpClient.EndReceive(result, ref end);
 				udpClient.BeginReceive(ReceiveCallback, null);
 
-				PacketManager.CreatePacket(data).Run();
-			}catch (Exception e)
+				ClientManager.packetQ.Add(PacketManager.CreatePacket(data));
+			}
+			catch (Exception e)
 			{
 				ClientManager.Print(e.ToString());
 			}
