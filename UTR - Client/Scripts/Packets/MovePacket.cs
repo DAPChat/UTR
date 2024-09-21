@@ -22,6 +22,7 @@ namespace packets
 				{
 					writer.Write(1);
 					writer.Write(playerId);
+					writer.Write(data);
 					writer.Write(x);
 					writer.Write(y);
 				}
@@ -31,7 +32,7 @@ namespace packets
 
 		public override void Deserialize(Buffer buff)
 		{
-			playerId = buff.ReadInt();
+			base.Deserialize(buff);
 			x = buff.ReadFloat();
 			y = buff.ReadFloat();
 		}

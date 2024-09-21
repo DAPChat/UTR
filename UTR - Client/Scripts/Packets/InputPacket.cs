@@ -17,7 +17,7 @@ namespace packets
 		{
 			inVect = new();
 
-			playerId = buff.ReadInt();
+			base.Deserialize(buff);
 			inVect.X = buff.ReadInt();
 			inVect.Y = buff.ReadInt();
 		}
@@ -35,6 +35,7 @@ namespace packets
 				{
 					writer.Write(2);
 					writer.Write(playerId);
+					writer.Write(data);
 					writer.Write(inVect.X);
 					writer.Write(inVect.Y);
 				}

@@ -8,7 +8,7 @@ namespace packets
 		public Vector2I inVect;
 
 		public InputPacket(Buffer _buff) : base(_buff) { }
-		public InputPacket(int id, Vector2I _inVect) : base(id) 
+		public InputPacket(int id, Vector2I _inVect, int _data = -1) : base(id, _data) 
 		{
 			inVect = _inVect;
 		}
@@ -17,7 +17,7 @@ namespace packets
 		{
 			inVect = new();
 
-			playerId = buff.ReadInt();
+			base.Deserialize(buff);
 			inVect.X = buff.ReadInt();
 			inVect.Y = buff.ReadInt();
 		}
@@ -35,6 +35,7 @@ namespace packets
 				{
 					writer.Write(2);
 					writer.Write(playerId);
+					writer.Write(data);
 					writer.Write(inVect.X);
 					writer.Write(inVect.Y);
 				}

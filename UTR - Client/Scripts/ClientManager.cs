@@ -61,12 +61,12 @@ public partial class ClientManager : Node
 			_sprite.FlipH = true;
 		}
 
-		if (_inputVect == Vector2I.Zero)
+		if (_inputVect == Vector2I.Zero || !_sprite.IsPlaying())
 		{
-			if (_sprite.Animation != "run_accel")
+			if (_sprite.Animation != "run_accel" || !_sprite.IsPlaying())
 				_sprite.Play("run_accel");
 		}
-		else
+		else if (_sprite.Animation != "run_max")
 		{
 			_sprite.Play("run_max");
 		}
@@ -107,6 +107,29 @@ public partial class ClientManager : Node
 			if (_move.playerId == client.id) active = true;
 		}
 
+		AnimatedSprite2D _pAnim = players[_move.playerId].GetNode<AnimatedSprite2D>("PlayerView");
+
+		if (_move.data == 1 && _move.playerId != client.id)
+		{
+			float _pLocX = players[_move.playerId].Position.X;
+			float _nLocX = _move.x;
+
+			if (_pLocX != _nLocX)
+			{
+				if (_pLocX < _nLocX)
+					_pAnim.FlipH = true;
+				else if (_pLocX > _nLocX)
+					_pAnim.FlipH = false;
+			}
+
+			if (_pAnim.Animation != "run_max")
+				_pAnim.Play("run_max");
+		}
+		else if ((_pAnim.Animation != "run_accel" || !_pAnim.IsPlaying()) && _move.playerId != client.id)
+		{
+			_pAnim.Play("run_accel");
+		}
+
 		players[_move.playerId].SetDeferred(Node2D.PropertyName.Position, new Vector2(_move.x, _move.y));
 	}
 
@@ -119,7 +142,7 @@ public partial class ClientManager : Node
 	{
 		client.id = _packet.playerId;
 
-		_packet.gameId = TitleScene.reqId;
+		_packet.data = TitleScene.reqId;
 
 		client.udp.Send(_packet.Serialize());
 	}

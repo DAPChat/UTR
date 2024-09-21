@@ -8,7 +8,7 @@ namespace packets
 
 		public MovePacket(Buffer _buff) : base(_buff) { }
 
-		public MovePacket(int _id, float _x, float _y) : base(_id)
+		public MovePacket(int _id, float _x, float _y, int _data = -1) : base(_id, _data)
 		{
 			x = _x;
 			y = _y;
@@ -22,6 +22,7 @@ namespace packets
 				{
 					writer.Write(1);
 					writer.Write(playerId);
+					writer.Write(data);
 					writer.Write(x);
 					writer.Write(y);
 				}
@@ -31,7 +32,7 @@ namespace packets
 
 		public override void Deserialize(Buffer buff)
 		{
-			playerId = buff.ReadInt();
+			base.Deserialize(buff);
 			x = buff.ReadFloat();
 			y = buff.ReadFloat();
 		}

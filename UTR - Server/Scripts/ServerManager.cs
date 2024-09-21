@@ -117,10 +117,10 @@ public partial class ServerManager : Node
 	{
 		int _pId = _packet.playerId;
 
-		if (_packet.gameId != -1 && games.ContainsKey(_packet.gameId))
+		if (_packet.data != -1 && games.ContainsKey(_packet.data))
 		{
-			games[_packet.gameId].createQ.Add(GetClient(_pId));
-			GetClient(_pId).gameId = _packet.gameId;
+			games[_packet.data].createQ.Add(GetClient(_pId));
+			GetClient(_pId).gameId = _packet.data;
 			return;
 		}
 

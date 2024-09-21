@@ -40,7 +40,7 @@ namespace game
 
 			clients.Add(_c.id, _c);
 
-			SendAll(new MovePacket(_c.id, _tempPlayer.Position.X, _tempPlayer.Position.Y).Serialize());
+			SendAll(new MovePacket(_c.id, _tempPlayer.Position.X, _tempPlayer.Position.Y, 1).Serialize());
 		}
 
 		public void Move(InputPacket _pa)
@@ -73,13 +73,15 @@ namespace game
 			foreach (Client _c in clients.Values)
 			{
 				Player _p = _c.player;
+
+				Vector2 _prev = _p.Position;
 				try
 				{
 					_p.MoveAndSlide();
 				}
 				catch (Exception) { }
 				
-				SendAll(new MovePacket(_c.id, _p.Position.X, _p.Position.Y).Serialize());
+				SendAll(new MovePacket(_c.id, _p.Position.X, _p.Position.Y, _prev != _p.Position ? 1 : -1).Serialize());
 			}
 		}
 

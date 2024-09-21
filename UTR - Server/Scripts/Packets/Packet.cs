@@ -6,16 +6,17 @@ namespace packets
 	{
 		public int playerId;
 
-		public int gameId;
+		public int data;
 
 		public Packet(Buffer _buff)
 		{
 			Deserialize(_buff);
 		}
 
-		public Packet(int _id)
+		public Packet(int _id, int _data = -1)
 		{
 			playerId = _id;
+			data = _data;
 		}
 
 		public virtual void Run(int _gId) { }
@@ -28,6 +29,7 @@ namespace packets
 				{
 					writer.Write(0);
 					writer.Write(playerId);
+					writer.Write(data);
 				}
 				return m.ToArray();
 			}
@@ -36,7 +38,7 @@ namespace packets
 		public virtual void Deserialize(Buffer buff)
 		{
 			playerId = buff.ReadInt();
-			gameId = buff.ReadInt();
+			data = buff.ReadInt();
 		}
 	}
 }
