@@ -17,7 +17,9 @@ public class Client
 	//private Player player;
 	//private Account account;
 
-	public IPEndPoint end = new(IPAddress.Parse("10.72.101.156"), 6666);
+	//10.72.101.156
+
+	public IPEndPoint end = new(IPAddress.Parse("10.72.99.138"), 6666);
 
 	public Client()
 	{
