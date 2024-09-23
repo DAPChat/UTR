@@ -27,4 +27,5 @@ collision_mask = 7
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Sprite2D/StaticBody2D"]
 shape = SubResource("RectangleShape2D_526m5")
 
-[node name="Players" type="Node" parent="."]
+[node name="Players" type="Node2D" parent="."]
+y_sort_enabled = true

@@ -76,6 +76,7 @@ script = ExtResource("1_1v8xi")
 shape = SubResource("CapsuleShape2D_5fpqd")
 
 [node name="PlayerView" type="AnimatedSprite2D" parent="."]
+y_sort_enabled = true
 sprite_frames = SubResource("SpriteFrames_mo3nh")
 animation = &"run_accel"
 frame_progress = 0.805626

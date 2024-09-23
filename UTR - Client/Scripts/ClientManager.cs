@@ -100,7 +100,7 @@ public partial class ClientManager : Node
 		if (!players.ContainsKey(_move.playerId))
 		{
 			CharacterBody2D _tempPlayer = (CharacterBody2D)ResourceLoader.Load<PackedScene>("res://Scenes/player.tscn").Instantiate().Duplicate();
-			sceneTree.GetNode<Node>("Players").AddChild(_tempPlayer);
+			sceneTree.GetNode<Node2D>("Players").AddChild(_tempPlayer);
 
 			players[_move.playerId] = _tempPlayer as Player;
 
