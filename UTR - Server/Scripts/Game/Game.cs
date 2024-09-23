@@ -46,7 +46,7 @@ namespace game
 		public void Move(InputPacket _pa)
 		{
 			Player _p = ServerManager.GetClient(_pa.playerId).player;
-			_p.Velocity = ((Vector2)_pa.inVect).Normalized() * (float)GetPhysicsProcessDeltaTime() * 10000;
+			_p.Velocity = ((Vector2)_pa.inVect).Normalized() * (float)GetPhysicsProcessDeltaTime() * 50000;
 		}
 
 		public void AddToQueue(Packet _packet)
