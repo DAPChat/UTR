@@ -34,6 +34,8 @@ public class Client
 		active = false;
 		ClientManager.active = false;
 
+		ClientManager.Print("Disconnected");
+
 		tcp.Disconnect();
 		udp.Disconnect();
 	}
@@ -98,6 +100,8 @@ public class Client
 				}
 
 				ClientManager.packetQ.Add(PacketManager.CreatePacket(buffer));
+
+				ReadStreamAsync();
 			}
 			catch (Exception)
 			{

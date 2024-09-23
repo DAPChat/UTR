@@ -81,6 +81,8 @@ public class Client
 				}
 
 				PacketManager.CreatePacket(buffer).Run(instance.gameId);
+
+				ReadStreamAsync();
 			}
 			catch (Exception)
 			{
