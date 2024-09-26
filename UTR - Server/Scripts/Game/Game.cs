@@ -49,7 +49,7 @@ namespace game
 
 			float _acceleration = -1;
 
-			_p.Velocity = _p.Velocity.MoveToward(((Vector2)_pa.inVect).Normalized() * 300, 3500 * (float)GetPhysicsProcessDeltaTime());
+			_p.Velocity = _p.Velocity.MoveToward(((Vector2)_pa.inVect).Normalized() * 100, 1500 * (float)GetPhysicsProcessDeltaTime());
 		}
 
 		public void AddToQueue(Packet _packet)

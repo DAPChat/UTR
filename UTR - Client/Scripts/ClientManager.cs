@@ -18,11 +18,16 @@ public partial class ClientManager : Node
 
 	private static bool readingQueue = false;
 
+	private static Camera2D camera;
+
 	public override void _Ready()
 	{
 		base._Ready();
 
 		curId = GD.RandRange(1,999);
+
+		camera = new();
+		camera.Zoom = new(7, 7);
 
 		client = new();
 		sceneTree = this;
@@ -73,7 +78,7 @@ public partial class ClientManager : Node
 
 		client.udp.Send(new InputPacket(client.id, _inputVect).Serialize());
 
-		players[client.id].Velocity = players[client.id].Velocity.MoveToward(((Vector2)_inputVect).Normalized() * 300, 3500 * (float)delta);
+		players[client.id].Velocity = players[client.id].Velocity.MoveToward(((Vector2)_inputVect).Normalized() * 100, 1500 * (float)delta);
 		try
 		{
 			players[client.id].MoveAndSlide();
@@ -104,7 +109,11 @@ public partial class ClientManager : Node
 
 			players[_move.playerId] = _tempPlayer as Player;
 
-			if (_move.playerId == client.id) active = true;
+			if (_move.playerId == client.id)
+			{
+				active = true;
+				_tempPlayer.AddChild(camera);
+			}
 		}
 
 		AnimatedSprite2D _pAnim = players[_move.playerId].GetNode<AnimatedSprite2D>("PlayerView");
