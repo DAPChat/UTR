@@ -1,7 +1,8 @@
-[gd_scene load_steps=11 format=3 uid="uid://cf41briyf5dnu"]
+[gd_scene load_steps=12 format=3 uid="uid://cf41briyf5dnu"]
 
 [ext_resource type="Script" path="res://Scripts/Player.cs" id="1_1v8xi"]
 [ext_resource type="Texture2D" uid="uid://dveahimyvgi62" path="res://Assets/smolryo_spritesheet_orgres.png" id="1_ej3ew"]
+[ext_resource type="Texture2D" uid="uid://dfdj00crbnasl" path="res://Assets/pixil-frame-0 (15).png" id="3_pcc2n"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_5fpqd"]
 radius = 4.0
@@ -15,21 +16,21 @@ region = Rect2(0, 0, 9, 13)
 atlas = ExtResource("1_ej3ew")
 region = Rect2(0, 12, 9, 13)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_is74w"]
-atlas = ExtResource("1_ej3ew")
-region = Rect2(8, 0, 9, 13)
+[sub_resource type="AtlasTexture" id="AtlasTexture_ukak6"]
+atlas = ExtResource("3_pcc2n")
+region = Rect2(0, 0, 11, 13)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_500kh"]
-atlas = ExtResource("1_ej3ew")
-region = Rect2(17, 12, 9, 13)
+[sub_resource type="AtlasTexture" id="AtlasTexture_jfjf2"]
+atlas = ExtResource("3_pcc2n")
+region = Rect2(33, 0, 11, 13)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_vedlx"]
-atlas = ExtResource("1_ej3ew")
-region = Rect2(17, 0, 9, 13)
+[sub_resource type="AtlasTexture" id="AtlasTexture_vdi7v"]
+atlas = ExtResource("3_pcc2n")
+region = Rect2(11, 0, 11, 13)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_wb7ka"]
-atlas = ExtResource("1_ej3ew")
-region = Rect2(8, 12, 9, 13)
+[sub_resource type="AtlasTexture" id="AtlasTexture_axkiv"]
+atlas = ExtResource("3_pcc2n")
+region = Rect2(22, 0, 11, 13)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_mo3nh"]
 animations = [{
@@ -46,16 +47,16 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_is74w")
+"texture": SubResource("AtlasTexture_ukak6")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_500kh")
+"texture": SubResource("AtlasTexture_jfjf2")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_vedlx")
+"texture": SubResource("AtlasTexture_vdi7v")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_wb7ka")
+"texture": SubResource("AtlasTexture_axkiv")
 }],
 "loop": true,
 "name": &"run_max",
@@ -77,5 +78,4 @@ shape = SubResource("CapsuleShape2D_5fpqd")
 [node name="PlayerView" type="AnimatedSprite2D" parent="."]
 y_sort_enabled = true
 sprite_frames = SubResource("SpriteFrames_mo3nh")
-animation = &"run_accel"
-frame_progress = 0.805626
+animation = &"run_max"
