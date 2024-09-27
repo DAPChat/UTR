@@ -1,0 +1,29 @@
+[gd_scene load_steps=5 format=3 uid="uid://5vni5b8mvr2m"]
+
+[ext_resource type="Texture2D" uid="uid://vhgg1as6tgn7" path="res://Assets/UltimaStar.png" id="1_jdn1l"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_q6g6k"]
+radius = 5.09902
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_yrevc"]
+atlas = ExtResource("1_jdn1l")
+region = Rect2(0, 0, 400, 400)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_2coxa"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_yrevc")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[node name="Collapsing Star" type="CharacterBody2D"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_q6g6k")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_2coxa")
