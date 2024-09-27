@@ -35,7 +35,7 @@ namespace game
 		{
 			CharacterBody2D _tempPlayer = (CharacterBody2D)ResourceLoader.Load<PackedScene>("res://Scenes/player.tscn").Instantiate().Duplicate();
 			GetNode<Node>("Players").AddChild(_tempPlayer);
-			_tempPlayer.Position = new (50, 500);
+			_tempPlayer.Position = new (0, 0);
 			_c.player = _tempPlayer as Player;
 
 			clients.Add(_c.id, _c);
