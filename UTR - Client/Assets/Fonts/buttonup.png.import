@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://fviwjtsfuwht"
-path="res://.godot/imported/buttonup.png-37bd997b65285a9db699f2a380a2f373.ctex"
+path="res://.godot/imported/buttonup.png-9d97c78e8b2e06794734eccb7499764a.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://fonts/buttonup.png"
-dest_files=["res://.godot/imported/buttonup.png-37bd997b65285a9db699f2a380a2f373.ctex"]
+source_file="res://Assets/Fonts/buttonup.png"
+dest_files=["res://.godot/imported/buttonup.png-9d97c78e8b2e06794734eccb7499764a.ctex"]
 
 [params]
 

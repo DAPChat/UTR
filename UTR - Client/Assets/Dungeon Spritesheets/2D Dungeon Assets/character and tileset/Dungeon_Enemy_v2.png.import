@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://dfrkkawpwjg1t"
-path="res://.godot/imported/Dungeon_Enemy_v2.png-bb411aa5537c819d2e9dc096120bcca1.ctex"
+path="res://.godot/imported/Dungeon_Enemy_v2.png-ab3d28bb10c67c74bfb79923b038cd94.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/2D Dungeon Asset Pack_v5.2/2D Dungeon Asset Pack_v5.2/character and tileset/Dungeon_Enemy_v2.png"
-dest_files=["res://.godot/imported/Dungeon_Enemy_v2.png-bb411aa5537c819d2e9dc096120bcca1.ctex"]
+source_file="res://Assets/Dungeon Spritesheets/2D Dungeon Assets/character and tileset/Dungeon_Enemy_v2.png"
+dest_files=["res://.godot/imported/Dungeon_Enemy_v2.png-ab3d28bb10c67c74bfb79923b038cd94.ctex"]
 
 [params]
 

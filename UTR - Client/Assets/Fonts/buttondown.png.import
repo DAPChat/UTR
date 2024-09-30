@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://bquw1gbmxmrn"
-path="res://.godot/imported/buttondown.png-412538ed7e1aa871bc0dfdc9f7a570d4.ctex"
+path="res://.godot/imported/buttondown.png-6c7391183550b0de68a8d203e4c286bb.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://fonts/buttondown.png"
-dest_files=["res://.godot/imported/buttondown.png-412538ed7e1aa871bc0dfdc9f7a570d4.ctex"]
+source_file="res://Assets/Fonts/buttondown.png"
+dest_files=["res://.godot/imported/buttondown.png-6c7391183550b0de68a8d203e4c286bb.ctex"]
 
 [params]
 

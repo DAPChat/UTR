@@ -3,12 +3,12 @@
 importer="font_data_dynamic"
 type="FontFile"
 uid="uid://dr4b7ulxi2rc0"
-path="res://.godot/imported/MinimalPixelFont.ttf-f0a412209c5f180415a46c3df95f5750.fontdata"
+path="res://.godot/imported/MinimalPixelFont.ttf-73c586d0b09e9eeefb6f0f8ac6b132c7.fontdata"
 
 [deps]
 
-source_file="res://fonts/MinimalPixelFont.ttf"
-dest_files=["res://.godot/imported/MinimalPixelFont.ttf-f0a412209c5f180415a46c3df95f5750.fontdata"]
+source_file="res://Assets/Fonts/MinimalPixelFont.ttf"
+dest_files=["res://.godot/imported/MinimalPixelFont.ttf-73c586d0b09e9eeefb6f0f8ac6b132c7.fontdata"]
 
 [params]
 

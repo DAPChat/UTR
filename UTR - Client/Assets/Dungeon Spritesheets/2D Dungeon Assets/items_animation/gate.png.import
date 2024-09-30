@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://c1h48xv8kg04m"
-path="res://.godot/imported/gate.png-9fcc6f0d995f12a37a5d26fbb231bd21.ctex"
+path="res://.godot/imported/gate.png-ace02177dc552547f93d7124fb300ad1.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/2D Dungeon Asset Pack_v5.2/2D Dungeon Asset Pack_v5.2/items_animation/gate.png"
-dest_files=["res://.godot/imported/gate.png-9fcc6f0d995f12a37a5d26fbb231bd21.ctex"]
+source_file="res://Assets/Dungeon Spritesheets/2D Dungeon Assets/items_animation/gate.png"
+dest_files=["res://.godot/imported/gate.png-ace02177dc552547f93d7124fb300ad1.ctex"]
 
 [params]
 

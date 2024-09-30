@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://qia1l8r6mpcc"
-path="res://.godot/imported/flag_r.png-e89f116daf94c5b5238c0cc4acfa2fe5.ctex"
+path="res://.godot/imported/flag_r.png-842f324110d23ae535ad4acf52e60852.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/2D Dungeon Asset Pack_v5.2/2D Dungeon Asset Pack_v5.2/items_animation/flag_r.png"
-dest_files=["res://.godot/imported/flag_r.png-e89f116daf94c5b5238c0cc4acfa2fe5.ctex"]
+source_file="res://Assets/Dungeon Spritesheets/2D Dungeon Assets/items_animation/flag_r.png"
+dest_files=["res://.godot/imported/flag_r.png-842f324110d23ae535ad4acf52e60852.ctex"]
 
 [params]
 
