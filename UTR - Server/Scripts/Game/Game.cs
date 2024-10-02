@@ -8,8 +8,13 @@ namespace game
 	{
 		private int gameId;
 
+<<<<<<< Updated upstream
 		private Dungeon dun;
 		private List<Client> clients = new();
+=======
+		private Dungen dun;
+		private Dictionary<int, Client> clients = new();
+>>>>>>> Stashed changes
 		private List<Packet> packetQueue = new();
 
 		private bool readingQueue = false;
@@ -19,19 +24,28 @@ namespace game
 			gameId = _gameId;
 			clients.AddRange(_clients);
 
+<<<<<<< Updated upstream
 			foreach (Client _c in clients)
+=======
+			dun = GetNode<Node>("Map") as Dungen;
+			dun.CreateDungeon();
+
+			foreach (Client _c in _clients)
+>>>>>>> Stashed changes
 			{
 				CreateClient(_c);
 			}
-
-			dun = new(10);
 		}
 
 		private void CreateClient(Client _c)
 		{
 			CharacterBody2D _tempPlayer = (CharacterBody2D)ResourceLoader.Load<PackedScene>("res://Scenes/player.tscn").Instantiate().Duplicate();
 			GetNode<Node>("Players").AddChild(_tempPlayer);
+<<<<<<< Updated upstream
 			_tempPlayer.Position = new(50, 500);
+=======
+			_tempPlayer.Position = dun.bsp.rooms[^1].panel.Position + dun.bsp.rooms[^1].panel.Size/2;
+>>>>>>> Stashed changes
 			_c.player = _tempPlayer as Player;
 
 			SendAll(new MovePacket(_c.id, _tempPlayer.Position.X, _tempPlayer.Position.Y).Serialize());

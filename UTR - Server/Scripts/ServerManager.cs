@@ -65,7 +65,8 @@ public partial class ServerManager : Node
 				return;
 			}
 
-			games[clients[_p.playerId].gameId].AddToQueue(_p);
+			if (games.ContainsKey(clients[_p.playerId].gameId))
+				games[clients[_p.playerId].gameId].AddToQueue(_p);
 		}
 		catch (Exception e)
 		{

@@ -17,7 +17,13 @@ public class Client
 	//private Player player;
 	//private Account account;
 
+<<<<<<< Updated upstream
 	public IPEndPoint end = new(IPAddress.Parse("127.1.1.0"), 6666);
+=======
+	//10.72.101.156
+
+	public IPEndPoint end = new(IPAddress.Parse("10.72.106.126"), 6666);
+>>>>>>> Stashed changes
 
 	public Client()
 	{

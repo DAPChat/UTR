@@ -6,4 +6,7 @@
     <EnableDynamicLoading>true</EnableDynamicLoading>
     <RootNamespace>UTRServer</RootNamespace>
   </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="Delaunator" Version="1.0.10" />
+  </ItemGroup>
 </Project>

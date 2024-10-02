@@ -1,6 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://covs3s8f0furv"]
 
 [ext_resource type="Script" path="res://Scripts/Game/Game.cs" id="1_6w0mk"]
+[ext_resource type="Script" path="res://Scripts/DungeonGen/Dungen.cs" id="2_e0hs5"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_8ss8v"]
 size = Vector2(20, 600)
@@ -8,10 +9,15 @@ size = Vector2(20, 600)
 [node name="GameRoom" type="Node2D"]
 script = ExtResource("1_6w0mk")
 
+<<<<<<< Updated upstream
 [node name="Wall" type="StaticBody2D" parent="."]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Wall"]
 position = Vector2(0, 300)
 shape = SubResource("RectangleShape2D_8ss8v")
+=======
+[node name="Map" type="Node" parent="."]
+script = ExtResource("2_e0hs5")
+>>>>>>> Stashed changes
 
 [node name="Players" type="Node" parent="."]
