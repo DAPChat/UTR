@@ -1,7 +1,8 @@
-[gd_scene load_steps=11 format=3 uid="uid://cf41briyf5dnu"]
+[gd_scene load_steps=12 format=3 uid="uid://cf41briyf5dnu"]
 
 [ext_resource type="Script" path="res://Scripts/Player.cs" id="1_1v8xi"]
 [ext_resource type="Texture2D" uid="uid://dveahimyvgi62" path="res://Assets/smolryo_spritesheet_orgres.png" id="1_ej3ew"]
+[ext_resource type="Texture2D" path="res://Assets/pixil-frame-0 (15).png" id="3_pcc2n"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_5fpqd"]
 radius = 4.0
@@ -15,21 +16,21 @@ region = Rect2(0, 0, 9, 13)
 atlas = ExtResource("1_ej3ew")
 region = Rect2(0, 12, 9, 13)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_is74w"]
-atlas = ExtResource("1_ej3ew")
-region = Rect2(8, 0, 9, 13)
+[sub_resource type="AtlasTexture" id="AtlasTexture_ukak6"]
+atlas = ExtResource("3_pcc2n")
+region = Rect2(0, 0, 11, 13)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_500kh"]
-atlas = ExtResource("1_ej3ew")
-region = Rect2(17, 12, 9, 13)
+[sub_resource type="AtlasTexture" id="AtlasTexture_jfjf2"]
+atlas = ExtResource("3_pcc2n")
+region = Rect2(33, 0, 11, 13)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_vedlx"]
-atlas = ExtResource("1_ej3ew")
-region = Rect2(17, 0, 9, 13)
+[sub_resource type="AtlasTexture" id="AtlasTexture_vdi7v"]
+atlas = ExtResource("3_pcc2n")
+region = Rect2(11, 0, 11, 13)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_wb7ka"]
-atlas = ExtResource("1_ej3ew")
-region = Rect2(8, 12, 9, 13)
+[sub_resource type="AtlasTexture" id="AtlasTexture_axkiv"]
+atlas = ExtResource("3_pcc2n")
+region = Rect2(22, 0, 11, 13)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_mo3nh"]
 animations = [{
@@ -42,33 +43,39 @@ animations = [{
 }],
 "loop": true,
 "name": &"run_accel",
-"speed": 5.0
+"speed": 2.0
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_is74w")
+"texture": SubResource("AtlasTexture_ukak6")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_500kh")
+"texture": SubResource("AtlasTexture_jfjf2")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_vedlx")
+"texture": SubResource("AtlasTexture_vdi7v")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_wb7ka")
+"texture": SubResource("AtlasTexture_axkiv")
 }],
 "loop": true,
 "name": &"run_max",
-"speed": 5.0
+"speed": 8.0
 }]
 
 [node name="Player" type="CharacterBody2D"]
-scale = Vector2(7, 7)
+collision_layer = 4
+collision_mask = 3
+motion_mode = 1
+slide_on_ceiling = false
+platform_floor_layers = 1
+platform_wall_layers = 2
 script = ExtResource("1_1v8xi")
 
 [node name="PlayerCollider" type="CollisionShape2D" parent="."]
 shape = SubResource("CapsuleShape2D_5fpqd")
 
 [node name="PlayerView" type="AnimatedSprite2D" parent="."]
+y_sort_enabled = true
 sprite_frames = SubResource("SpriteFrames_mo3nh")
-animation = &"run_accel"
+animation = &"run_max"
