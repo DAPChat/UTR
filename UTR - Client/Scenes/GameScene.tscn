@@ -1,7 +1,7 @@
 [gd_scene load_steps=5 format=4 uid="uid://doaccr1k3qtwt"]
 
 [ext_resource type="Script" path="res://Scripts/ClientManager.cs" id="1_vpr8p"]
-[ext_resource type="Texture2D" uid="uid://b2qsbm2hj3ejj" path="res://Assets/2D Pixel Dungeon Asset Pack v2.0/2D Pixel Dungeon Asset Pack/character and tileset/Dungeon_Tileset.png" id="3_8pn0t"]
+[ext_resource type="Texture2D" uid="uid://dg7mfxdeyxrtj" path="res://Assets/Dungeon Spritesheets/2D Dungeon Assets/character and tileset/Dungeon_Tileset_v2.png" id="3_8pn0t"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_jvuu0"]
 resource_name = "DungeonMain"

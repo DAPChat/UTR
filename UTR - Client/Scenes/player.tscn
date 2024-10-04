@@ -16,21 +16,21 @@ region = Rect2(0, 0, 9, 13)
 atlas = ExtResource("1_ej3ew")
 region = Rect2(0, 12, 9, 13)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_ukak6"]
-atlas = ExtResource("3_pcc2n")
-region = Rect2(0, 0, 11, 13)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_jfjf2"]
-atlas = ExtResource("3_pcc2n")
-region = Rect2(33, 0, 11, 13)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_vdi7v"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_dhktk"]
 atlas = ExtResource("3_pcc2n")
 region = Rect2(11, 0, 11, 13)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_axkiv"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_ujli0"]
+atlas = ExtResource("3_pcc2n")
+region = Rect2(0, 0, 11, 13)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ap4ni"]
 atlas = ExtResource("3_pcc2n")
 region = Rect2(22, 0, 11, 13)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xocyi"]
+atlas = ExtResource("3_pcc2n")
+region = Rect2(33, 0, 11, 13)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_mo3nh"]
 animations = [{
@@ -47,16 +47,16 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_ukak6")
+"texture": SubResource("AtlasTexture_dhktk")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_jfjf2")
+"texture": SubResource("AtlasTexture_ujli0")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_vdi7v")
+"texture": SubResource("AtlasTexture_ap4ni")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_axkiv")
+"texture": SubResource("AtlasTexture_xocyi")
 }],
 "loop": true,
 "name": &"run_max",
@@ -79,3 +79,5 @@ shape = SubResource("CapsuleShape2D_5fpqd")
 y_sort_enabled = true
 sprite_frames = SubResource("SpriteFrames_mo3nh")
 animation = &"run_max"
+frame = 2
+frame_progress = 0.0200604

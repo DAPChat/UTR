@@ -1,7 +1,7 @@
 [gd_scene load_steps=9 format=3 uid="uid://cf10amu8jbh4x"]
 
 [ext_resource type="Script" path="res://Scripts/TitleScene.cs" id="1_22tra"]
-[ext_resource type="FontFile" uid="uid://dr4b7ulxi2rc0" path="res://fonts/MinimalPixelFont.ttf" id="2_bpuxe"]
+[ext_resource type="FontFile" uid="uid://dr4b7ulxi2rc0" path="res://Assets/Fonts/MinimalPixelFont.ttf" id="2_bpuxe"]
 [ext_resource type="Texture2D" uid="uid://cgr6nug4tcad3" path="res://Assets/pixil-frame-0 (5).png" id="3_ul0t0"]
 [ext_resource type="Texture2D" uid="uid://cd753prxsdw4w" path="res://Assets/pixil-frame-0 (7).png" id="4_dsih5"]
 
