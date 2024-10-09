@@ -10,30 +10,20 @@ namespace game
 		public RoomPacket[] rooms;
 		int size;
 
-		public Dungeon(int _size, Node2D dungeon)
+		public Dungeon(int _size, TileMapLayer dungeon)
 		{
 			rooms = GenRoom();
 
-			RigidBody2D _rb = ResourceLoader.Load<PackedScene>("res://Scenes/wall_tile.tscn").Instantiate<RigidBody2D>();
-
 			foreach (RoomPacket _room in rooms)
 			{
-				RigidBody2D _irb = _rb.Duplicate() as RigidBody2D;
-				_irb.Position = new Vector2(_room.x, _room.y) * 16;
-				_irb.Scale = new Vector2(_room.w*16, 1);
-				dungeon.AddChild(_irb);
-				_irb = _rb.Duplicate() as RigidBody2D;
-				_irb.Position = new Vector2(_room.x, _room.y+_room.h*16) * 16;
-				_irb.Scale = new Vector2(_room.w*16, 1);
-				dungeon.AddChild(_irb);
-				_irb = _rb.Duplicate() as RigidBody2D;
-				_irb.Position = new Vector2(_room.x, _room.y) * 16;
-				_irb.Scale = new Vector2(1, _room.h*16);
-				dungeon.AddChild(_irb);
-				_irb = _rb.Duplicate() as RigidBody2D;
-				_irb.Position = new Vector2(_room.x + _room.w*16, _room.y) * 16;
-				_irb.Scale = new Vector2(1, _room.h*16);
-				dungeon.AddChild(_irb);
+				for (int i = _room.x; i <= _room.w * 16 + _room.x; i++)
+				{
+					for (int j = _room.y; j <= _room.h * 16 + _room.y; j++)
+					{
+						if (j == _room.y || i == _room.x || j == _room.y + _room.h * 16 || i == _room.x + _room.w * 16)
+							dungeon.SetCell(new Vector2I(i, j), 0, new (0 ,0), 1);
+					}
+				}
 			}
 		}
 

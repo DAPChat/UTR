@@ -22,7 +22,7 @@ namespace game
 		public void Instantiate(int _gameId, Client[] _clients)
 		{
 			gameId = _gameId;
-			dun = new(10, GetNode<Node2D>("Dungeon"));
+			dun = new(10, GetNode<TileMapLayer>("DungeonT"));
 
 			foreach (Client _c in _clients)
 			{
