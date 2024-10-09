@@ -12,9 +12,10 @@ namespace packets
 			Deserialize(_buff);
 		}
 
-		public Packet(int _id) 
+		public Packet(int _id, int _data = -1)
 		{
 			playerId = _id;
+			data = _data;
 		}
 
 		public virtual void Run()

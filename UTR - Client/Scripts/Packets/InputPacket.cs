@@ -8,7 +8,7 @@ namespace packets
 		public Vector2I inVect;
 
 		public InputPacket(Buffer _buff) : base(_buff) { }
-		public InputPacket(int id, Vector2I _inVect) : base(id)
+		public InputPacket(int id, Vector2I _inVect, int _data = 0) : base(id, _data)
 		{
 			inVect = _inVect;
 		}

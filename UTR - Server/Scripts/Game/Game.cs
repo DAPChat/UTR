@@ -22,25 +22,25 @@ namespace game
 		public void Instantiate(int _gameId, Client[] _clients)
 		{
 			gameId = _gameId;
+			dun = new(10, GetNode<Node2D>("Dungeon"));
 
 			foreach (Client _c in _clients)
 			{
 				CreateClient(_c);
 			}
-
-			dun = new(10);
 		}
 
 		public void CreateClient(Client _c)
 		{
 			CharacterBody2D _tempPlayer = (CharacterBody2D)ResourceLoader.Load<PackedScene>("res://Scenes/player.tscn").Instantiate().Duplicate();
 			GetNode<Node>("Players").AddChild(_tempPlayer);
-			_tempPlayer.Position = new (0, 0);
+			_tempPlayer.Position = new (32, 32);
 			_c.player = _tempPlayer as Player;
 
 			clients.Add(_c.id, _c);
 
 			SendAll(new MovePacket(_c.id, _tempPlayer.Position.X, _tempPlayer.Position.Y, 1).Serialize());
+			SendAll(dun.rooms[0].Serialize());
 		}
 
 		public void Move(InputPacket _pa)

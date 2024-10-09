@@ -19,10 +19,13 @@ public partial class ClientManager : Node
 	private static bool readingQueue = false;
 
 	private static Camera2D camera;
+	private static TileMapLayer dungeon;
 
 	public override void _Ready()
 	{
 		base._Ready();
+
+		dungeon = GetNode<TileMapLayer>("GameRoom");
 
 		curId = GD.RandRange(1,999);
 
@@ -145,6 +148,22 @@ public partial class ClientManager : Node
 	public static void Print(string message)
 	{
 		GD.Print(message);
+	}
+
+	public static void CreateRoom(RoomPacket _room)
+	{
+		//Vector2I _rPos = new(_room.x, _room.y) * 16;
+
+		for (int i = _room.x; i <= _room.w*16 + _room.x; i++)
+		{
+			for (int j = _room.y; j <= _room.h*16 + _room.y; j++)
+			{
+				if (j == _room.y) dungeon.SetCell(new Vector2I(i, j), 0, new(0, 2));
+				if (i == _room.x) dungeon.SetCell(new Vector2I(i, j), 0, new(0, 2));
+				if (j == _room.y+_room.h*16) dungeon.SetCell(new Vector2I(i, j), 0, new(0, 2));
+				if (i == _room.x+_room.w*16) dungeon.SetCell(new Vector2I(i, j), 0, new(0, 2));
+			}
+		}
 	}
 
 	public static void SetClient(Packet _packet)

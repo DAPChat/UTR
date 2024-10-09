@@ -1,32 +1,45 @@
 ﻿using System;
+using Godot;
+
+using packets;
 
 namespace game
 {
 	public class Dungeon
 	{
+		public RoomPacket[] rooms;
 		int size;
-		int seed;
-		Room[] rooms;
 
-		public Dungeon(int _size)
+		public Dungeon(int _size, Node2D dungeon)
 		{
-			size = _size;
-			rooms = new Room[size];
+			rooms = GenRoom();
 
-			Random rand = new(Environment.TickCount);
+			RigidBody2D _rb = ResourceLoader.Load<PackedScene>("res://Scenes/wall_tile.tscn").Instantiate<RigidBody2D>();
 
-			seed = rand.Next();
-
-			GenRoom();
+			foreach (RoomPacket _room in rooms)
+			{
+				RigidBody2D _irb = _rb.Duplicate() as RigidBody2D;
+				_irb.Position = new Vector2(_room.x, _room.y) * 16;
+				_irb.Scale = new Vector2(_room.w*16, 1);
+				dungeon.AddChild(_irb);
+				_irb = _rb.Duplicate() as RigidBody2D;
+				_irb.Position = new Vector2(_room.x, _room.y+_room.h*16) * 16;
+				_irb.Scale = new Vector2(_room.w*16, 1);
+				dungeon.AddChild(_irb);
+				_irb = _rb.Duplicate() as RigidBody2D;
+				_irb.Position = new Vector2(_room.x, _room.y) * 16;
+				_irb.Scale = new Vector2(1, _room.h*16);
+				dungeon.AddChild(_irb);
+				_irb = _rb.Duplicate() as RigidBody2D;
+				_irb.Position = new Vector2(_room.x + _room.w*16, _room.y) * 16;
+				_irb.Scale = new Vector2(1, _room.h*16);
+				dungeon.AddChild(_irb);
+			}
 		}
 
-		private void GenRoom()
+		private RoomPacket[] GenRoom()
 		{
-			for (int i = 0; i < size; i++)
-			{
-				rooms[i] = new Room(seed, i, i == 0 ? null : rooms[i - 1].doorPos);
-				// Create room and paste new room into world at correct pos
-			}
+			return [new RoomPacket(-1, 0, 0, 1, 1)];
 		}
 	}
 }
