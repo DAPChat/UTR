@@ -30,7 +30,7 @@ public partial class ClientManager : Node
 		curId = GD.RandRange(1,999);
 
 		camera = new();
-		camera.Zoom = new(7, 7);
+		camera.Zoom = new(5, 5);
 
 		client = new();
 		sceneTree = this;
@@ -154,14 +154,16 @@ public partial class ClientManager : Node
 	{
 		//Vector2I _rPos = new(_room.x, _room.y) * 16;
 
-		for (int i = _room.x; i <= _room.w*16 + _room.x; i++)
+		int _rScale = 10;
+
+		for (int i = _room.x; i <= _room.w*_rScale + _room.x + 1; i++)
 		{
-			for (int j = _room.y; j <= _room.h*16 + _room.y; j++)
+			for (int j = _room.y; j <= _room.h*_rScale + _room.y + 1; j++)
 			{
 				if (j == _room.y) dungeon.SetCell(new Vector2I(i, j), 0, new(0, 2));
 				if (i == _room.x) dungeon.SetCell(new Vector2I(i, j), 0, new(0, 2));
-				if (j == _room.y+_room.h*16) dungeon.SetCell(new Vector2I(i, j), 0, new(0, 2));
-				if (i == _room.x+_room.w*16) dungeon.SetCell(new Vector2I(i, j), 0, new(0, 2));
+				if (j == _room.y+_room.h*_rScale+1) dungeon.SetCell(new Vector2I(i, j), 0, new(0, 2));
+				if (i == _room.x+_room.w*_rScale+1) dungeon.SetCell(new Vector2I(i, j), 0, new(0, 2));
 			}
 		}
 	}
