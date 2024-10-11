@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 
 namespace packets
 {
@@ -23,22 +24,33 @@ namespace packets
 
 		public virtual byte[] Serialize()
 		{
-			using (MemoryStream m = new())
-			{
-				using (BinaryWriter writer = new(m))
-				{
-					writer.Write(0);
-					writer.Write(playerId);
-					writer.Write(data);
-				}
-				return m.ToArray();
-			}
+			return Serialize([0, playerId, data]);
 		}
 
 		public virtual void Deserialize(Buffer buff)
 		{
 			playerId = buff.ReadInt();
 			data = buff.ReadInt();
+		}
+
+		public static byte[] Serialize(object[] _o)
+		{
+			using (MemoryStream m = new())
+			{
+				using (BinaryWriter writer = new(m))
+				{
+					foreach (object obj in _o)
+					{
+						Type t = obj.GetType();
+
+						if (t == typeof(int)) writer.Write((int)obj);
+						else if (t == typeof(float)) writer.Write((float)obj);
+						else if (t == typeof(string)) writer.Write((string)obj);
+					}
+				}
+
+				return m.ToArray();
+			}
 		}
 	}
 }

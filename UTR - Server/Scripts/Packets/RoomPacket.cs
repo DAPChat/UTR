@@ -24,20 +24,7 @@ namespace packets
 
 		public override byte[] Serialize()
 		{
-			using (MemoryStream m = new())
-			{
-				using (BinaryWriter writer = new(m))
-				{
-					writer.Write(3);
-					writer.Write(playerId);
-					writer.Write(data);
-					writer.Write(x);
-					writer.Write(y);
-					writer.Write(w);
-					writer.Write(h);
-				}
-				return m.ToArray();
-			}
+			return Serialize([3, playerId, data, x, y, w, h]);
 		}
 
 		public override void Deserialize(Buffer _buff)
