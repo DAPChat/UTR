@@ -29,18 +29,7 @@ namespace packets
 
 		public override byte[] Serialize()
 		{
-			using (MemoryStream m = new())
-			{
-				using (BinaryWriter writer = new(m))
-				{
-					writer.Write(2);
-					writer.Write(playerId);
-					writer.Write(data);
-					writer.Write(inVect.X);
-					writer.Write(inVect.Y);
-				}
-				return m.ToArray();
-			}
+			return Serialize([2, playerId, data, inVect.X, inVect.Y]);
 		}
 	}
 }
