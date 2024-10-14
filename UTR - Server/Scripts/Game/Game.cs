@@ -36,7 +36,7 @@ namespace game
 			GetNode<Node>("Players").AddChild(_tempPlayer);
 			_tempPlayer.Position = new (32, 32);
 			_c.player = _tempPlayer as Player;
-
+			_c.player.Instantiate();
 			clients.Add(_c.id, _c);
 
 			SendAll(new MovePacket(_c.id, _tempPlayer.Position.X, _tempPlayer.Position.Y, 1).Serialize());
