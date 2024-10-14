@@ -84,7 +84,7 @@ public partial class ClientManager : Node
 		players[client.id].Velocity = players[client.id].Velocity.MoveToward(((Vector2)_inputVect).Normalized() * 100, 1500 * (float)delta);
 		try
 		{
-			players[client.id].MoveAndSlide();
+			//players[client.id].MoveAndSlide();
 		}
 		catch (Exception){ }
 	}
