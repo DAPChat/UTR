@@ -6,6 +6,7 @@ using System.Net.Sockets;
 using System.Threading.Tasks;
 
 using game;
+using items;
 using System.Linq;
 
 public partial class ServerManager : Node
@@ -29,6 +30,7 @@ public partial class ServerManager : Node
 
 		tree = this;
 
+		Item.CompileAll();
 		PacketManager.CompileAll();
 
 		listener = new(IPAddress.Any, 6666);
