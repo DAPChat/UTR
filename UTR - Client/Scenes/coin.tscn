@@ -1,6 +1,6 @@
 [gd_scene load_steps=12 format=3 uid="uid://cd8dgyv6l5f3m"]
 
-[ext_resource type="Texture2D" uid="uid://dp7crkaty1uam" path="res://Assets/2D Dungeon Asset Pack_v5.2/2D Dungeon Asset Pack_v5.2/items_animation/coin.png" id="1_vu1fe"]
+[ext_resource type="Texture2D" uid="uid://dp7crkaty1uam" path="res://Assets/Dungeon Spritesheets/2D Dungeon Assets/items_animation/coin.png" id="1_vu1fe"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_q6g6k"]
 radius = 5.09902
