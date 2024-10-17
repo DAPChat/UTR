@@ -36,11 +36,11 @@ namespace game
 			GetNode<Node>("Players").AddChild(_tempPlayer);
 			_tempPlayer.Position = new (32, 32);
 			_c.player = _tempPlayer as Player;
-			_c.player.Instantiate();
+			_c.player.Instantiate(_c.id, gameId);
 			clients.Add(_c.id, _c);
 
 			SendAll(new MovePacket(_c.id, _tempPlayer.Position.X, _tempPlayer.Position.Y, 1).Serialize());
-			SendAll(dun.rooms[0].Serialize());
+			SendTo(_c.id, dun.rooms[0].Serialize());
 		}
 
 		public void Move(InputPacket _pa)
@@ -125,6 +125,11 @@ namespace game
 				else packetQueue.RemoveAt(0);
 			}
 			readingQueue = false;
+		}
+
+		public void SendTo(int _cId, byte[] _msg)
+		{
+			clients[_cId].udp.Send(_msg);
 		}
 
 		public void SendAll(byte[] _msg)

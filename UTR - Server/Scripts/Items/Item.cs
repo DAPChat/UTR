@@ -1,47 +1,53 @@
-﻿using Godot;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 
-[GlobalClass]
-public partial class Item : Resource
+namespace items
 {
-	[Export]
-	public string name;
-	[Export]
-	public string description;
-	[Export]
-	public string icon;
-	[Export]
-	public int[] attributeType;
-	[Export]
-	public int[] attributeValues;
-
-	public int[] instanceAttrType;
-	public int[] instanceAttrValues;
-
-	public virtual byte[] GetBytes()
+	public class Item
 	{
-		List<object> list = [];
+		public ItemBase item;
+		public int[] instanceAttrType;
+		public int[] instanceAttrValues;
 
-		int _id = int.Parse(ResourcePath.Where(char.IsDigit).ToArray());
-
-		list.Add(_id);
-		list.Add(instanceAttrType.Length);
-		for (int i = 0; i < instanceAttrType.Length; i++)
+		public Item(ItemBase _item)
 		{
-			list.Add(instanceAttrType[i]);
-			list.Add(instanceAttrValues[i]);
+			item = _item;
+			instanceAttrType = [];
+			instanceAttrValues = [];
 		}
 
-		string s = "";
-
-		foreach (object obj in list)
+		public Item(Buffer _buff)
 		{
-			s += obj;
+			Deserialize(_buff);
 		}
 
-		GD.Print(s);
+		public byte[] Serialize()
+		{
+			List<object> list = [];
 
-		return packets.Packet.Serialize(list.ToArray());
+			list.Add(instanceAttrType.Length);
+			for (int i = 0; i < instanceAttrType.Length; i++)
+			{
+				list.Add(instanceAttrType[i]);
+				list.Add(instanceAttrValues[i]);
+			}
+
+			return item.Serialize().Concat(packets.Packet.Serialize(list.ToArray())).ToArray();
+		}
+
+		public void Deserialize(Buffer _buff)
+		{
+			item = ItemManager.GetItemBase(_buff.ReadInt());
+
+			int _len = _buff.ReadInt();
+			instanceAttrType = new int[_len];
+			instanceAttrValues = new int[_len];
+
+			for (int i = 0; i < _len; i++)
+			{
+				instanceAttrType[i] = _buff.ReadInt();
+				instanceAttrValues[i] = _buff.ReadInt();
+			}
+		}
 	}
 }

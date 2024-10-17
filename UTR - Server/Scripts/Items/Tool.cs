@@ -1,21 +1,20 @@
 ﻿using Godot;
+using System.Linq;
 
-[GlobalClass]
-public partial class Tool : Item
+namespace items
 {
-	[Export]
-	public int type;
-	[Export]
-	public int baseDmg;
-	[Export]
-	public int lvlScale;
-	[Export]
-	public int range;
-	[Export]
-	public int cooldown;
-
-	public override byte[] GetBytes()
+	[GlobalClass]
+	public partial class Tool : ItemBase
 	{
-		return base.GetBytes();
+		[Export]
+		public int type;
+		[Export]
+		public int baseDmg;
+		[Export]
+		public int lvlScale;
+		[Export]
+		public int range;
+		[Export]
+		public int cooldown;
 	}
 }
