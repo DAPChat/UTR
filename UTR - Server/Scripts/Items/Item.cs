@@ -1,34 +1,47 @@
-﻿using packets;
-using System;
+﻿using Godot;
 using System.Collections.Generic;
-using System.Linq.Expressions;
+using System.Linq;
 
-namespace items
+[GlobalClass]
+public partial class Item : Resource
 {
-	public abstract class Item
+	[Export]
+	public string name;
+	[Export]
+	public string description;
+	[Export]
+	public string icon;
+	[Export]
+	public int[] attributeType;
+	[Export]
+	public int[] attributeValues;
+
+	public int[] instanceAttrType;
+	public int[] instanceAttrValues;
+
+	public virtual byte[] GetBytes()
 	{
-		public static List<Item> Items = new List<Item>();
+		List<object> list = [];
 
-		public static Item CreateItem(int _id)
+		int _id = int.Parse(ResourcePath.Where(char.IsDigit).ToArray());
+
+		list.Add(_id);
+		list.Add(instanceAttrType.Length);
+		for (int i = 0; i < instanceAttrType.Length; i++)
 		{
-			
-
-			return null;
+			list.Add(instanceAttrType[i]);
+			list.Add(instanceAttrValues[i]);
 		}
 
-		private static Dictionary<int, Func<Buffer, Item>> itemT = new();
+		string s = "";
 
-		public static void CompileAll()
+		foreach (object obj in list)
 		{
-			itemT[0] = CreateCreator<Buffer, Item>();
+			s += obj;
 		}
 
-		static Func<TArg, T> CreateCreator<TArg, T>()
-		{
-			var constructor = typeof(T).GetConstructor([typeof(TArg)]);
-			var parameter = Expression.Parameter(typeof(TArg));
-			var creatorExpression = Expression.Lambda<Func<TArg, T>>(Expression.New(constructor, [parameter]), parameter);
-			return creatorExpression.Compile();
-		}
+		GD.Print(s);
+
+		return packets.Packet.Serialize(list.ToArray());
 	}
 }

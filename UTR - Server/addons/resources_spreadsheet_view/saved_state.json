@@ -1,9 +1,5 @@
 {
   "hidden_columns": {
-    "": {
-      "resource_local_to_scene": true,
-      "resource_name": true
-    },
     "res://Items/": {
       "resource_local_to_scene": true,
       "resource_name": true

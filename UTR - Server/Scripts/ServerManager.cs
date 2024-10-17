@@ -30,7 +30,6 @@ public partial class ServerManager : Node
 
 		tree = this;
 
-		Item.CompileAll();
 		PacketManager.CompileAll();
 
 		listener = new(IPAddress.Any, 6666);
