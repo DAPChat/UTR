@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="Tool" load_steps=2 format=3 uid="uid://xogxeusdw7eb"]
+
+[ext_resource type="Script" path="res://Scripts/Items/Tool.cs" id="1_osswx"]
+
+[resource]
+script = ExtResource("1_osswx")
+type = 0
+baseDmg = 0
+lvlScale = 0
+range = 0
+cooldown = 0
+name = "Sword"
+description = "Sharp, pointy thing"
+icon = ""
+attributeType = PackedInt32Array()
+attributeValues = PackedInt32Array()
