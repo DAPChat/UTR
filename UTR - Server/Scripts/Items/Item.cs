@@ -23,16 +23,15 @@ namespace items
 
 		public byte[] Serialize()
 		{
-			List<object> list = [];
+			List<object> list = [item.Serialize(), instanceAttrType.Length];
 
-			list.Add(instanceAttrType.Length);
 			for (int i = 0; i < instanceAttrType.Length; i++)
 			{
 				list.Add(instanceAttrType[i]);
 				list.Add(instanceAttrValues[i]);
 			}
 
-			return item.Serialize().Concat(packets.Packet.Serialize(list.ToArray())).ToArray();
+			return packets.Packet.Serialize(list.ToArray());
 		}
 
 		public void Deserialize(Buffer _buff)
