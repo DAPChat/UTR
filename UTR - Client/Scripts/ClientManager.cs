@@ -6,7 +6,7 @@ using System.Collections.Generic;
 
 public partial class ClientManager : Node
 {
-	static Client client;
+	public static Client client { get; private set; }
 
 	static ClientManager sceneTree;
 
@@ -20,12 +20,14 @@ public partial class ClientManager : Node
 
 	private static Camera2D camera;
 	private static TileMapLayer dungeon;
+	private static Inventory inventory;
 
 	public override void _Ready()
 	{
 		base._Ready();
 
 		dungeon = GetNode<TileMapLayer>("GameRoom");
+		inventory = GetNode<Panel>("UI/Inventory") as Inventory;
 
 		curId = GD.RandRange(1,999);
 
@@ -166,6 +168,11 @@ public partial class ClientManager : Node
 				if (i == _room.x+_room.w*_rScale+1) dungeon.SetCell(new Vector2I(i, j), 0, new(0, 2));
 			}
 		}
+	}
+
+	public static void SetSlot(items.Item _item, int _slot, int _amt)
+	{
+		inventory.SetSlot(_item, _slot, _amt);
 	}
 
 	public static void SetClient(Packet _packet)

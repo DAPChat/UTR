@@ -19,6 +19,6 @@ public partial class Player : CharacterBody2D
 
 		hotbar[0] = new(cId, ItemManager.GetItem(0), 0, 1);
 
-		ServerManager.GetGame(_gId).SendTo(cId, hotbar[0].Serialize());
+		ServerManager.GetGame(gId).SendTo(cId, hotbar[0].Serialize());
 	}
 }

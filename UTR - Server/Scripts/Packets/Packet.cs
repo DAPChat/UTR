@@ -43,7 +43,7 @@ namespace packets
 					{
 						Type t = obj.GetType();
 
-						if (t == typeof(int)) writer.Write((int)obj);
+						if (t == typeof(int) || t == typeof(short)) writer.Write((int)obj);
 						else if (t == typeof(float)) writer.Write((float)obj);
 						else if (t == typeof(string)) writer.Write((string)obj);
 					}
@@ -51,6 +51,14 @@ namespace packets
 
 				return m.ToArray();
 			}
+		}
+
+		public static byte[] Concat(byte[] _a, byte[] _b)
+		{
+			byte[] c = new byte[_a.Length + _b.Length];
+			_a.CopyTo(c, 0);
+			_b.CopyTo(c, _a.Length);
+			return c;
 		}
 	}
 }

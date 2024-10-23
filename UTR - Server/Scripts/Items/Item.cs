@@ -1,6 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 
+using packets;
+
 namespace items
 {
 	public class Item
@@ -23,7 +25,7 @@ namespace items
 
 		public byte[] Serialize()
 		{
-			List<object> list = [item.Serialize(), instanceAttrType.Length];
+			List<object> list = [instanceAttrType.Length];
 
 			for (int i = 0; i < instanceAttrType.Length; i++)
 			{
@@ -31,7 +33,7 @@ namespace items
 				list.Add(instanceAttrValues[i]);
 			}
 
-			return packets.Packet.Serialize(list.ToArray());
+			return Packet.Concat(item.Serialize(), Packet.Serialize(list.ToArray()));
 		}
 
 		public void Deserialize(Buffer _buff)

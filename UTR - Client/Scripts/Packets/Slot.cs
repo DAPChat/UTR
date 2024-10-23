@@ -20,7 +20,7 @@ namespace packets
 
 		public override byte[] Serialize()
 		{
-			return Serialize([4, playerId, data, slot, count]).Concat(item.Serialize()).ToArray();
+			return Concat(Serialize([4, playerId, data, slot, count]), item.Serialize());
 		}
 
 		public override void Deserialize(Buffer buff)
@@ -29,6 +29,14 @@ namespace packets
 			slot = buff.ReadInt();
 			count = buff.ReadInt();
 			item = new(buff);
+		}
+
+		public override void Run()
+		{
+			if (playerId == ClientManager.client.id)
+			{
+				ClientManager.SetSlot(item, slot, count);
+			}
 		}
 	}
 }

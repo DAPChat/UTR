@@ -32,12 +32,12 @@ namespace game
 
 		public void CreateClient(Client _c)
 		{
+			clients.Add(_c.id, _c);
 			CharacterBody2D _tempPlayer = (CharacterBody2D)ResourceLoader.Load<PackedScene>("res://Scenes/player.tscn").Instantiate().Duplicate();
 			GetNode<Node>("Players").AddChild(_tempPlayer);
 			_tempPlayer.Position = new (32, 32);
 			_c.player = _tempPlayer as Player;
 			_c.player.Instantiate(_c.id, gameId);
-			clients.Add(_c.id, _c);
 
 			SendAll(new MovePacket(_c.id, _tempPlayer.Position.X, _tempPlayer.Position.Y, 1).Serialize());
 			SendTo(_c.id, dun.rooms[0].Serialize());

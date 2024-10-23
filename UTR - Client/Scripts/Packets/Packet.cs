@@ -54,5 +54,13 @@ namespace packets
 				return m.ToArray();
 			}
 		}
+
+		public static byte[] Concat(byte[] _a, byte[] _b)
+		{
+			byte[] c = new byte[_a.Length + _b.Length];
+			_a.CopyTo(c, 0);
+			_b.CopyTo(c, _a.Length);
+			return c;
+		}
 	}
 }

@@ -11,6 +11,6 @@ range = 0
 cooldown = 0
 name = "Sword"
 description = "Sharp, pointy thing"
-icon = ""
+icon = "res://Assets/UltimaStar.png"
 attributeType = PackedInt32Array()
 attributeValues = PackedInt32Array()

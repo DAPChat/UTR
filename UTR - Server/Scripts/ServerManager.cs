@@ -141,13 +141,13 @@ public partial class ServerManager : Node
 		win.Show();
 		Game _tempGame = _tempGameScene as Game;
 
-		_tempGame.Instantiate(_gameId, [_tempClient]);
-
 		win.CallDeferred(Node.MethodName.AddChild, _tempGameScene);
 
 		games.Add(_gameId, _tempGame);
 
 		_tempClient.gameId = _gameId;
+
+		_tempGame.Instantiate(_gameId, [_tempClient]);
 	}
 
 	public static void AddPacket(packets.Packet _packet, int _gId)
