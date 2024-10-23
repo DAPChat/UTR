@@ -20,7 +20,7 @@ public partial class ClientManager : Node
 
 	private static Camera2D camera;
 	private static TileMapLayer dungeon;
-	private static Inventory inventory;
+	public static Inventory inventory;
 
 	public override void _Ready()
 	{
@@ -89,6 +89,12 @@ public partial class ClientManager : Node
 			//players[client.id].MoveAndSlide();
 		}
 		catch (Exception){ }
+
+		if (Input.IsActionJustPressed("inventory"))
+		{
+			if (!inventory.Visible) inventory.Show();
+			else inventory.Hide();
+		}
 	}
 
 	private static void ReadQueue()

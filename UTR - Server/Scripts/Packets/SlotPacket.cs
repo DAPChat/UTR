@@ -3,15 +3,15 @@ using System.Linq;
 
 namespace packets
 {
-	public class Slot : Packet
+	public class SlotPacket : Packet
 	{
 		public Item item;
 		public int slot;
 		public int count;
 
-		public Slot(Buffer _buff) : base(_buff) {}
+		public SlotPacket(Buffer _buff) : base(_buff) {}
 
-		public Slot(int _id, Item _item, int _slot, int _count, int _data = -1) : base(_id, _data)
+		public SlotPacket(int _id, Item _item, int _slot, int _count, int _data = -1) : base(_id, _data)
 		{
 			item = _item;
 			slot = _slot;

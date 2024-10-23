@@ -9,8 +9,8 @@ public partial class Player : CharacterBody2D
 	int cId;
 	int gId;
 
-	public Slot[] inventory = new Slot[8];
-	public Slot[] hotbar = new Slot[5];
+	public SlotPacket[] inventory = new SlotPacket[8];
+	public SlotPacket[] hotbar = new SlotPacket[5];
 
 	public void Instantiate(int _cId, int _gId)
 	{

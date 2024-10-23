@@ -48,5 +48,15 @@ namespace items
 				instanceAttrValues[i] = _buff.ReadInt();
 			}
 		}
+
+		public override string ToString()
+		{
+			string s = "";
+
+			s += item.name + "\n";
+			s += item.description + "\n";
+
+			return s;
+		}
 	}
 }

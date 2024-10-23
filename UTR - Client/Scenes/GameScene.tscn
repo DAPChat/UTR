@@ -116,7 +116,7 @@ physics_layer_0/collision_mask = 6
 sources/0 = SubResource("TileSetAtlasSource_jvuu0")
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_6bbq7"]
-bg_color = Color(0.136826, 0.136826, 0.136826, 0.564706)
+bg_color = Color(0.137255, 0.137255, 0.137255, 0.858824)
 corner_radius_top_left = 5
 corner_radius_top_right = 5
 corner_radius_bottom_right = 5
@@ -134,6 +134,7 @@ tile_set = SubResource("TileSet_ii8ot")
 [node name="UI" type="CanvasLayer" parent="."]
 
 [node name="Inventory" type="Panel" parent="UI"]
+visible = false
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
@@ -195,36 +196,53 @@ offset_bottom = 377.0
 grow_horizontal = 0
 text = "Tooltip"
 
-[node name="Slots" type="GridContainer" parent="UI/Inventory"]
-layout_mode = 0
+[node name="Slots" type="Control" parent="UI/Inventory"]
+anchors_preset = 0
 offset_left = 17.0
 offset_top = 126.0
-offset_right = 505.0
-offset_bottom = 347.0
-theme_override_constants/h_separation = 40
-theme_override_constants/v_separation = 40
-columns = 4
+offset_right = 513.0
+offset_bottom = 356.0
 
 [node name="0" parent="UI/Inventory/Slots" instance=ExtResource("3_00363")]
 layout_mode = 2
 
 [node name="1" parent="UI/Inventory/Slots" instance=ExtResource("3_00363")]
 layout_mode = 2
+offset_left = 132.0
+offset_right = 232.0
 
 [node name="2" parent="UI/Inventory/Slots" instance=ExtResource("3_00363")]
 layout_mode = 2
+offset_left = 264.0
+offset_right = 364.0
 
 [node name="3" parent="UI/Inventory/Slots" instance=ExtResource("3_00363")]
 layout_mode = 2
+offset_left = 395.0
+offset_right = 495.0
 
 [node name="4" parent="UI/Inventory/Slots" instance=ExtResource("3_00363")]
 layout_mode = 2
+offset_top = 130.0
+offset_bottom = 230.0
 
 [node name="5" parent="UI/Inventory/Slots" instance=ExtResource("3_00363")]
 layout_mode = 2
+offset_left = 132.0
+offset_top = 130.0
+offset_right = 232.0
+offset_bottom = 230.0
 
 [node name="6" parent="UI/Inventory/Slots" instance=ExtResource("3_00363")]
 layout_mode = 2
+offset_left = 264.0
+offset_top = 130.0
+offset_right = 364.0
+offset_bottom = 230.0
 
 [node name="7" parent="UI/Inventory/Slots" instance=ExtResource("3_00363")]
 layout_mode = 2
+offset_left = 395.0
+offset_top = 130.0
+offset_right = 495.0
+offset_bottom = 230.0
