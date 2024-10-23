@@ -9,11 +9,8 @@ public partial class Slot : Panel
 	{
 		item = _item;
 
-		GD.Print("Here");
-
 		MouseEntered += () =>
 		{
-			GD.Print("Hereee");
 			ClientManager.inventory.SetTooltip(item);
 		};
 	}
