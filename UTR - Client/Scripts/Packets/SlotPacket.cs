@@ -35,7 +35,7 @@ namespace packets
 		{
 			if (playerId == ClientManager.client.id)
 			{
-				ClientManager.SetSlot(item, slot, count);
+				ClientManager.SetSlot(item, slot, count, data);
 			}
 		}
 	}

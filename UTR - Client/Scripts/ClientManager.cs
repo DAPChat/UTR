@@ -21,6 +21,7 @@ public partial class ClientManager : Node
 	private static Camera2D camera;
 	private static TileMapLayer dungeon;
 	public static Inventory inventory;
+	public static Hotbar hotbar;
 
 	public override void _Ready()
 	{
@@ -28,6 +29,7 @@ public partial class ClientManager : Node
 
 		dungeon = GetNode<TileMapLayer>("GameRoom");
 		inventory = GetNode<Panel>("UI/Inventory") as Inventory;
+		hotbar = GetNode<Panel>("UI/Hotbar") as Hotbar;
 
 		curId = GD.RandRange(1,999);
 
@@ -176,9 +178,11 @@ public partial class ClientManager : Node
 		}
 	}
 
-	public static void SetSlot(items.Item _item, int _slot, int _amt)
+	public static void SetSlot(items.Item _item, int _slot, int _amt, int _loc)
 	{
-		inventory.SetSlot(_item, _slot, _amt);
+		if (_loc == 0)
+			inventory.SetSlot(_item, _slot, _amt);
+		else hotbar.SetSlot(_item, _slot, _amt);
 	}
 
 	public static void SetClient(Packet _packet)
