@@ -83,16 +83,19 @@ public partial class ClientManager : Node
 			_sprite.Play("run_max");
 		}
 
-		client.udp.Send(new InputPacket(client.id, _inputVect).Serialize());
+		client.udp.Send(new MovePacket(client.id, _inputVect.X, _inputVect.Y).Serialize());
 
 		players[client.id].Velocity = players[client.id].Velocity.MoveToward(((Vector2)_inputVect).Normalized() * 100, 1500 * (float)delta);
 		try
 		{
 			//players[client.id].MoveAndSlide();
 		}
-		catch (Exception){ }
+		catch (Exception) { }
+	}
 
-		if (Input.IsActionJustPressed("inventory"))
+	public override void _Input(InputEvent @event)
+	{
+		if (@event.IsActionPressed("inventory"))
 		{
 			if (!inventory.Visible) inventory.Show();
 			else inventory.Hide();

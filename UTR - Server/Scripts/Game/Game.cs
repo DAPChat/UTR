@@ -43,13 +43,13 @@ namespace game
 			SendTo(_c.id, dun.rooms[0].Serialize());
 		}
 
-		public void Move(InputPacket _pa)
+		public void Move(MovePacket _pa)
 		{
 			Player _p = ServerManager.GetClient(_pa.playerId).player;
 
 			float _acceleration = -1;
 
-			_p.Velocity = _p.Velocity.MoveToward(((Vector2)_pa.inVect).Normalized() * 100, 1500 * (float)GetPhysicsProcessDeltaTime());
+			_p.Velocity = _p.Velocity.MoveToward(new Vector2(_pa.x, _pa.y).Normalized() * 100, 1500 * (float)GetPhysicsProcessDeltaTime());
 		}
 
 		public void AddToQueue(Packet _packet)

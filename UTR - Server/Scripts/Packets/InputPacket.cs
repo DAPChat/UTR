@@ -5,31 +5,28 @@ namespace packets
 {
 	public class InputPacket : Packet
 	{
-		public Vector2I inVect;
+		public char input;
 
 		public InputPacket(Buffer _buff) : base(_buff) { }
-		public InputPacket(int id, Vector2I _inVect, int _data = -1) : base(id, _data) 
+		public InputPacket(int id, char _input, int _data = 0) : base(id, _data)
 		{
-			inVect = _inVect;
+			input = _input;
 		}
 
 		public override void Deserialize(Buffer buff)
 		{
-			inVect = new();
-
 			base.Deserialize(buff);
-			inVect.X = buff.ReadInt();
-			inVect.Y = buff.ReadInt();
+			input = buff.ReadChar();
 		}
 
 		public override void Run(int _gId)
 		{
-			ServerManager.GetGame(_gId).Move(this);
+			throw new System.NotImplementedException();
 		}
 
 		public override byte[] Serialize()
 		{
-			return Serialize([2, playerId, data, inVect.X, inVect.Y]);
+			return Serialize([2, playerId, data, input]);
 		}
 	}
 }

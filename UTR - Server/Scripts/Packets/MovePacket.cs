@@ -28,8 +28,7 @@ namespace packets
 
 		public override void Run(int _gId)
 		{
-			//ServerManager.Print("pain");
-			//ServerManager.GetGame(_gId).SendAll(Serialize());
+			ServerManager.GetGame(_gId).Move(this);
 		}
 	}
 }

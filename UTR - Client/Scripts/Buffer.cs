@@ -32,4 +32,11 @@ public class Buffer(byte[] _buff)
 
 		return val;
 	}
+
+	public char ReadChar()
+	{
+		char val = BitConverter.ToChar(data, pos);
+		pos += 2;
+		return val;
+	}
 }
