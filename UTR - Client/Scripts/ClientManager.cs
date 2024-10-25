@@ -100,6 +100,22 @@ public partial class ClientManager : Node
 			if (!inventory.Visible) inventory.Show();
 			else inventory.Hide();
 		}
+
+		int _in = -1;
+
+		if (@event.IsActionPressed("slot_1"))
+			_in = 1;
+		if (@event.IsActionPressed("slot_2"))
+			_in = 2;
+		if (@event.IsActionPressed("slot_3"))
+			_in = 3;
+		if (@event.IsActionPressed("slot_4"))
+			_in = 4;
+		if (@event.IsActionPressed("slot_5"))
+			_in = 5;
+
+		if (_in != -1)
+			client.udp.Send(new InputPacket(client.id, _in).Serialize());
 	}
 
 	private static void ReadQueue()
@@ -188,6 +204,11 @@ public partial class ClientManager : Node
 		else hotbar.SetSlot(_item, _slot, _amt);
 	}
 
+	public static void SetPlayerItem(int _pId, items.Item _item)
+	{
+		Print("Set player (" + _pId + ") item to, " + _item.item.name);
+	}
+	
 	public static void SetClient(Packet _packet)
 	{
 		client.id = _packet.playerId;

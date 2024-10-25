@@ -33,6 +33,11 @@ namespace packets
 
 		public override void Run()
 		{
+			if (data == 2)
+			{
+				ClientManager.SetPlayerItem(playerId, item);
+				return;
+			}
 			if (playerId == ClientManager.client.id)
 			{
 				ClientManager.SetSlot(item, slot, count, data);
