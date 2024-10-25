@@ -113,6 +113,8 @@ public partial class ClientManager : Node
 			_in = 4;
 		if (@event.IsActionPressed("slot_5"))
 			_in = 5;
+		if (@event.IsActionPressed("use"))
+			_in = 6;
 
 		if (_in != -1)
 			client.udp.Send(new InputPacket(client.id, _in).Serialize());
@@ -140,6 +142,7 @@ public partial class ClientManager : Node
 			sceneTree.GetNode<Node2D>("Players").AddChild(_tempPlayer);
 
 			players[_move.playerId] = _tempPlayer as Player;
+			players[_move.playerId].Instantiate();
 
 			if (_move.playerId == client.id)
 			{
@@ -206,6 +209,8 @@ public partial class ClientManager : Node
 
 	public static void SetPlayerItem(int _pId, items.Item _item)
 	{
+		players[_pId].SetActiveItem(_item);
+
 		Print("Set player (" + _pId + ") item to, " + _item.item.name);
 	}
 	

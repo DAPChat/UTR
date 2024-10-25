@@ -23,6 +23,8 @@ namespace packets
 		{
 			if (input >= 1 && input <= 5)
 				ServerManager.GetClient(playerId).player.SetActiveSlot(input);
+			if (input == 6)
+				ServerManager.GetClient(playerId).player.UseItem();
 		}
 
 		public override byte[] Serialize()

@@ -19,8 +19,10 @@ public partial class Player : CharacterBody2D
 		gId = _gId;
 
 		hotbar[0] = new(cId, ItemManager.GetItem(0), 0, 1, 1);
+		SlotPacket _sp = new(cId, hotbar[activeSlot].item, activeSlot, hotbar[activeSlot].count, 2);
 
 		ServerManager.GetGame(gId).SendTo(cId, hotbar[0].Serialize());
+		ServerManager.GetGame(gId).SendAll(_sp.Serialize());
 	}
 
 	public void SetActiveSlot(int _slot)
@@ -33,5 +35,17 @@ public partial class Player : CharacterBody2D
 		SlotPacket _sp = new(cId, hotbar[activeSlot].item, activeSlot, hotbar[activeSlot].count, 2);
 
 		ServerManager.GetGame(gId).SendAll(_sp.Serialize());
+	}
+
+	public void UseItem()
+	{
+		if (hotbar[activeSlot] == null) return;
+		
+		Item item = hotbar[activeSlot].item;
+
+		if (item.type == 1)
+		{
+			
+		}
 	}
 }

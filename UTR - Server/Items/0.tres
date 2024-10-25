@@ -5,12 +5,13 @@
 [resource]
 script = ExtResource("1_foy8c")
 type = 0
-baseDmg = 0
+baseDmg = 10.0
 lvlScale = 0
 range = 0
 cooldown = 0
 name = "Sword"
 description = "Sharp, pointy thing"
 icon = ""
+maxStack = 1.0
 attributeType = PackedInt32Array()
 attributeValues = PackedInt32Array()

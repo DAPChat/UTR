@@ -133,6 +133,7 @@ script = ExtResource("1_vpr8p")
 y_sort_enabled = true
 
 [node name="GameRoom" type="TileMapLayer" parent="."]
+z_index = -1
 tile_set = SubResource("TileSet_ii8ot")
 
 [node name="UI" type="CanvasLayer" parent="."]
