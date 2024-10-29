@@ -146,9 +146,13 @@ public partial class ClientManager : Node
 
 			if (_move.playerId == client.id)
 			{
-				active = true;
 				_tempPlayer.AddChild(camera);
 			}
+		}
+
+		if (!active && client.id == _move.playerId && _move.data != -2)
+		{
+			active = true;
 		}
 
 		AnimatedSprite2D _pAnim = players[_move.playerId].GetNode<AnimatedSprite2D>("PlayerView");
@@ -219,6 +223,8 @@ public partial class ClientManager : Node
 		client.id = _packet.playerId;
 
 		_packet.data = TitleScene.reqId;
+
+		MovePlayer(new(_packet.playerId, 0, 0, -2));
 
 		client.udp.Send(_packet.Serialize());
 	}

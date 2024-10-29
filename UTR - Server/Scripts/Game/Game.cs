@@ -41,6 +41,11 @@ namespace game
 
 			SendAll(new MovePacket(_c.id, _tempPlayer.Position.X, _tempPlayer.Position.Y, 1).Serialize());
 			SendTo(_c.id, dun.rooms[0].Serialize());
+
+			foreach (Client c in clients.Values)
+			{
+				SendTo(_c.id, new SlotPacket(c.id, c.player.hotbar[c.player.activeSlot].item, c.player.activeSlot, c.player.hotbar[c.player.activeSlot].count, 2).Serialize());
+			}
 		}
 
 		public void Move(MovePacket _pa)

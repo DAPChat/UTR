@@ -8,7 +8,8 @@ public partial class Player : CharacterBody2D
 {
 	int cId;
 	int gId;
-	int activeSlot = 0;
+	
+	public int activeSlot = 0;
 
 	public SlotPacket[] inventory = new SlotPacket[8];
 	public SlotPacket[] hotbar = new SlotPacket[5];
