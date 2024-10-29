@@ -35,7 +35,7 @@ namespace packets
 		{
 			if (data == 2)
 			{
-				ClientManager.SetPlayerItem(playerId, item);
+				ClientManager.SetPlayerItem(playerId, this);
 				return;
 			}
 			if (playerId == ClientManager.client.id)

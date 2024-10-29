@@ -62,6 +62,10 @@ namespace items
 			{
 				type = 1;
 			}
+			else if (_item.GetType() == typeof(Consumable))
+			{
+				type = 2;
+			}
 
 			return type;
 		}

@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="ItemBase" load_steps=2 format=3 uid="uid://bbod605hobovx"]
+
+[ext_resource type="Script" path="res://Scripts/Items/ItemBase.cs" id="1_4y233"]
+
+[resource]
+script = ExtResource("1_4y233")
+name = ""
+description = ""
+icon = ""
+maxStack = 0
+attributeType = PackedInt32Array()
+attributeValues = PackedInt32Array()

@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="Consumable" load_steps=2 format=3 uid="uid://dbjthg2q8uise"]
+
+[ext_resource type="Script" path="res://Scripts/Items/Consumable.cs" id="1_liirn"]
+
+[resource]
+script = ExtResource("1_liirn")
+recover = 15.0
+value = 0
+name = "Health Potion"
+description = "The true american way"
+icon = ""
+maxStack = 10.0
+attributeType = PackedInt32Array()
+attributeValues = PackedInt32Array()

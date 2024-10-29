@@ -211,11 +211,9 @@ public partial class ClientManager : Node
 		else hotbar.SetSlot(_item, _slot, _amt);
 	}
 
-	public static void SetPlayerItem(int _pId, items.Item _item)
+	public static void SetPlayerItem(int _pId, SlotPacket _slot)
 	{
-		players[_pId].SetActiveItem(_item);
-
-		Print("Set player (" + _pId + ") item to, " + _item.item.name);
+		players[_pId].SetActiveItem(_slot);
 	}
 	
 	public static void SetClient(Packet _packet)

@@ -22,7 +22,10 @@ namespace items
 
 		public virtual byte[] Serialize()
 		{
-			return packets.Packet.Serialize([int.Parse(ResourcePath.Where(char.IsDigit).ToArray())]);
+			string _rp = ResourcePath;
+			_rp = _rp.Substring(_rp.IndexOf("ms/") + 3, -(_rp.IndexOf("ms/") + 3) + _rp.IndexOf(".tres"));
+
+			return packets.Packet.Serialize([int.Parse(_rp)]);
 		}
 	}
 }

@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://doaccr1k3qtwt"]
+[gd_scene load_steps=14 format=3 uid="uid://doaccr1k3qtwt"]
 
 [ext_resource type="Script" path="res://Scripts/ClientManager.cs" id="1_vpr8p"]
 [ext_resource type="Script" path="res://Scripts/Inventory.cs" id="3_5xvom"]
@@ -125,6 +125,18 @@ corner_radius_bottom_left = 5
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_vegbu"]
 bg_color = Color(0.376471, 0.376471, 0.376471, 0.533333)
+
+[sub_resource type="CanvasTexture" id="CanvasTexture_aijxp"]
+
+[sub_resource type="CanvasTexture" id="CanvasTexture_he8gd"]
+
+[sub_resource type="StyleBoxLine" id="StyleBoxLine_u5rgl"]
+color = Color(0.680024, 0.190517, 0.215848, 1)
+thickness = 16
+
+[sub_resource type="StyleBoxLine" id="StyleBoxLine_a68s7"]
+color = Color(0.245913, 0.521782, 0.27638, 1)
+thickness = 16
 
 [node name="GameScene" type="Node2D"]
 script = ExtResource("1_vpr8p")
@@ -312,3 +324,24 @@ offset_top = 10.0
 offset_right = 590.0
 offset_bottom = 110.0
 metadata/_edit_lock_ = true
+
+[node name="Health" type="Label" parent="UI"]
+offset_left = 28.0
+offset_top = 16.0
+offset_right = 225.0
+offset_bottom = 52.0
+theme_override_font_sizes/font_size = 26
+text = "Health: 100/100"
+
+[node name="HealthSlider" type="HSlider" parent="UI/Health"]
+offset_top = 36.0
+offset_right = 400.0
+offset_bottom = 68.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_icons/grabber_highlight = SubResource("CanvasTexture_aijxp")
+theme_override_icons/grabber_disabled = SubResource("CanvasTexture_he8gd")
+theme_override_styles/slider = SubResource("StyleBoxLine_u5rgl")
+theme_override_styles/grabber_area = SubResource("StyleBoxLine_a68s7")
+editable = false
+scrollable = false

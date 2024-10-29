@@ -8,8 +8,13 @@ public partial class Player : CharacterBody2D
 {
 	int cId;
 	int gId;
-	
+
+	bool noItem = true;
+
+	int maxHealth = 100;
+
 	public int activeSlot = 0;
+	public int health;
 
 	public SlotPacket[] inventory = new SlotPacket[8];
 	public SlotPacket[] hotbar = new SlotPacket[5];
@@ -19,21 +24,36 @@ public partial class Player : CharacterBody2D
 		cId = _cId;
 		gId = _gId;
 
+		health = 50;
+
 		hotbar[0] = new(cId, ItemManager.GetItem(0), 0, 1, 1);
+		hotbar[1] = new(cId, ItemManager.GetItem(1), 1, 2, 1);
+		noItem = false;
 		SlotPacket _sp = new(cId, hotbar[activeSlot].item, activeSlot, hotbar[activeSlot].count, 2);
 
 		ServerManager.GetGame(gId).SendTo(cId, hotbar[0].Serialize());
+		ServerManager.GetGame(gId).SendTo(cId, hotbar[1].Serialize());
 		ServerManager.GetGame(gId).SendAll(_sp.Serialize());
 	}
 
 	public void SetActiveSlot(int _slot)
 	{
-		if (activeSlot == _slot - 1) return;
-		if (hotbar[_slot - 1] == null) return;
+		int _tempIn = activeSlot;
 
-		activeSlot = _slot-1;
+		activeSlot = _slot - 1;
 
-		SlotPacket _sp = new(cId, hotbar[activeSlot].item, activeSlot, hotbar[activeSlot].count, 2);
+		SlotPacket _sp;
+
+		if ((_tempIn == _slot - 1 && !noItem) || hotbar[_slot - 1] == null)
+		{
+			_sp = new(cId, ItemManager.GetItem(-1), activeSlot, 0, 2);
+			noItem = true;
+		}
+		else
+		{
+			noItem = false;
+			_sp = new(cId, hotbar[activeSlot].item, activeSlot, hotbar[activeSlot].count, 2);
+		}
 
 		ServerManager.GetGame(gId).SendAll(_sp.Serialize());
 	}
@@ -46,7 +66,27 @@ public partial class Player : CharacterBody2D
 
 		if (item.type == 1)
 		{
-			
+
+		}
+		else if (item.type == 2)
+		{
+			Consumable _cons = (Consumable)item.item;
+
+			switch (_cons.value)
+			{
+				case 0:
+					health = Math.Clamp(_cons.recover + health, 0, maxHealth);
+					GD.Print(health);
+					break;
+			}
+
+			hotbar[activeSlot].count -= 1;
+		}
+
+		if (hotbar[activeSlot].count <= 0)
+		{
+			hotbar[activeSlot] = null;
+			// Send packet to remove item (item id -1)
 		}
 	}
 }
