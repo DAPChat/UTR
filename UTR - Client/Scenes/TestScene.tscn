@@ -48,6 +48,8 @@ theme_override_styles/hover = SubResource("StyleBoxTexture_dkd6b")
 theme_override_styles/pressed = SubResource("StyleBoxTexture_m5dvs")
 theme_override_styles/normal = SubResource("StyleBoxTexture_jxuip")
 shortcut = SubResource("Shortcut_wwacl")
+shortcut_feedback = false
+shortcut_in_tooltip = false
 
 [node name="StartText" type="Label" parent="CanvasLayer"]
 anchors_preset = 8
