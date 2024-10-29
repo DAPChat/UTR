@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://cf10amu8jbh4x"]
+[gd_scene load_steps=11 format=3 uid="uid://cf10amu8jbh4x"]
 
 [ext_resource type="Script" path="res://Scripts/TitleScene.cs" id="1_22tra"]
 [ext_resource type="FontFile" uid="uid://dr4b7ulxi2rc0" path="res://Assets/Fonts/MinimalPixelFont.ttf" id="2_bpuxe"]
@@ -15,6 +15,12 @@ texture = ExtResource("4_dsih5")
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_jxuip"]
 texture = ExtResource("3_ul0t0")
+
+[sub_resource type="InputEventAction" id="InputEventAction_yfirh"]
+action = &"ui_accept"
+
+[sub_resource type="Shortcut" id="Shortcut_wwacl"]
+events = [SubResource("InputEventAction_yfirh")]
 
 [node name="TitleScene" type="Node2D"]
 script = ExtResource("1_22tra")
@@ -41,6 +47,7 @@ theme_override_styles/focus = SubResource("StyleBoxEmpty_ljah3")
 theme_override_styles/hover = SubResource("StyleBoxTexture_dkd6b")
 theme_override_styles/pressed = SubResource("StyleBoxTexture_m5dvs")
 theme_override_styles/normal = SubResource("StyleBoxTexture_jxuip")
+shortcut = SubResource("Shortcut_wwacl")
 
 [node name="StartText" type="Label" parent="CanvasLayer"]
 anchors_preset = 8
