@@ -15,6 +15,7 @@ public partial class Player : CharacterBody2D
 
 	public int activeSlot = 0;
 	public int health;
+	public int mana;
 
 	public SlotPacket[] inventory = new SlotPacket[8];
 	public SlotPacket[] hotbar = new SlotPacket[5];
@@ -34,6 +35,8 @@ public partial class Player : CharacterBody2D
 		ServerManager.GetGame(gId).SendTo(cId, hotbar[0].Serialize());
 		ServerManager.GetGame(gId).SendTo(cId, hotbar[1].Serialize());
 		ServerManager.GetGame(gId).SendAll(_sp.Serialize());
+
+		ServerManager.GetGame(gId).SendTo(cId, new StatsPacket(cId, health, mana).Serialize());
 	}
 
 	public void SetActiveSlot(int _slot)
@@ -76,17 +79,20 @@ public partial class Player : CharacterBody2D
 			{
 				case 0:
 					health = Math.Clamp(_cons.recover + health, 0, maxHealth);
-					GD.Print(health);
 					break;
 			}
 
 			hotbar[activeSlot].count -= 1;
+
+			ServerManager.GetGame(gId).SendTo(cId, new StatsPacket(cId, health, mana).Serialize());
+			ServerManager.GetGame(gId).SendTo(cId, hotbar[activeSlot].Serialize());
 		}
 
 		if (hotbar[activeSlot].count <= 0)
 		{
 			hotbar[activeSlot] = null;
-			// Send packet to remove item (item id -1)
+			noItem = true;
+			ServerManager.GetGame(gId).SendAll(new SlotPacket(cId, ItemManager.GetItem(-1), activeSlot, 0, 2).Serialize());
 		}
 	}
 }

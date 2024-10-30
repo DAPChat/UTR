@@ -211,9 +211,22 @@ public partial class ClientManager : Node
 		else hotbar.SetSlot(_item, _slot, _amt);
 	}
 
-	public static void SetPlayerItem(int _pId, SlotPacket _slot)
+	public static void RemoveSlot(SlotPacket _slot)
 	{
-		players[_pId].SetActiveItem(_slot);
+		if (_slot.data == 0)
+			inventory.RemoveSlot(_slot.slot);
+		else hotbar.RemoveSlot(_slot.slot);
+	}
+
+	public static void SetPlayerItem(SlotPacket _slot)
+	{
+		players[_slot.playerId].SetActiveItem(_slot);
+	}
+
+	public static void UpdateStats(StatsPacket _stats)
+	{
+		sceneTree.GetNode<Label>("UI/Health").Text = _stats.health.ToString();// + "/" + players[_stats.playerId].health;
+		sceneTree.GetNode<HSlider>("UI/Health/HealthSlider").Value = _stats.health;
 	}
 	
 	public static void SetClient(Packet _packet)

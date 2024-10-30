@@ -7,11 +7,14 @@ public partial class Slot : Panel
 
 	public void Instance(items.Item _item)
 	{
+		if (item != null && _item.item == item.item) return;
+
 		item = _item;
 
-		MouseEntered += () =>
+		try
 		{
-			ClientManager.inventory.SetTooltip(item);
-		};
+			MouseEntered += () => ClientManager.inventory.SetTooltip(item);
+		}
+		catch (Exception) { }
 	}
 }

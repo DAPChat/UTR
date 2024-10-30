@@ -12,4 +12,13 @@ public partial class Hotbar : Panel
 
 		(_p as Slot).Instance(_item);
 	}
+
+	public void RemoveSlot(int _slot)
+	{
+		Panel _p = GetChild<Panel>(_slot);
+		_p.GetNode<TextureRect>("Sprite").Texture = null;
+		_p.GetNode<Label>("Count").Text = "";
+
+		//(_p as Slot).MouseEntered -= Slot.SetTooltip((_p as Slot).item);
+	}
 }

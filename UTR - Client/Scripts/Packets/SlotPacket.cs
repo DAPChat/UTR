@@ -35,12 +35,13 @@ namespace packets
 		{
 			if (data == 2)
 			{
-				ClientManager.SetPlayerItem(playerId, this);
+				ClientManager.SetPlayerItem(this);
 				return;
 			}
 			if (playerId == ClientManager.client.id)
 			{
-				ClientManager.SetSlot(item, slot, count, data);
+				if (count <= 0) ClientManager.RemoveSlot(this);
+				else ClientManager.SetSlot(item, slot, count, data);
 			}
 		}
 	}

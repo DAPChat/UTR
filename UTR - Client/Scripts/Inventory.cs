@@ -20,8 +20,17 @@ public partial class Inventory : Panel
 		(_p as Slot).Instance(_item);
 	}
 
+	public void RemoveSlot(int _slot)
+	{
+		Panel _p = GetChild<Panel>(_slot);
+		_p.GetNode<TextureRect>("Sprite").Texture = null;
+		_p.GetNode<Label>("Count").Text = "";
+	}
+
 	public void SetTooltip(Item _item)
 	{
+		if (_item == null) return;
+
 		GetNode<RichTextLabel>("Tooltip").Text = "Tooltip\n" + _item.ToString();
 	}
 }

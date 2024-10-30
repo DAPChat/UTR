@@ -334,6 +334,7 @@ theme_override_font_sizes/font_size = 26
 text = "Health: 100/100"
 
 [node name="HealthSlider" type="HSlider" parent="UI/Health"]
+layout_mode = 0
 offset_top = 36.0
 offset_right = 400.0
 offset_bottom = 68.0
