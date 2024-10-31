@@ -346,3 +346,5 @@ theme_override_styles/slider = SubResource("StyleBoxLine_u5rgl")
 theme_override_styles/grabber_area = SubResource("StyleBoxLine_a68s7")
 editable = false
 scrollable = false
+
+[node name="Enemies" type="Node" parent="."]

@@ -18,3 +18,5 @@ script = ExtResource("1_6w0mk")
 
 [node name="DungeonT" type="TileMapLayer" parent="."]
 tile_set = SubResource("TileSet_tw3l5")
+
+[node name="Enemies" type="Node" parent="."]

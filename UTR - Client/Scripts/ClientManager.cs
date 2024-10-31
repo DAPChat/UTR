@@ -12,6 +12,8 @@ public partial class ClientManager : Node
 
 	static Dictionary<int, Player> players = new();
 
+	static Dictionary<int, RigidBody2D> entities = new();
+
 	public static bool active = false;
 	public static int curId;
 	public static List<Packet> packetQ = new();
@@ -229,6 +231,18 @@ public partial class ClientManager : Node
 		sceneTree.GetNode<HSlider>("UI/Health/HealthSlider").Value = _stats.health;
 	}
 	
+	public static void MoveEntity(EnemyPacket _enemy)
+	{
+		if (!entities.ContainsKey(_enemy.enemyId))
+		{
+			RigidBody2D body = (RigidBody2D)ResourceLoader.Load<PackedScene>("res://Scenes/enemy.tscn").Instantiate().Duplicate();
+
+			sceneTree.GetNode<Node>("Enemies").AddChild(body);
+			entities[_enemy.enemyId] = body;
+		}
+		entities[_enemy.enemyId].Position = new (_enemy.x, _enemy.y);
+	}
+
 	public static void SetClient(Packet _packet)
 	{
 		client.id = _packet.playerId;

@@ -1,0 +1,45 @@
+[gd_scene load_steps=7 format=3 uid="uid://dl8yxrbhvp4fr"]
+
+[ext_resource type="Texture2D" uid="uid://dw7qksnxntx2s" path="res://Assets/pixil-frame-0 (11).png" id="1_bi6vh"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_vwan5"]
+radius = 5.0
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vtx4k"]
+atlas = ExtResource("1_bi6vh")
+region = Rect2(25, 0, 28, 80)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_pi5n2"]
+atlas = ExtResource("1_bi6vh")
+region = Rect2(69, 0, 28, 80)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6ucmm"]
+atlas = ExtResource("1_bi6vh")
+region = Rect2(113, 0, 28, 80)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_s3mr6"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vtx4k")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_pi5n2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6ucmm")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[node name="Enemy" type="RigidBody2D"]
+gravity_scale = 0.0
+
+[node name="Shape" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_vwan5")
+
+[node name="Sprite" type="AnimatedSprite2D" parent="."]
+scale = Vector2(0.178571, 0.178571)
+sprite_frames = SubResource("SpriteFrames_s3mr6")

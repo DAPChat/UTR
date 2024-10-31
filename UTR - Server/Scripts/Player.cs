@@ -6,7 +6,7 @@ using items;
 
 public partial class Player : CharacterBody2D
 {
-	int cId;
+	public int cId;
 	int gId;
 
 	bool noItem = true;

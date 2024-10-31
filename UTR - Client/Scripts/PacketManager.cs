@@ -18,6 +18,7 @@ public static class PacketManager
 		packetL[3] = CreateCreator<Buffer, RoomPacket>();
 		packetL[4] = CreateCreator<Buffer, SlotPacket>();
 		packetL[5] = CreateCreator<Buffer, StatsPacket>();
+		packetL[6] = CreateCreator<Buffer, EnemyPacket>();
 	}
 
 	static Func<TArg, T> CreateCreator<TArg, T>()

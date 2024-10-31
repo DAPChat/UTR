@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using game;
 using items;
 using System.Linq;
+using packets;
 
 public partial class ServerManager : Node
 {
@@ -20,9 +21,12 @@ public partial class ServerManager : Node
 	private static Dictionary<int, Client> clients = new();
 	private static Dictionary<int, Game> games = new();
 
+	private static List<Packet> gameQueue = new();
+
 	private static ServerManager tree;
 
-	private static bool checkingQueue = false;
+	//private static bool checkingQueue = false;
+	private static bool checkingGame = false;
 
 	public override void _Ready()
 	{
@@ -63,7 +67,7 @@ public partial class ServerManager : Node
 			if (clients[_p.playerId].udp.end == null)
 			{
 				clients[_p.playerId].udp.Connect(_clientEnd);
-				AddToGame(_p);
+				gameQueue.Add(_p);
 				return;
 			}
 
@@ -94,6 +98,18 @@ public partial class ServerManager : Node
 	public override void _Process(double delta)
 	{
 		base._Process(delta);
+
+		if (!checkingGame && gameQueue.Count > 0) ReadGameQueue();
+	}
+
+	private static void ReadGameQueue()
+	{
+		while (gameQueue.Count > 0)
+		{
+			if (gameQueue[0] == null) continue;
+			AddToGame(gameQueue[0]);
+			gameQueue.RemoveAt(0);
+		}
 	}
 
 	private static void AddClient(TcpClient _client)
@@ -111,10 +127,12 @@ public partial class ServerManager : Node
 
 	public static Client GetClient(int _cId)
 	{
+		if (!clients.ContainsKey(_cId)) return null;
+
 		return clients[_cId];
 	}
 
-	private static void AddToGame(packets.Packet _packet)
+	private static void AddToGame(Packet _packet)
 	{
 		int _pId = _packet.playerId;
 

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using enemy;
 using Godot;
 using packets;
 
@@ -24,6 +25,18 @@ namespace game
 			gameId = _gameId;
 			dun = new(10, GetNode<TileMapLayer>("DungeonT"));
 
+			for (int i = 0; i < 5; i++)
+			{
+				Enemy enemy = (Enemy)ResourceLoader.Load<PackedScene>("res://Scenes/enemy.tscn").Instantiate<Enemy>().Duplicate();
+				enemy.Position = new Vector2(GD.RandRange(1,16), GD.RandRange(1, 16));
+
+				enemy.enemyId = i;
+
+				enemy.Instantiate(gameId);
+
+				GetNode<Node>("Enemies").AddChild(enemy);
+			}
+
 			foreach (Client _c in _clients)
 			{
 				CreateClient(_c);
@@ -41,6 +54,11 @@ namespace game
 
 			SendAll(new MovePacket(_c.id, _tempPlayer.Position.X, _tempPlayer.Position.Y, 1).Serialize());
 			SendTo(_c.id, dun.rooms[0].Serialize());
+
+			foreach (Enemy enemy in GetNode<Node>("Enemies").GetChildren())
+			{
+				SendTo(_c.id, new EnemyPacket(_c.id, enemy).Serialize());
+			}
 
 			foreach (Client c in clients.Values)
 			{
