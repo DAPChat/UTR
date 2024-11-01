@@ -28,7 +28,7 @@ namespace game
 			for (int i = 0; i < 5; i++)
 			{
 				Enemy enemy = (Enemy)ResourceLoader.Load<PackedScene>("res://Scenes/enemy.tscn").Instantiate<Enemy>().Duplicate();
-				enemy.Position = new Vector2(GD.RandRange(1,16), GD.RandRange(1, 16));
+				enemy.Position = new Vector2(GD.RandRange(32,16*15), GD.RandRange(32, 16*15));
 
 				enemy.enemyId = i;
 
@@ -113,7 +113,10 @@ namespace game
 
 		public void Destroy(int _cId)
 		{
+			clients[_cId].player.QueueFree();
 			clients.Remove(_cId);
+
+			SendAll(new Packet(_cId, -2).Serialize());
 
 			if (clients.Count != 0) return;
 

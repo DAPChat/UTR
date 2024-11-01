@@ -243,6 +243,11 @@ public partial class ClientManager : Node
 		entities[_enemy.enemyId].Position = new (_enemy.x, _enemy.y);
 	}
 
+	public static void RemoveClient(int _id)
+	{
+		players[_id].QueueFree();
+	}
+
 	public static void SetClient(Packet _packet)
 	{
 		client.id = _packet.playerId;

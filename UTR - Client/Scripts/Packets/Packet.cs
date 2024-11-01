@@ -21,7 +21,8 @@ namespace packets
 
 		public virtual void Run()
 		{
-			ClientManager.SetClient(this);
+			if (data == -2) ClientManager.RemoveClient(playerId);
+			else if (data == -1) ClientManager.SetClient(this);
 		}
 
 		public virtual byte[] Serialize()

@@ -60,16 +60,13 @@ namespace enemy
 		{
 			base._PhysicsProcess(delta);
 
-			if (trackingId != -1)
+			if (trackingId != -1 && ServerManager.GetClient(trackingId) != null)
 			{
-				if (ServerManager.GetClient(trackingId) == null)
-				{
-					GetNode<Area2D>("TrackerArea").EmitSignal(Area2D.SignalName.AreaExited);
-					return;
-				}
 				Vector2 pos = (ServerManager.GetClient(trackingId).player.Position - Position).Normalized();
-				Velocity = pos*(float)delta*500;
+
+				Velocity = pos * (float)delta * 500;
 				MoveAndSlide();
+				//MoveAndCollide(pos * (float)delta * 10);
 
 				ServerManager.GetGame(gId).SendAll(new packets.EnemyPacket(-1, this).Serialize());
 			}
