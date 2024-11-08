@@ -16,6 +16,8 @@ namespace enemy
 
 		public int trackingId = -1;
 
+		public bool active = false;
+
 		public void Instantiate(int _gId)
 		{
 			gId = _gId;
@@ -54,11 +56,15 @@ namespace enemy
 				//if (body.GetParent().GetType() == typeof (Player))
 					//GD.Print("Hello");
 			};
+
+			active = true;
 		}
 
 		public override void _PhysicsProcess(double delta)
 		{
 			base._PhysicsProcess(delta);
+
+			if (!active) return;
 
 			if (trackingId != -1 && ServerManager.GetClient(trackingId) != null)
 			{
@@ -69,6 +75,17 @@ namespace enemy
 				//MoveAndCollide(pos * (float)delta * 10);
 
 				ServerManager.GetGame(gId).SendAll(new packets.EnemyPacket(-1, this).Serialize());
+			}
+		}
+
+		public void Damage(int amt)
+		{
+			health -= amt;
+			if (health <= 0)
+			{
+				active = false;
+				ServerManager.GetGame(gId).SendAll(new packets.EnemyPacket(-1, this, 0).Serialize());
+				QueueFree();
 			}
 		}
 	}

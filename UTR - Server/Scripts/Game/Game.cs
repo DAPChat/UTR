@@ -28,7 +28,7 @@ namespace game
 			for (int i = 0; i < 5; i++)
 			{
 				Enemy enemy = (Enemy)ResourceLoader.Load<PackedScene>("res://Scenes/enemy.tscn").Instantiate<Enemy>().Duplicate();
-				enemy.Position = new Vector2(GD.RandRange(32,16*15), GD.RandRange(32, 16*15));
+				enemy.Position = new Vector2(GD.RandRange(20,10*15), GD.RandRange(20, 10*15));
 
 				enemy.enemyId = i;
 

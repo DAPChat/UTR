@@ -1,4 +1,4 @@
-[gd_scene load_steps=4 format=3 uid="uid://c8isk4rjdxrwl"]
+[gd_scene load_steps=5 format=3 uid="uid://c8isk4rjdxrwl"]
 
 [ext_resource type="Script" path="res://Scripts/Player.cs" id="1_ny11a"]
 
@@ -8,6 +8,9 @@ height = 12.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_m7028"]
 radius = 7.07107
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_j64tp"]
+radius = 8.0
 
 [node name="Player" type="CharacterBody2D"]
 collision_layer = 4
@@ -22,6 +25,13 @@ script = ExtResource("1_ny11a")
 shape = SubResource("CapsuleShape2D_fnr0i")
 
 [node name="Area" type="Area2D" parent="."]
+collision_mask = 2
 
 [node name="AreaShape" type="CollisionShape2D" parent="Area"]
 shape = SubResource("CircleShape2D_m7028")
+
+[node name="WeaponArea" type="Area2D" parent="."]
+
+[node name="Shape" type="CollisionShape2D" parent="WeaponArea"]
+position = Vector2(-4, 0)
+shape = SubResource("CircleShape2D_j64tp")

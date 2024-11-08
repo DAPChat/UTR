@@ -3,6 +3,9 @@ using System;
 
 using packets;
 using items;
+using enemy;
+using System.Collections.Generic;
+using System.Linq;
 
 public partial class Player : CharacterBody2D
 {
@@ -20,12 +23,28 @@ public partial class Player : CharacterBody2D
 	public SlotPacket[] inventory = new SlotPacket[8];
 	public SlotPacket[] hotbar = new SlotPacket[5];
 
+	// Temp Solution (Replace the following w/ spawning a new shape
+	//Area2D area;
+	List<Enemy> enemies = new();
+
 	public void Instantiate(int _cId, int _gId)
 	{
 		cId = _cId;
 		gId = _gId;
 
 		health = 50;
+
+		Area2D _ar = GetNode<Area2D>("WeaponArea");
+
+		_ar.AreaEntered += (body) =>
+		{
+			if (body.GetParentOrNull<Enemy>() != null) enemies.Add(body.GetParent<Enemy>());
+		};
+
+		_ar.AreaExited += (body) =>
+		{
+			if (body.GetParentOrNull<Enemy>() != null) enemies.Remove(body.GetParent<Enemy>());
+		};
 
 		hotbar[0] = new(cId, ItemManager.GetItem(0), 0, 1, 1);
 		hotbar[1] = new(cId, ItemManager.GetItem(1), 1, 2, 1);
@@ -69,7 +88,14 @@ public partial class Player : CharacterBody2D
 
 		if (item.type == 1)
 		{
+			Tool tool = (Tool)item.item;
 
+			if (tool.type == 0)
+			{
+				SetCollider(8);
+				if (enemies.Count == 0) { return; }
+				enemies.FirstOrDefault().Damage(tool.baseDmg);
+			}
 		}
 		else if (item.type == 2)
 		{
@@ -94,5 +120,12 @@ public partial class Player : CharacterBody2D
 			noItem = true;
 			ServerManager.GetGame(gId).SendAll(new SlotPacket(cId, ItemManager.GetItem(-1), activeSlot, 0, 2).Serialize());
 		}
+	}
+
+	public void SetCollider(int size)
+	{
+		Area2D _ar = GetNode<Area2D>("WeaponArea");
+		CollisionShape2D _sh = _ar.GetNode<CollisionShape2D>("Shape");
+		((CircleShape2D)_sh.Shape).Radius = size;
 	}
 }

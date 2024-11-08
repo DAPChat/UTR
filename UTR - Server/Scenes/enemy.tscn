@@ -30,6 +30,7 @@ shape = SubResource("CircleShape2D_12sig")
 
 [node name="AttackArea" type="Area2D" parent="."]
 scale = Vector2(0.25, 0.25)
+collision_layer = 2
 
 [node name="AttackShape" type="CollisionShape2D" parent="AttackArea"]
 shape = SubResource("CircleShape2D_w6l4f")

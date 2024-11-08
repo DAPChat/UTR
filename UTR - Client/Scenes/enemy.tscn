@@ -1,5 +1,6 @@
-[gd_scene load_steps=7 format=3 uid="uid://dl8yxrbhvp4fr"]
+[gd_scene load_steps=8 format=3 uid="uid://dl8yxrbhvp4fr"]
 
+[ext_resource type="Script" path="res://Scripts/Entity/Enemy.cs" id="1_b6an4"]
 [ext_resource type="Texture2D" uid="uid://dw7qksnxntx2s" path="res://Assets/pixil-frame-0 (11).png" id="1_bi6vh"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_vwan5"]
@@ -36,6 +37,7 @@ animations = [{
 
 [node name="Enemy" type="RigidBody2D"]
 gravity_scale = 0.0
+script = ExtResource("1_b6an4")
 
 [node name="Shape" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_vwan5")

@@ -12,7 +12,7 @@ public partial class ClientManager : Node
 
 	static Dictionary<int, Player> players = new();
 
-	static Dictionary<int, RigidBody2D> entities = new();
+	static Dictionary<int, Entity> entities = new();
 
 	public static bool active = false;
 	public static int curId;
@@ -67,12 +67,12 @@ public partial class ClientManager : Node
 		if (Input.IsActionPressed("left"))
 		{
 			_inputVect.X -= 1;
-			_sprite.FlipH = false;
+			players[client.id].Scale = new (1, 1);
 		}
 		if (Input.IsActionPressed("right"))
 		{
 			_inputVect.X += 1;
-			_sprite.FlipH = true;
+			players[client.id].Scale = new(-1, 1);
 		}
 
 		if (_inputVect == Vector2I.Zero || !_sprite.IsPlaying())
@@ -158,6 +158,7 @@ public partial class ClientManager : Node
 		}
 
 		AnimatedSprite2D _pAnim = players[_move.playerId].GetNode<AnimatedSprite2D>("PlayerView");
+		Sprite2D _wpn = players[_move.playerId].GetNode<Sprite2D>("Item");
 
 		if (_move.data == 1 && _move.playerId != client.id)
 		{
@@ -167,9 +168,19 @@ public partial class ClientManager : Node
 			if (_pLocX != _nLocX)
 			{
 				if (_pLocX < _nLocX)
-					_pAnim.FlipH = true;
+				{
+					//_pAnim.FlipH = true;
+					//_wpn.FlipH = true;
+					//_wpn.Position = new Vector2(8,0);
+					players[_move.playerId].Scale = new Vector2(-1, 1);
+				}
 				else if (_pLocX > _nLocX)
-					_pAnim.FlipH = false;
+				{
+					//_pAnim.FlipH = false;
+					//_wpn.FlipH = false;
+					//_wpn.Position = new Vector2(-4,0);
+					players[_move.playerId].Scale = new Vector2(1, 1);
+				}
 			}
 
 			if (_pAnim.Animation != "run_max")
@@ -235,12 +246,19 @@ public partial class ClientManager : Node
 	{
 		if (!entities.ContainsKey(_enemy.enemyId))
 		{
-			RigidBody2D body = (RigidBody2D)ResourceLoader.Load<PackedScene>("res://Scenes/enemy.tscn").Instantiate().Duplicate();
+			Entity body = (Entity)ResourceLoader.Load<PackedScene>("res://Scenes/enemy.tscn").Instantiate().Duplicate();
 
 			sceneTree.GetNode<Node>("Enemies").AddChild(body);
+			body.Instantiate();
 			entities[_enemy.enemyId] = body;
 		}
-		entities[_enemy.enemyId].Position = new (_enemy.x, _enemy.y);
+		entities[_enemy.enemyId].Update(new(_enemy.x, _enemy.y), _enemy.health);
+	}
+
+	public static void RemoveEntity(int _eId)
+	{
+		entities[_eId].QueueFree();
+		entities.Remove(_eId);
 	}
 
 	public static void RemoveClient(int _id)

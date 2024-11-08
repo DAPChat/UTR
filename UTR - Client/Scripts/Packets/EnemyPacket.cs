@@ -5,6 +5,7 @@
 		public int enemyId;
 		public float x;
 		public float y;
+		public int health;
 
 		public EnemyPacket(Buffer _buff) : base(_buff)
 		{
@@ -19,12 +20,15 @@
 
 		public override void Run()
 		{
-			ClientManager.MoveEntity(this);
+			if (data == 0)
+				ClientManager.RemoveEntity(enemyId);
+			else
+				ClientManager.MoveEntity(this);
 		}
 
 		public override byte[] Serialize()
 		{
-			return Serialize([6, playerId, data, enemyId, x, y]);
+			return Serialize([6, playerId, data, enemyId, x, y, health]);
 		}
 
 		public override void Deserialize(Buffer buff)
@@ -33,6 +37,7 @@
 			enemyId = buff.ReadInt();
 			x = buff.ReadFloat();
 			y = buff.ReadFloat();
+			health = buff.ReadInt();
 		}
 	}
 }
