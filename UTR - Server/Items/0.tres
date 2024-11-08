@@ -12,6 +12,6 @@ cooldown = 0
 name = "Sword"
 description = "Sharp, pointy thing"
 icon = ""
-maxStack = 1.0
+maxStack = 1
 attributeType = PackedInt32Array()
 attributeValues = PackedInt32Array()

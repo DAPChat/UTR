@@ -8,7 +8,7 @@ namespace packets
 
 		public MovePacket(Buffer _buff) : base(_buff) { }
 
-		public MovePacket(int _id, float _x, float _y, int _data = 0) : base(_id, _data)
+		public MovePacket(int _id, float _x, float _y, int _data = -1) : base(_id, _data)
 		{
 			x = _x;
 			y = _y;
