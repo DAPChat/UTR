@@ -160,27 +160,18 @@ public partial class ClientManager : Node
 		AnimatedSprite2D _pAnim = players[_move.playerId].GetNode<AnimatedSprite2D>("PlayerView");
 		Sprite2D _wpn = players[_move.playerId].GetNode<Sprite2D>("Item");
 
-		if (_move.data == 1 && _move.playerId != client.id)
+		if (_move.data != 0 && _move.playerId != client.id)
 		{
 			float _pLocX = players[_move.playerId].Position.X;
 			float _nLocX = _move.x;
 
-			if (_pLocX != _nLocX)
+			if (_move.data == 1)
 			{
-				if (_pLocX < _nLocX)
-				{
-					//_pAnim.FlipH = true;
-					//_wpn.FlipH = true;
-					//_wpn.Position = new Vector2(8,0);
-					players[_move.playerId].Scale = new Vector2(-1, 1);
-				}
-				else if (_pLocX > _nLocX)
-				{
-					//_pAnim.FlipH = false;
-					//_wpn.FlipH = false;
-					//_wpn.Position = new Vector2(-4,0);
-					players[_move.playerId].Scale = new Vector2(1, 1);
-				}
+				players[_move.playerId].Scale = new Vector2(-1, 1);
+			}
+			else
+			{
+				players[_move.playerId].Scale = new Vector2(1, 1);
 			}
 
 			if (_pAnim.Animation != "run_max")

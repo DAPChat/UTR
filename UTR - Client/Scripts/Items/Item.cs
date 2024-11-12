@@ -56,6 +56,8 @@ namespace items
 		{
 			int type = 0;
 
+			if (_item == null) return -1;
+
 			if (_item.GetType() == typeof(Tool))
 			{
 				type = 1;

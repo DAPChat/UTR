@@ -1,4 +1,4 @@
-[gd_scene load_steps=5 format=3 uid="uid://cnm02w8fk5ipn"]
+[gd_scene load_steps=6 format=3 uid="uid://cnm02w8fk5ipn"]
 
 [ext_resource type="Script" path="res://Scripts/Game/Enemy.cs" id="1_ner2n"]
 
@@ -9,7 +9,10 @@ radius = 5.0
 radius = 150.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_w6l4f"]
-radius = 50.0
+radius = 30.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_amhkf"]
+radius = 5.0
 
 [node name="Enemy" type="CharacterBody2D"]
 collision_layer = 2
@@ -30,7 +33,12 @@ shape = SubResource("CircleShape2D_12sig")
 
 [node name="AttackArea" type="Area2D" parent="."]
 scale = Vector2(0.25, 0.25)
-collision_layer = 2
 
 [node name="AttackShape" type="CollisionShape2D" parent="AttackArea"]
 shape = SubResource("CircleShape2D_w6l4f")
+
+[node name="Hitbox" type="Area2D" parent="."]
+collision_layer = 2
+
+[node name="HitboxShape" type="CollisionShape2D" parent="Hitbox"]
+shape = SubResource("CircleShape2D_amhkf")

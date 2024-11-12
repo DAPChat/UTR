@@ -20,6 +20,8 @@ public partial class Player : CharacterBody2D
 	public int health;
 	public int mana;
 
+	public bool dir; // Left false, Right true
+
 	public SlotPacket[] inventory = new SlotPacket[8];
 	public SlotPacket[] hotbar = new SlotPacket[5];
 
@@ -92,7 +94,7 @@ public partial class Player : CharacterBody2D
 
 			if (tool.type == 0)
 			{
-				SetCollider(8);
+				SetCollider(4);
 				if (enemies.Count == 0) { return; }
 				enemies.FirstOrDefault().Damage(tool.baseDmg);
 			}
