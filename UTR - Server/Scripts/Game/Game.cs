@@ -23,7 +23,9 @@ namespace game
 		public void Instantiate(int _gameId, Client[] _clients)
 		{
 			gameId = _gameId;
-			dun = new(10, GetNode<TileMapLayer>("DungeonT"));
+			dun = new(10, 10, 10, GetNode<TileMapLayer>("DungeonT"));
+
+			while (dun.startRoom == new Vector2I(-1, -1)) { }
 
 			for (int i = 0; i < 5; i++)
 			{
@@ -53,12 +55,14 @@ namespace game
 			clients.Add(_c.id, _c);
 			CharacterBody2D _tempPlayer = (CharacterBody2D)ResourceLoader.Load<PackedScene>("res://Scenes/player.tscn").Instantiate().Duplicate();
 			GetNode<Node>("Players").AddChild(_tempPlayer);
-			_tempPlayer.Position = new (32, 32);
+			_tempPlayer.Position = new (dun.startRoom.X*160+32, dun.startRoom.Y*160+32);
 			_c.player = _tempPlayer as Player;
 			_c.player.Instantiate(_c.id, gameId);
 
 			SendAll(new MovePacket(_c.id, _tempPlayer.Position.X, _tempPlayer.Position.Y, 1).Serialize());
-			SendTo(_c.id, dun.rooms[0].Serialize());
+			
+			foreach (RoomPacket _rm in dun.rooms)
+				SendTo(_c.id, _rm.Serialize());
 
 			foreach (Enemy enemy in GetNode<Node>("Enemies").GetChildren())
 			{

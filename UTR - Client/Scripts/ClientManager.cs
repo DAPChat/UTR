@@ -196,6 +196,20 @@ public partial class ClientManager : Node
 
 		int _rScale = 10;
 
+		int x = _room.x * _rScale;
+		int y = _room.y * _rScale;
+		int h = _room.h * _rScale;
+		int w = _room.w * _rScale;
+
+		for (int i = x; i <= w + x; i++)
+		{
+			for (int j = y; j <= h + y; j++)
+			{
+				if (j == y || i == x || j == y + h || i == x + w)
+					dungeon.SetCell(new Vector2I(i, j), 0, new(0, 2));
+			}
+		}
+		return;
 		for (int i = _room.x; i <= _room.w*_rScale + _room.x + 1; i++)
 		{
 			for (int j = _room.y; j <= _room.h*_rScale + _room.y + 1; j++)
