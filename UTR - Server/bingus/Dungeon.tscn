@@ -112,7 +112,7 @@ sources/0 = SubResource("TileSetAtlasSource_gsxx6")
 [node name="Node2D" type="Node2D"]
 
 [node name="TileMapLayer" type="TileMapLayer" parent="."]
-scale = Vector2(10, 10)
+scale = Vector2(6, 6)
 tile_set = SubResource("TileSet_5mnm1")
 script = ExtResource("2_tk4xp")
 
