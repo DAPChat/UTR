@@ -19,7 +19,7 @@ public class Client
 
 	//10.72.101.156
 
-	public IPEndPoint end = new(IPAddress.Parse("192.168.234.221"), 6666);
+	public IPEndPoint end = new(IPAddress.Parse("10.72.110.84"), 6666);
 
 	public Client()
 	{

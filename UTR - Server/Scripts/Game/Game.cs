@@ -43,6 +43,11 @@ namespace game
 			}
 		}
 
+		public void Move(MovePacket _pa)
+		{
+			clients[_pa.playerId].player.Move(_pa);
+		}
+
 		public void CreateClient(Client _c)
 		{
 			clients.Add(_c.id, _c);
@@ -66,18 +71,6 @@ namespace game
 			}
 		}
 
-		public void Move(MovePacket _pa)
-		{
-			Player _p = ServerManager.GetClient(_pa.playerId).player;
-
-			if (_pa.x != 0)
-			{
-				_p.dir = _pa.x != -1;
-			}
-
-			_p.Velocity = _p.Velocity.MoveToward(new Vector2(_pa.x, _pa.y).Normalized() * 100, 1500 * (float)GetPhysicsProcessDeltaTime());
-		}
-
 		public void AddToQueue(Packet _packet)
 		{
 			packetQueue.Add(_packet);
@@ -97,21 +90,6 @@ namespace game
 			{
 				createQC = true;
 				CreateQueue();
-			}
-
-			foreach (Client _c in clients.Values)
-			{
-				Player _p = _c.player;
-
-				Vector2 _prev = _p.Position;
-				try
-				{
-					_p.MoveAndSlide();
-					_p.Scale = new(_p.dir ? 1 : -1, 1);
-				}
-				catch (Exception) { }
-				
-				SendAll(new MovePacket(_c.id, _p.Position.X, _p.Position.Y, _prev != _p.Position ? _p.dir ? 1 : -1 : 0).Serialize());
 			}
 		}
 

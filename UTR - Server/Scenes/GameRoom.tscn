@@ -22,3 +22,5 @@ tile_set = SubResource("TileSet_tw3l5")
 [node name="Enemies" type="Node" parent="."]
 
 [node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(227, 129)
+zoom = Vector2(2.5, 2.5)

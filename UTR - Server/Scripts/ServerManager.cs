@@ -175,6 +175,8 @@ public partial class ServerManager : Node
 
 	public static Game GetGame(int _gId)
 	{
+		if (!games.ContainsKey(_gId)) return null;
+
 		return games[_gId];
 	}
 

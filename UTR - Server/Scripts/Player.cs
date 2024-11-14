@@ -20,10 +20,12 @@ public partial class Player : CharacterBody2D
 	public int health;
 	public int mana;
 
-	public bool dir; // Left false, Right true
+	//public bool dir; // Left false, Right true
 
 	public SlotPacket[] inventory = new SlotPacket[8];
 	public SlotPacket[] hotbar = new SlotPacket[5];
+
+	public Vector2 inMove = new();
 
 	// Temp Solution (Replace the following w/ spawning a new shape
 	//Area2D area;
@@ -122,6 +124,35 @@ public partial class Player : CharacterBody2D
 			noItem = true;
 			ServerManager.GetGame(gId).SendAll(new SlotPacket(cId, ItemManager.GetItem(-1), activeSlot, 0, 2).Serialize());
 		}
+	}
+
+	public void Move(MovePacket move)
+	{
+		if (inMove == new Vector2(move.x, move.y)) return;
+
+		inMove = new (move.x, move.y);
+		if (inMove.X != 0)
+			if (inMove.X == 1)
+			{
+				Scale = new (1, -1);
+				RotationDegrees = 180f;
+			}else
+			{
+				Scale = new (1, 1);
+				RotationDegrees = 0f;
+			}
+	}
+
+	public override void _PhysicsProcess(double delta)
+	{
+		Vector2 prevPos = Position;
+
+		Velocity = Velocity.MoveToward(inMove.Normalized() * 100, 1500 * (float)GetPhysicsProcessDeltaTime());
+		MoveAndSlide();
+
+		if (ServerManager.GetGame(gId) == null) return;
+
+		ServerManager.GetGame(gId).SendAll(new MovePacket(cId, Position.X, Position.Y, prevPos != Position ? (int)inMove.X : 0).Serialize());
 	}
 
 	public void SetCollider(int size)
