@@ -18,19 +18,21 @@ collision_mask = 3
 motion_mode = 1
 slide_on_ceiling = false
 platform_floor_layers = 1
-platform_wall_layers = 2
+platform_wall_layers = 1
 script = ExtResource("1_ny11a")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CapsuleShape2D_fnr0i")
 
 [node name="Area" type="Area2D" parent="."]
+collision_layer = 4
 collision_mask = 2
 
 [node name="AreaShape" type="CollisionShape2D" parent="Area"]
 shape = SubResource("CircleShape2D_m7028")
 
 [node name="WeaponArea" type="Area2D" parent="."]
+collision_layer = 4
 collision_mask = 2
 
 [node name="Shape" type="CollisionShape2D" parent="WeaponArea"]

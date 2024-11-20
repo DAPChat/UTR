@@ -50,6 +50,7 @@ namespace packets
 						else if (t == typeof(float)) writer.Write((float)obj);
 						else if (t == typeof(string)) writer.Write((string)obj);
 						else if (t == typeof(char)) writer.Write((char)obj);
+						else if (t == typeof(bool)) writer.Write((bool)obj);
 					}
 				}
 

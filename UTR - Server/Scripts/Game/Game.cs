@@ -17,18 +17,19 @@ namespace game
 
 		public List<Client> createQ = new();
 
+		public List<int> exploredRooms = new();
+
 		private bool readingQueue = false;
 		private bool createQC = false;
 
 		public void Instantiate(int _gameId, Client[] _clients)
 		{
 			gameId = _gameId;
-			dun = new(10, 10, 10, GetNode<TileMapLayer>("DungeonT"));
-
-			while (dun.startRoom == new Vector2I(-1, -1)) { }
+			dun = new(10, 10, 10, GetNode<TileMapLayer>("DungeonT"), gameId);
 
 			for (int i = 0; i < 5; i++)
 			{
+				continue;
 				Enemy enemy = (Enemy)ResourceLoader.Load<PackedScene>("res://Scenes/enemy.tscn").Instantiate<Enemy>().Duplicate();
 				enemy.Position = new Vector2(GD.RandRange(20,10*15), GD.RandRange(20, 10*15));
 
@@ -55,14 +56,16 @@ namespace game
 			clients.Add(_c.id, _c);
 			CharacterBody2D _tempPlayer = (CharacterBody2D)ResourceLoader.Load<PackedScene>("res://Scenes/player.tscn").Instantiate().Duplicate();
 			GetNode<Node>("Players").AddChild(_tempPlayer);
-			_tempPlayer.Position = new (dun.startRoom.X*160+32, dun.startRoom.Y*160+32);
+
+			while (dun.startRoom == null) { }
+
+			_tempPlayer.Position = new (dun.startRoom.x*256+32, dun.startRoom.y*256+32);
 			_c.player = _tempPlayer as Player;
 			_c.player.Instantiate(_c.id, gameId);
 
 			SendAll(new MovePacket(_c.id, _tempPlayer.Position.X, _tempPlayer.Position.Y, 1).Serialize());
 			
-			foreach (RoomPacket _rm in dun.rooms)
-				SendTo(_c.id, _rm.Serialize());
+			SendTo(_c.id, dun.startRoom.Serialize());
 
 			foreach (Enemy enemy in GetNode<Node>("Enemies").GetChildren())
 			{
@@ -95,6 +98,16 @@ namespace game
 				createQC = true;
 				CreateQueue();
 			}
+		}
+
+		public void ChangeRoom(int _cId, RoomPacket _rp)
+		{
+			clients[_cId].player.curRoom = _rp.playerId;
+
+			if (exploredRooms.Contains(_rp.playerId)) return;
+
+			SendAll(_rp.Serialize());
+			exploredRooms.Add(_rp.playerId);
 		}
 
 		public void Destroy(int _cId)
@@ -143,7 +156,6 @@ namespace game
 		{
 			clients[_cId].udp.Send(_msg);
 		}
-
 		public void SendAll(byte[] _msg)
 		{
 			foreach (Client _client in clients.Values)

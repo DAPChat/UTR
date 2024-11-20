@@ -41,3 +41,9 @@ project/assembly_name="UTR - Server"
 [editor_plugins]
 
 enabled=PackedStringArray("res://addons/resources_spreadsheet_view/plugin.cfg")
+
+[layer_names]
+
+2d_physics/layer_1="Environment"
+2d_physics/layer_2="Enemies"
+2d_physics/layer_3="Player"

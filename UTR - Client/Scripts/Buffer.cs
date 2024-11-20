@@ -32,4 +32,11 @@ public class Buffer(byte[] _buff)
 
 		return val;
 	}
+
+	public bool ReadBool()
+	{
+		bool val = BitConverter.ToBoolean(data, pos);
+		pos += 1;
+		return val;
+	}
 }

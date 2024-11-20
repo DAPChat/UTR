@@ -20,6 +20,8 @@ public partial class Player : CharacterBody2D
 	public int health;
 	public int mana;
 
+	public int curRoom;
+
 	//public bool dir; // Left false, Right true
 
 	public SlotPacket[] inventory = new SlotPacket[8];
@@ -147,7 +149,7 @@ public partial class Player : CharacterBody2D
 	{
 		Vector2 prevPos = Position;
 
-		Velocity = Velocity.MoveToward(inMove.Normalized() * 100, 1500 * (float)GetPhysicsProcessDeltaTime());
+		Velocity = Velocity.MoveToward(inMove.Normalized() * 200, 1500 * (float)GetPhysicsProcessDeltaTime());
 		MoveAndSlide();
 
 		if (ServerManager.GetGame(gId) == null) return;

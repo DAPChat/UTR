@@ -4,6 +4,7 @@
 size = Vector2(16, 16)
 
 [node name="WallTile" type="RigidBody2D"]
+collision_mask = 6
 lock_rotation = true
 freeze = true
 

@@ -1,0 +1,14 @@
+[gd_scene load_steps=3 format=3 uid="uid://bb8vhag4jm1qi"]
+
+[ext_resource type="Script" path="res://Scripts/Room.cs" id="1_80bf3"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_bn2xf"]
+size = Vector2(16, 16)
+
+[node name="Room" type="Area2D"]
+collision_mask = 4
+script = ExtResource("1_80bf3")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_bn2xf")
+debug_color = Color(0.78411, 0.408922, 0.396699, 0.42)
