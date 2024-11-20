@@ -1,9 +1,13 @@
-[gd_scene load_steps=11 format=3 uid="uid://cf10amu8jbh4x"]
+[gd_scene load_steps=15 format=3 uid="uid://cf10amu8jbh4x"]
 
 [ext_resource type="Script" path="res://Scripts/TitleScene.cs" id="1_22tra"]
 [ext_resource type="FontFile" uid="uid://dr4b7ulxi2rc0" path="res://Assets/Fonts/MinimalPixelFont.ttf" id="2_bpuxe"]
 [ext_resource type="Texture2D" uid="uid://cgr6nug4tcad3" path="res://Assets/pixil-frame-0 (5).png" id="3_ul0t0"]
 [ext_resource type="Texture2D" uid="uid://cd753prxsdw4w" path="res://Assets/pixil-frame-0 (7).png" id="4_dsih5"]
+[ext_resource type="FontFile" uid="uid://biyckev5maadx" path="res://Assets/Fonts/alagard.ttf" id="5_6l1wy"]
+[ext_resource type="Texture2D" uid="uid://3skr3o3ca8vk" path="res://Assets/Ultimate Dark Fantasy UI set v1.2/Gothic patterns/Fade_effect_line x2.png" id="5_7dysd"]
+[ext_resource type="Texture2D" uid="uid://2rg8g4iqgwjj" path="res://Assets/Ultimate Dark Fantasy UI set v1.2/Gothic patterns/Pattern03 x2.png" id="6_wya0w"]
+[ext_resource type="Texture2D" uid="uid://l7204dabp1tr" path="res://Assets/Ultimate Dark Fantasy UI set v1.2/Gothic patterns/Pattern02 x2.png" id="7_ijr6f"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ljah3"]
 
@@ -27,16 +31,21 @@ script = ExtResource("1_22tra")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer"]
+offset_right = 1161.0
+offset_bottom = 659.0
+color = Color(0.12549, 0.12549, 0.12549, 1)
+
 [node name="StartBtn" type="Button" parent="CanvasLayer"]
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -47.0
-offset_top = 19.0
-offset_right = 9943.0
-offset_bottom = 4681.0
+offset_left = -53.0
+offset_top = 169.0
+offset_right = 9937.0
+offset_bottom = 4831.0
 grow_horizontal = 2
 grow_vertical = 2
 scale = Vector2(0.01, 0.01)
@@ -51,35 +60,77 @@ shortcut = SubResource("Shortcut_wwacl")
 shortcut_feedback = false
 shortcut_in_tooltip = false
 
-[node name="StartText" type="Label" parent="CanvasLayer"]
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -30.0
-offset_top = 20.0
-offset_right = 39.0
-offset_bottom = 52.0
-grow_horizontal = 2
-grow_vertical = 2
-size_flags_horizontal = 4
-theme_override_fonts/font = ExtResource("2_bpuxe")
-theme_override_font_sizes/font_size = 48
-text = "Start?"
-horizontal_alignment = 1
-
 [node name="GameId" type="LineEdit" parent="CanvasLayer"]
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -119.0
-offset_top = -15.5
-offset_right = 119.0
-offset_bottom = 15.5
+offset_left = -127.0
+offset_top = 108.0
+offset_right = 111.0
+offset_bottom = 139.0
 grow_horizontal = 2
 grow_vertical = 2
 placeholder_text = "Join Existing Room?"
 virtual_keyboard_type = 2
+
+[node name="TextureRect3" type="TextureRect" parent="CanvasLayer"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -576.0
+offset_top = -374.0
+offset_right = 576.0
+offset_bottom = 188.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("5_7dysd")
+
+[node name="Title" type="Label" parent="CanvasLayer"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -296.0
+offset_top = -124.0
+offset_right = 296.0
+offset_bottom = -64.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0.811765, 0.658824, 0.490196, 1)
+theme_override_colors/font_outline_color = Color(0.105882, 0.0823529, 0.105882, 1)
+theme_override_constants/outline_size = 10
+theme_override_fonts/font = ExtResource("5_6l1wy")
+theme_override_font_sizes/font_size = 64
+text = "Unforgotten Realms"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="TextureRect" type="TextureRect" parent="CanvasLayer"]
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -576.0
+offset_right = 576.0
+offset_bottom = 100.0
+grow_horizontal = 2
+texture = ExtResource("6_wya0w")
+stretch_mode = 5
+
+[node name="TextureRect2" type="TextureRect" parent="CanvasLayer"]
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -576.0
+offset_top = -100.0
+offset_right = 576.0
+grow_horizontal = 2
+grow_vertical = 0
+texture = ExtResource("7_ijr6f")
+stretch_mode = 5
