@@ -22,23 +22,12 @@ namespace game
 		private bool readingQueue = false;
 		private bool createQC = false;
 
+		public List<int> enemyIds = new();
+
 		public void Instantiate(int _gameId, Client[] _clients)
 		{
 			gameId = _gameId;
 			dun = new(10, 10, 10, GetNode<TileMapLayer>("DungeonT"), gameId);
-
-			for (int i = 0; i < 5; i++)
-			{
-				continue;
-				Enemy enemy = (Enemy)ResourceLoader.Load<PackedScene>("res://Scenes/enemy.tscn").Instantiate<Enemy>().Duplicate();
-				enemy.Position = new Vector2(GD.RandRange(20,10*15), GD.RandRange(20, 10*15));
-
-				enemy.enemyId = i;
-
-				enemy.Instantiate(gameId);
-
-				GetNode<Node>("Enemies").AddChild(enemy);
-			}
 
 			foreach (Client _c in _clients)
 			{
@@ -106,8 +95,31 @@ namespace game
 
 			if (exploredRooms.Contains(_rp.playerId)) return;
 
+			PrepareRoom(_rp);
+
 			SendAll(_rp.Serialize());
 			exploredRooms.Add(_rp.playerId);
+		}
+
+		public void PrepareRoom(RoomPacket _rp)
+		{
+			if (!(_rp.h == 1 && _rp.w == 1)) return;
+
+			for (int i = 0; i < 5; i++)
+			{
+				Enemy enemy = (Enemy)ResourceLoader.Load<PackedScene>("res://Scenes/enemy.tscn").Instantiate<Enemy>().Duplicate();
+				enemy.Position = new Vector2(GD.RandRange(_rp.x * 16 * 16 + 32, _rp.x * 16 * 16 + 16 * 15), GD.RandRange(_rp.y * 16 * 16 + 32, _rp.y * 16 * 16 + 16 * 15));
+
+				int id = 0;
+
+				while (enemyIds.Contains(id)) id++;
+
+				enemyIds.Add(id);
+
+				enemy.Instantiate(gameId, id);
+
+				GetNode<Node>("Enemies").CallDeferred(Node.MethodName.AddChild, enemy);
+			}
 		}
 
 		public void Destroy(int _cId)

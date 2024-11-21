@@ -88,7 +88,7 @@ public partial class Player : CharacterBody2D
 
 	public void UseItem()
 	{
-		if (hotbar[activeSlot] == null) return;
+		if (hotbar[activeSlot] == null || noItem) return;
 		
 		Item item = hotbar[activeSlot].item;
 
@@ -149,7 +149,7 @@ public partial class Player : CharacterBody2D
 	{
 		Vector2 prevPos = Position;
 
-		Velocity = Velocity.MoveToward(inMove.Normalized() * 200, 1500 * (float)GetPhysicsProcessDeltaTime());
+		Velocity = Velocity.MoveToward(inMove.Normalized() * 100, 1500 * (float)GetPhysicsProcessDeltaTime());
 		MoveAndSlide();
 
 		if (ServerManager.GetGame(gId) == null) return;

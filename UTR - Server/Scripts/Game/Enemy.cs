@@ -18,9 +18,10 @@ namespace enemy
 
 		public bool active = false;
 
-		public void Instantiate(int _gId)
+		public void Instantiate(int _gId, int _id)
 		{
 			gId = _gId;
+			enemyId = _id;
 
 			GetNode<Area2D>("TrackerArea").AreaEntered += (body) =>
 			{
@@ -57,6 +58,8 @@ namespace enemy
 					//GD.Print("Hello");
 			};
 
+			ServerManager.GetGame(gId).SendAll(new packets.EnemyPacket(enemyId, this).Serialize());
+
 			active = true;
 		}
 
@@ -70,11 +73,11 @@ namespace enemy
 			{
 				Vector2 pos = (ServerManager.GetClient(trackingId).player.Position - Position).Normalized();
 
-				Velocity = pos * (float)delta * 500;
+				Velocity = pos * (float)delta * 750;
 				MoveAndSlide();
 				//MoveAndCollide(pos * (float)delta * 10);
 
-				ServerManager.GetGame(gId).SendAll(new packets.EnemyPacket(-1, this).Serialize());
+				ServerManager.GetGame(gId).SendAll(new packets.EnemyPacket(enemyId, this).Serialize());
 			}
 		}
 
@@ -84,7 +87,7 @@ namespace enemy
 			if (health <= 0)
 			{
 				active = false;
-				ServerManager.GetGame(gId).SendAll(new packets.EnemyPacket(-1, this, 0).Serialize());
+				ServerManager.GetGame(gId).SendAll(new packets.EnemyPacket(enemyId, this, 0).Serialize());
 				QueueFree();
 			}
 		}
