@@ -156,7 +156,7 @@ namespace game
 				if ((CardinalAdjacents(x, y, 1, false).X == -1) && !DiagAdjacents(x, y, 1) && (adj.X != -1) && _rms[x, y].X == 0) {
 					_rms[x-1,y-1].X = 3;
 					_rms[x-1,y-1].Y[adj.X] = true;
-					CardinalAdjacents(x, y, 1, true);
+					CardinalAdjacents(x, y, 2, true);
 					_boss = true;
 				}
 			}
