@@ -279,9 +279,9 @@ public partial class ClientManager : Node
 	public static void UpdateStats(StatsPacket _stats)
 	{
 		sceneTree.GetNode<Label>("UI/Health").Text = _stats.health.ToString();// + "/" + players[_stats.playerId].health;
-		//sceneTree.GetNode<HSlider>("UI/Health/HealthSlider").Value = _stats.health;
+		sceneTree.GetNode<HSlider>("UI/HealthSlider").Value = _stats.health;
 	}
-	
+
 	public static void MoveEntity(EnemyPacket _enemy)
 	{
 		if (!entities.ContainsKey(_enemy.enemyId))
