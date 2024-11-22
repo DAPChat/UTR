@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://Scripts/TitleScene.cs" id="1_22tra"]
 [ext_resource type="FontFile" uid="uid://dr4b7ulxi2rc0" path="res://Assets/Fonts/MinimalPixelFont.ttf" id="2_bpuxe"]
-[ext_resource type="Script" path="res://Scenes/canvas_layer.gd" id="2_v3gi4"]
+[ext_resource type="Script" path="res://Scripts/SeizureProcedure.gd" id="2_hm0dt"]
 [ext_resource type="Texture2D" uid="uid://cgr6nug4tcad3" path="res://Assets/pixil-frame-0 (5).png" id="3_ul0t0"]
 [ext_resource type="Texture2D" uid="uid://cd753prxsdw4w" path="res://Assets/pixil-frame-0 (7).png" id="4_dsih5"]
 [ext_resource type="FontFile" uid="uid://biyckev5maadx" path="res://Assets/Fonts/alagard.ttf" id="5_6l1wy"]
@@ -31,52 +31,13 @@ events = [SubResource("InputEventAction_yfirh")]
 script = ExtResource("1_22tra")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
-script = ExtResource("2_v3gi4")
+script = ExtResource("2_hm0dt")
 
 [node name="ColorRect" type="ColorRect" parent="CanvasLayer"]
 offset_right = 1161.0
 offset_bottom = 659.0
 mouse_filter = 2
 color = Color(0.12549, 0.12549, 0.12549, 1)
-
-[node name="StartBtn" type="Button" parent="CanvasLayer"]
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -72.0
-offset_top = 152.0
-offset_right = 9918.0
-offset_bottom = 4814.0
-grow_horizontal = 2
-grow_vertical = 2
-scale = Vector2(0.01, 0.01)
-mouse_default_cursor_shape = 2
-theme_override_fonts/font = ExtResource("2_bpuxe")
-theme_override_font_sizes/font_size = 32
-theme_override_styles/focus = SubResource("StyleBoxEmpty_ljah3")
-theme_override_styles/hover = SubResource("StyleBoxTexture_dkd6b")
-theme_override_styles/pressed = SubResource("StyleBoxTexture_m5dvs")
-theme_override_styles/normal = SubResource("StyleBoxTexture_jxuip")
-shortcut = SubResource("Shortcut_wwacl")
-shortcut_feedback = false
-shortcut_in_tooltip = false
-
-[node name="GameId" type="LineEdit" parent="CanvasLayer"]
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -127.0
-offset_top = 108.0
-offset_right = 111.0
-offset_bottom = 139.0
-grow_horizontal = 2
-grow_vertical = 2
-placeholder_text = "Join Existing Room?"
-virtual_keyboard_type = 2
 
 [node name="TextureRect3" type="TextureRect" parent="CanvasLayer"]
 modulate = Color(1, 1, 1, 0.392157)
@@ -118,7 +79,7 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="Timer" type="Timer" parent="CanvasLayer/Title"]
-wait_time = 0.25
+wait_time = 0.05
 autostart = true
 
 [node name="TextureRect" type="TextureRect" parent="CanvasLayer"]
@@ -145,5 +106,45 @@ grow_horizontal = 2
 grow_vertical = 0
 texture = ExtResource("7_ijr6f")
 stretch_mode = 5
+
+[node name="StartBtn" type="Button" parent="CanvasLayer"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -51.0
+offset_top = 159.0
+offset_right = 9939.0
+offset_bottom = 4821.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.01, 0.01)
+mouse_default_cursor_shape = 2
+theme_override_fonts/font = ExtResource("2_bpuxe")
+theme_override_font_sizes/font_size = 32
+theme_override_styles/focus = SubResource("StyleBoxEmpty_ljah3")
+theme_override_styles/hover = SubResource("StyleBoxTexture_dkd6b")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_m5dvs")
+theme_override_styles/normal = SubResource("StyleBoxTexture_jxuip")
+shortcut = SubResource("Shortcut_wwacl")
+shortcut_feedback = false
+shortcut_in_tooltip = false
+
+[node name="GameId" type="LineEdit" parent="CanvasLayer"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -111.0
+offset_top = 113.0
+offset_right = 127.0
+offset_bottom = 144.0
+grow_horizontal = 2
+grow_vertical = 2
+placeholder_text = "Join Existing Room?"
+alignment = 1
+virtual_keyboard_type = 2
 
 [connection signal="timeout" from="CanvasLayer/Title/Timer" to="CanvasLayer" method="_on_timer_timeout"]
