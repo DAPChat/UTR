@@ -1,7 +1,8 @@
-[gd_scene load_steps=15 format=3 uid="uid://cf10amu8jbh4x"]
+[gd_scene load_steps=16 format=3 uid="uid://cf10amu8jbh4x"]
 
 [ext_resource type="Script" path="res://Scripts/TitleScene.cs" id="1_22tra"]
 [ext_resource type="FontFile" uid="uid://dr4b7ulxi2rc0" path="res://Assets/Fonts/MinimalPixelFont.ttf" id="2_bpuxe"]
+[ext_resource type="Script" path="res://Scenes/canvas_layer.gd" id="2_v3gi4"]
 [ext_resource type="Texture2D" uid="uid://cgr6nug4tcad3" path="res://Assets/pixil-frame-0 (5).png" id="3_ul0t0"]
 [ext_resource type="Texture2D" uid="uid://cd753prxsdw4w" path="res://Assets/pixil-frame-0 (7).png" id="4_dsih5"]
 [ext_resource type="FontFile" uid="uid://biyckev5maadx" path="res://Assets/Fonts/alagard.ttf" id="5_6l1wy"]
@@ -30,6 +31,7 @@ events = [SubResource("InputEventAction_yfirh")]
 script = ExtResource("1_22tra")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
+script = ExtResource("2_v3gi4")
 
 [node name="ColorRect" type="ColorRect" parent="CanvasLayer"]
 offset_right = 1161.0
@@ -77,6 +79,7 @@ placeholder_text = "Join Existing Room?"
 virtual_keyboard_type = 2
 
 [node name="TextureRect3" type="TextureRect" parent="CanvasLayer"]
+modulate = Color(1, 1, 1, 0.392157)
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
@@ -90,8 +93,10 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 texture = ExtResource("5_7dysd")
+expand_mode = 1
 
 [node name="Title" type="Label" parent="CanvasLayer"]
+unique_name_in_owner = true
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
@@ -111,6 +116,10 @@ theme_override_font_sizes/font_size = 64
 text = "Unforgotten Realms"
 horizontal_alignment = 1
 vertical_alignment = 1
+
+[node name="Timer" type="Timer" parent="CanvasLayer/Title"]
+wait_time = 0.25
+autostart = true
 
 [node name="TextureRect" type="TextureRect" parent="CanvasLayer"]
 anchors_preset = 5
@@ -136,3 +145,5 @@ grow_horizontal = 2
 grow_vertical = 0
 texture = ExtResource("7_ijr6f")
 stretch_mode = 5
+
+[connection signal="timeout" from="CanvasLayer/Title/Timer" to="CanvasLayer" method="_on_timer_timeout"]
