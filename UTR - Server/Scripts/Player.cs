@@ -13,6 +13,7 @@ public partial class Player : CharacterBody2D
 	int gId;
 
 	bool noItem = true;
+	bool active = false;
 
 	int maxHealth = 100;
 
@@ -40,6 +41,8 @@ public partial class Player : CharacterBody2D
 
 		health = 50;
 
+		active = true;
+
 		Area2D _ar = GetNode<Area2D>("WeaponArea");
 
 		_ar.AreaEntered += (body) =>
@@ -66,6 +69,8 @@ public partial class Player : CharacterBody2D
 
 	public void SetActiveSlot(int _slot)
 	{
+		if (!active) return;
+
 		int _tempIn = activeSlot;
 
 		activeSlot = _slot - 1;
@@ -88,6 +93,7 @@ public partial class Player : CharacterBody2D
 
 	public void UseItem()
 	{
+		if (!active) return;
 		if (hotbar[activeSlot] == null || noItem) return;
 		
 		Item item = hotbar[activeSlot].item;
@@ -130,6 +136,7 @@ public partial class Player : CharacterBody2D
 
 	public void Move(MovePacket move)
 	{
+		if (!active) return;
 		if (inMove == new Vector2(move.x, move.y)) return;
 
 		inMove = new (move.x, move.y);
@@ -155,6 +162,13 @@ public partial class Player : CharacterBody2D
 		if (ServerManager.GetGame(gId) == null) return;
 
 		ServerManager.GetGame(gId).SendAll(new MovePacket(cId, Position.X, Position.Y, prevPos != Position ? (int)inMove.X : 0).Serialize());
+	}
+
+	public void Exit()
+	{
+		active = false;
+		ServerManager.GetGame(gId).SendAll(new Packet(cId, -2).Serialize());
+		QueueFree();
 	}
 
 	public void SetCollider(int size)

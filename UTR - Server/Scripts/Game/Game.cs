@@ -129,10 +129,8 @@ namespace game
 
 		public void Destroy(int _cId)
 		{
-			clients[_cId].player.QueueFree();
+			clients[_cId].player.Exit();
 			clients.Remove(_cId);
-
-			SendAll(new Packet(_cId, -2).Serialize());
 
 			if (clients.Count != 0) return;
 

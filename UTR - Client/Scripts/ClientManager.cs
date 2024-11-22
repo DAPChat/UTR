@@ -162,9 +162,6 @@ public partial class ClientManager : Node
 
 		if (_move.data != 0 && _move.playerId != client.id)
 		{
-			float _pLocX = players[_move.playerId].Position.X;
-			float _nLocX = _move.x;
-
 			if (_move.data == 1)
 			{
 				players[_move.playerId].Scale = new Vector2(-1, 1);
@@ -307,6 +304,7 @@ public partial class ClientManager : Node
 	public static void RemoveClient(int _id)
 	{
 		players[_id].QueueFree();
+		players.Remove(_id);
 	}
 
 	public static void SetClient(Packet _packet)
