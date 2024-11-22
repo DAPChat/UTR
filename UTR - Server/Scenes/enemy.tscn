@@ -27,7 +27,7 @@ shape = SubResource("CircleShape2D_hcvil")
 
 [node name="TrackerArea" type="Area2D" parent="."]
 scale = Vector2(0.25, 0.25)
-collision_layer = 2
+collision_layer = 0
 collision_mask = 4
 
 [node name="TrackerShape" type="CollisionShape2D" parent="TrackerArea"]
@@ -35,7 +35,7 @@ shape = SubResource("CircleShape2D_12sig")
 
 [node name="AttackArea" type="Area2D" parent="."]
 scale = Vector2(0.25, 0.25)
-collision_layer = 2
+collision_layer = 0
 collision_mask = 4
 
 [node name="AttackShape" type="CollisionShape2D" parent="AttackArea"]

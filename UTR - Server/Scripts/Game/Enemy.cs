@@ -83,6 +83,7 @@ namespace enemy
 
 		public void Damage(int amt)
 		{
+			if (!active) return;
 			health -= amt;
 			if (health <= 0)
 			{

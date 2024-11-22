@@ -55,6 +55,11 @@ namespace game
 			SendAll(new MovePacket(_c.id, _tempPlayer.Position.X, _tempPlayer.Position.Y, 1).Serialize());
 			
 			SendTo(_c.id, dun.startRoom.Serialize());
+			
+			foreach (int i in exploredRooms)
+			{
+				SendTo(_c.id, dun.rooms[i].Serialize());
+			}
 
 			foreach (Enemy enemy in GetNode<Node>("Enemies").GetChildren())
 			{

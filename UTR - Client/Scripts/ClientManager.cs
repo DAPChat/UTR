@@ -210,6 +210,7 @@ public partial class ClientManager : Node
 				if (dungeon.GetCellSourceId(new(i, j)) == 1) continue;
 				if (j == y || i == x || j == y + h || i == x + w)
 					dungeon.SetCell(new Vector2I(i, j), 0, new(0, 2));
+				else dungeon.SetCell(new Vector2I(i, j), 0, new(8, 3));
 			}
 		}
 
