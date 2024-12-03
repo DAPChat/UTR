@@ -12,16 +12,18 @@ namespace enemy
 
 		public int health = 100;
 		public int enemyId;
+		public int roomId;
 		public int damage = 10;
 
 		public int trackingId = -1;
 
 		public bool active = false;
 
-		public void Instantiate(int _gId, int _id)
+		public void Instantiate(int _gId, int _id, int _rId)
 		{
 			gId = _gId;
 			enemyId = _id;
+			roomId = _rId;
 
 			GetNode<Area2D>("TrackerArea").AreaEntered += (body) =>
 			{
@@ -54,8 +56,20 @@ namespace enemy
 
 			GetNode<Area2D>("AttackArea").AreaEntered += (body) =>
 			{
-				//if (body.GetParent().GetType() == typeof (Player))
-					//GD.Print("Hello");
+				if (body.GetParent().GetType() == typeof(Player))
+				{
+					Player _p = (Player)body.GetParent();
+
+					if (_p.curRoom != roomId) return;
+				}
+			};
+
+			GetNode<Area2D>("AttackArea").AreaExited += (body) =>
+			{
+				if (body.GetParent().GetType() == typeof(Player))
+				{
+					Player _p = (Player)body.GetParent();
+				}
 			};
 
 			ServerManager.GetGame(gId).SendAll(new packets.EnemyPacket(enemyId, this).Serialize());
@@ -71,6 +85,16 @@ namespace enemy
 
 			if (trackingId != -1 && ServerManager.GetClient(trackingId) != null)
 			{
+				if (ServerManager.GetClient(trackingId).player.curRoom != roomId)
+				{
+					if (collidingPlayers.Count == 1) return;
+
+					collidingPlayers.Remove(trackingId);
+					collidingPlayers.Add(trackingId);
+					trackingId = collidingPlayers.FirstOrDefault();
+					return;
+				}
+
 				Vector2 pos = (ServerManager.GetClient(trackingId).player.Position - Position).Normalized();
 
 				Velocity = pos * (float)delta * 750;

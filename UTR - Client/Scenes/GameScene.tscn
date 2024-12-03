@@ -19,7 +19,7 @@ corner_radius_bottom_left = 5
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_vegbu"]
 bg_color = Color(0.376471, 0.376471, 0.376471, 0.533333)
 
-[sub_resource type="ImageTexture" id="ImageTexture_xiq2s"]
+[sub_resource type="ImageTexture" id="ImageTexture_nxnv7"]
 
 [sub_resource type="StyleBoxLine" id="StyleBoxLine_1jkvk"]
 grow_begin = 0.0
@@ -224,7 +224,7 @@ offset_top = -25.0
 offset_right = 366.0
 offset_bottom = 130.0
 theme_override_icons/grabber = ExtResource("6_0viuj")
-theme_override_icons/grabber_disabled = SubResource("ImageTexture_xiq2s")
+theme_override_icons/grabber_disabled = SubResource("ImageTexture_nxnv7")
 theme_override_styles/slider = SubResource("StyleBoxLine_1jkvk")
 theme_override_styles/grabber_area = SubResource("StyleBoxTexture_y3djm")
 theme_override_styles/grabber_area_highlight = SubResource("StyleBoxEmpty_pik5s")

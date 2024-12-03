@@ -98,7 +98,10 @@ namespace game
 		{
 			clients[_cId].player.curRoom = _rp.playerId;
 
-			if (exploredRooms.Contains(_rp.playerId)) return;
+			if (exploredRooms.Contains(_rp.playerId))
+			{
+				return;
+			}
 
 			PrepareRoom(_rp);
 
@@ -121,7 +124,7 @@ namespace game
 
 				enemyIds.Add(id);
 
-				enemy.Instantiate(gameId, id);
+				enemy.Instantiate(gameId, id, _rp.playerId);
 
 				GetNode<Node>("Enemies").CallDeferred(Node.MethodName.AddChild, enemy);
 			}
