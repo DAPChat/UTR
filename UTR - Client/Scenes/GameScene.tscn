@@ -1,9 +1,10 @@
-[gd_scene load_steps=17 format=3 uid="uid://doaccr1k3qtwt"]
+[gd_scene load_steps=18 format=3 uid="uid://doaccr1k3qtwt"]
 
 [ext_resource type="Script" path="res://Scripts/ClientManager.cs" id="1_vpr8p"]
 [ext_resource type="TileSet" uid="uid://55tbtm12gbs2" path="res://Assets/TileSet/GameScene.tres" id="2_seojb"]
 [ext_resource type="Script" path="res://Scripts/Inventory.cs" id="3_5xvom"]
 [ext_resource type="PackedScene" uid="uid://c0na7p5itoucg" path="res://Scenes/slot.tscn" id="3_00363"]
+[ext_resource type="Texture2D" uid="uid://nyfgosjvacj" path="res://Assets/Ultimate Dark Fantasy UI set v1.2/inventory/80x50 alt frame holder.png" id="4_71i4t"]
 [ext_resource type="Texture2D" uid="uid://dcqi1q1gpnud1" path="res://Assets/Ultimate Dark Fantasy UI set v1.2/inventory/32x32 Item holder.png" id="5_r33hr"]
 [ext_resource type="Script" path="res://Scripts/Hotbar.cs" id="5_tr0ex"]
 [ext_resource type="Texture2D" uid="uid://bhheuehbvae81" path="res://Assets/Ultimate Dark Fantasy UI set v1.2/Slider/x2/Slider_components3.png" id="6_0viuj"]
@@ -82,30 +83,13 @@ offset_right = 172.0
 offset_bottom = 51.0
 text = "Spells"
 
-[node name="TipBG" type="ColorRect" parent="UI/Inventory"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = 522.0
-offset_top = 65.0
-offset_right = -16.0
-offset_bottom = -16.0
-grow_horizontal = 2
-grow_vertical = 2
-color = Color(0.0823529, 0.0823529, 0.0823529, 0.4)
-
-[node name="Tooltip" type="RichTextLabel" parent="UI/Inventory"]
-layout_mode = 1
-anchors_preset = 1
-anchor_left = 1.0
-anchor_right = 1.0
-offset_left = -259.0
-offset_top = 82.0
-offset_right = -33.0
-offset_bottom = 377.0
-grow_horizontal = 0
-text = "Tooltip"
+[node name="TooltipBg" type="TextureRect" parent="UI/Inventory"]
+layout_mode = 0
+offset_left = 520.0
+offset_top = 17.0
+offset_right = 798.0
+offset_bottom = 388.0
+texture = ExtResource("4_71i4t")
 
 [node name="Slots" type="Control" parent="UI/Inventory"]
 anchors_preset = 0
