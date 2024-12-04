@@ -1,13 +1,15 @@
-[gd_scene load_steps=15 format=3 uid="uid://doaccr1k3qtwt"]
+[gd_scene load_steps=17 format=3 uid="uid://doaccr1k3qtwt"]
 
 [ext_resource type="Script" path="res://Scripts/ClientManager.cs" id="1_vpr8p"]
 [ext_resource type="TileSet" uid="uid://55tbtm12gbs2" path="res://Assets/TileSet/GameScene.tres" id="2_seojb"]
 [ext_resource type="Script" path="res://Scripts/Inventory.cs" id="3_5xvom"]
 [ext_resource type="PackedScene" uid="uid://c0na7p5itoucg" path="res://Scenes/slot.tscn" id="3_00363"]
+[ext_resource type="Texture2D" uid="uid://dcqi1q1gpnud1" path="res://Assets/Ultimate Dark Fantasy UI set v1.2/inventory/32x32 Item holder.png" id="5_r33hr"]
 [ext_resource type="Script" path="res://Scripts/Hotbar.cs" id="5_tr0ex"]
 [ext_resource type="Texture2D" uid="uid://bhheuehbvae81" path="res://Assets/Ultimate Dark Fantasy UI set v1.2/Slider/x2/Slider_components3.png" id="6_0viuj"]
 [ext_resource type="Texture2D" uid="uid://ce5jwel7ikoiq" path="res://Assets/Ultimate Dark Fantasy UI set v1.2/Player Bar/Player_Bar x2.png" id="6_bsowa"]
 [ext_resource type="Texture2D" uid="uid://b0f44cyalftrh" path="res://Assets/Ultimate Dark Fantasy UI set v1.2/Player Bar/health_filler3.png" id="7_vnmuf"]
+[ext_resource type="FontFile" uid="uid://biyckev5maadx" path="res://Assets/Fonts/alagard.ttf" id="9_xxd7f"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_6bbq7"]
 bg_color = Color(0.137255, 0.137255, 0.137255, 0.858824)
@@ -44,7 +46,6 @@ tile_set = ExtResource("2_seojb")
 [node name="UI" type="CanvasLayer" parent="."]
 
 [node name="Inventory" type="Panel" parent="UI"]
-visible = false
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
@@ -117,11 +118,26 @@ offset_bottom = 356.0
 layout_mode = 2
 metadata/_edit_lock_ = true
 
+[node name="TextureRect" type="TextureRect" parent="UI/Inventory/Slots/0"]
+layout_mode = 0
+offset_left = -15.0
+offset_top = -15.0
+offset_right = 115.0
+offset_bottom = 115.0
+texture = ExtResource("5_r33hr")
+
 [node name="1" parent="UI/Inventory/Slots" instance=ExtResource("3_00363")]
 layout_mode = 2
 offset_left = 132.0
 offset_right = 232.0
 metadata/_edit_lock_ = true
+
+[node name="TextureRect" type="TextureRect" parent="UI/Inventory/Slots/1"]
+offset_left = -15.0
+offset_top = -15.0
+offset_right = 115.0
+offset_bottom = 115.0
+texture = ExtResource("5_r33hr")
 
 [node name="2" parent="UI/Inventory/Slots" instance=ExtResource("3_00363")]
 layout_mode = 2
@@ -129,17 +145,38 @@ offset_left = 264.0
 offset_right = 364.0
 metadata/_edit_lock_ = true
 
+[node name="TextureRect" type="TextureRect" parent="UI/Inventory/Slots/2"]
+offset_left = -15.0
+offset_top = -15.0
+offset_right = 115.0
+offset_bottom = 115.0
+texture = ExtResource("5_r33hr")
+
 [node name="3" parent="UI/Inventory/Slots" instance=ExtResource("3_00363")]
 layout_mode = 2
 offset_left = 395.0
 offset_right = 495.0
 metadata/_edit_lock_ = true
 
+[node name="TextureRect" type="TextureRect" parent="UI/Inventory/Slots/3"]
+offset_left = -15.0
+offset_top = -15.0
+offset_right = 115.0
+offset_bottom = 115.0
+texture = ExtResource("5_r33hr")
+
 [node name="4" parent="UI/Inventory/Slots" instance=ExtResource("3_00363")]
 layout_mode = 2
 offset_top = 130.0
 offset_bottom = 230.0
 metadata/_edit_lock_ = true
+
+[node name="TextureRect" type="TextureRect" parent="UI/Inventory/Slots/4"]
+offset_left = -15.0
+offset_top = -15.0
+offset_right = 115.0
+offset_bottom = 115.0
+texture = ExtResource("5_r33hr")
 
 [node name="5" parent="UI/Inventory/Slots" instance=ExtResource("3_00363")]
 layout_mode = 2
@@ -149,6 +186,13 @@ offset_right = 232.0
 offset_bottom = 230.0
 metadata/_edit_lock_ = true
 
+[node name="TextureRect" type="TextureRect" parent="UI/Inventory/Slots/5"]
+offset_left = -15.0
+offset_top = -15.0
+offset_right = 115.0
+offset_bottom = 115.0
+texture = ExtResource("5_r33hr")
+
 [node name="6" parent="UI/Inventory/Slots" instance=ExtResource("3_00363")]
 layout_mode = 2
 offset_left = 264.0
@@ -157,6 +201,13 @@ offset_right = 364.0
 offset_bottom = 230.0
 metadata/_edit_lock_ = true
 
+[node name="TextureRect" type="TextureRect" parent="UI/Inventory/Slots/6"]
+offset_left = -15.0
+offset_top = -15.0
+offset_right = 115.0
+offset_bottom = 115.0
+texture = ExtResource("5_r33hr")
+
 [node name="7" parent="UI/Inventory/Slots" instance=ExtResource("3_00363")]
 layout_mode = 2
 offset_left = 395.0
@@ -164,6 +215,13 @@ offset_top = 130.0
 offset_right = 495.0
 offset_bottom = 230.0
 metadata/_edit_lock_ = true
+
+[node name="TextureRect" type="TextureRect" parent="UI/Inventory/Slots/7"]
+offset_left = -15.0
+offset_top = -15.0
+offset_right = 115.0
+offset_bottom = 115.0
+texture = ExtResource("5_r33hr")
 
 [node name="Hotbar" type="Panel" parent="UI"]
 anchors_preset = 2
@@ -238,11 +296,13 @@ offset_bottom = 94.0
 texture = ExtResource("6_bsowa")
 
 [node name="Health" type="Label" parent="UI"]
-offset_left = 934.0
-offset_top = 24.0
-offset_right = 1131.0
-offset_bottom = 60.0
-theme_override_font_sizes/font_size = 26
-text = "Health: 100/100"
+offset_left = 424.0
+offset_top = 28.0
+offset_right = 532.0
+offset_bottom = 58.0
+theme_override_colors/font_color = Color(0.792157, 0.619608, 0.431373, 1)
+theme_override_fonts/font = ExtResource("9_xxd7f")
+theme_override_font_sizes/font_size = 32
+text = "100/100"
 
 [node name="Enemies" type="Node" parent="."]
