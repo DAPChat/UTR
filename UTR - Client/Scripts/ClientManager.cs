@@ -278,6 +278,8 @@ public partial class ClientManager : Node
 
 	public static void UpdateStats(StatsPacket _stats)
 	{
+		if (_stats.playerId != client.id) return;
+
 		sceneTree.GetNode<Label>("UI/Health").Text = _stats.health.ToString();// + "/" + players[_stats.playerId].health;
 		sceneTree.GetNode<HSlider>("UI/HealthSlider").Value = _stats.health;
 	}

@@ -117,6 +117,7 @@ offset_right = 232.0
 metadata/_edit_lock_ = true
 
 [node name="TextureRect" type="TextureRect" parent="UI/Inventory/Slots/1"]
+layout_mode = 0
 offset_left = -15.0
 offset_top = -15.0
 offset_right = 115.0
@@ -130,6 +131,7 @@ offset_right = 364.0
 metadata/_edit_lock_ = true
 
 [node name="TextureRect" type="TextureRect" parent="UI/Inventory/Slots/2"]
+layout_mode = 0
 offset_left = -15.0
 offset_top = -15.0
 offset_right = 115.0
@@ -143,6 +145,7 @@ offset_right = 495.0
 metadata/_edit_lock_ = true
 
 [node name="TextureRect" type="TextureRect" parent="UI/Inventory/Slots/3"]
+layout_mode = 0
 offset_left = -15.0
 offset_top = -15.0
 offset_right = 115.0
@@ -156,6 +159,7 @@ offset_bottom = 230.0
 metadata/_edit_lock_ = true
 
 [node name="TextureRect" type="TextureRect" parent="UI/Inventory/Slots/4"]
+layout_mode = 0
 offset_left = -15.0
 offset_top = -15.0
 offset_right = 115.0
@@ -171,6 +175,7 @@ offset_bottom = 230.0
 metadata/_edit_lock_ = true
 
 [node name="TextureRect" type="TextureRect" parent="UI/Inventory/Slots/5"]
+layout_mode = 0
 offset_left = -15.0
 offset_top = -15.0
 offset_right = 115.0
@@ -186,6 +191,7 @@ offset_bottom = 230.0
 metadata/_edit_lock_ = true
 
 [node name="TextureRect" type="TextureRect" parent="UI/Inventory/Slots/6"]
+layout_mode = 0
 offset_left = -15.0
 offset_top = -15.0
 offset_right = 115.0
@@ -201,6 +207,7 @@ offset_bottom = 230.0
 metadata/_edit_lock_ = true
 
 [node name="TextureRect" type="TextureRect" parent="UI/Inventory/Slots/7"]
+layout_mode = 0
 offset_left = -15.0
 offset_top = -15.0
 offset_right = 115.0

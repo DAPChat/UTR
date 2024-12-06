@@ -15,6 +15,9 @@ public partial class Player : CharacterBody2D
 	bool noItem = true;
 	bool active = false;
 
+	bool cooled = true;
+	bool invincible = false;
+
 	int maxHealth = 100;
 
 	public int activeSlot = 0;
@@ -33,6 +36,9 @@ public partial class Player : CharacterBody2D
 	// Temp Solution (Replace the following w/ spawning a new shape
 	//Area2D area;
 	List<Enemy> enemies = new();
+
+	Timer cooldownTimer;
+	Timer invincibilityTimer;
 
 	public void Instantiate(int _cId, int _gId)
 	{
@@ -55,6 +61,20 @@ public partial class Player : CharacterBody2D
 			if (body.GetParentOrNull<Enemy>() != null) enemies.Remove(body.GetParent<Enemy>());
 		};
 
+		cooldownTimer = GetNode<Timer>("Cooldown");
+
+		cooldownTimer.Timeout += () =>
+		{
+			cooled = true;
+		};
+
+		invincibilityTimer = GetNode<Timer>("Invincibility");
+
+		invincibilityTimer.Timeout += () =>
+		{
+			invincible = false;
+		};
+
 		hotbar[0] = new(cId, ItemManager.GetItem(0), 0, 1, 1);
 		hotbar[1] = new(cId, ItemManager.GetItem(1), 1, 2, 1);
 		noItem = false;
@@ -64,7 +84,21 @@ public partial class Player : CharacterBody2D
 		ServerManager.GetGame(gId).SendTo(cId, hotbar[1].Serialize());
 		ServerManager.GetGame(gId).SendAll(_sp.Serialize());
 
-		ServerManager.GetGame(gId).SendTo(cId, new StatsPacket(cId, health, mana).Serialize());
+		ServerManager.GetGame(gId).SendAll(new StatsPacket(cId, health, mana).Serialize());
+	}
+
+	public void Damage(Enemy damager, int _dmg)
+	{
+		if (invincible) return;
+
+		health -= _dmg;
+
+		// Player death
+
+		invincible = true;
+		invincibilityTimer.Start();
+
+		ServerManager.GetGame(gId).SendAll(new StatsPacket(cId, health, mana).Serialize());
 	}
 
 	public void SetActiveSlot(int _slot)
@@ -86,6 +120,12 @@ public partial class Player : CharacterBody2D
 		{
 			noItem = false;
 			_sp = new(cId, hotbar[activeSlot].item, activeSlot, hotbar[activeSlot].count, 2);
+
+			if (hotbar[activeSlot].item.type == 1) {
+				cooled = false;
+				cooldownTimer.Start(((Tool)hotbar[activeSlot].item.item).cooldown);
+				GD.Print(((Tool)hotbar[activeSlot].item.item).cooldown);
+			}
 		}
 
 		ServerManager.GetGame(gId).SendAll(_sp.Serialize());
@@ -101,6 +141,11 @@ public partial class Player : CharacterBody2D
 		if (item.type == 1)
 		{
 			Tool tool = (Tool)item.item;
+
+			if (!cooled) return;
+
+			cooled = false;
+			cooldownTimer.Start(tool.cooldown);
 
 			if (tool.type == 0)
 			{
@@ -122,7 +167,7 @@ public partial class Player : CharacterBody2D
 
 			hotbar[activeSlot].count -= 1;
 
-			ServerManager.GetGame(gId).SendTo(cId, new StatsPacket(cId, health, mana).Serialize());
+			ServerManager.GetGame(gId).SendAll(new StatsPacket(cId, health, mana).Serialize());
 			ServerManager.GetGame(gId).SendTo(cId, hotbar[activeSlot].Serialize());
 		}
 

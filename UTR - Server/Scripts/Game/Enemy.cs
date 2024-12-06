@@ -9,21 +9,28 @@ namespace enemy
 		int gId;
 
 		List<int> collidingPlayers = new();
+		List<int> attackPlayers = new();
 
 		public int health = 100;
 		public int enemyId;
 		public int roomId;
-		public int damage = 10;
+		public int damage = 5;
 
 		public int trackingId = -1;
+		public int attackingId = -1;
 
 		public bool active = false;
+
+		bool attackReady = false;
+		Timer cooldown;
 
 		public void Instantiate(int _gId, int _id, int _rId)
 		{
 			gId = _gId;
 			enemyId = _id;
 			roomId = _rId;
+
+			cooldown = GetNode<Timer>("Cooldown");
 
 			GetNode<Area2D>("TrackerArea").AreaEntered += (body) =>
 			{
@@ -45,7 +52,7 @@ namespace enemy
 				if (body.GetParent().GetType() == typeof(Player))
 				{
 					Player _p = (Player)body.GetParent();
-					
+
 					collidingPlayers.Remove(_p.cId);
 
 					if (trackingId == _p.cId)
@@ -60,7 +67,16 @@ namespace enemy
 				{
 					Player _p = (Player)body.GetParent();
 
-					if (_p.curRoom != roomId) return;
+					if (attackingId == -1)
+					{
+						attackingId = _p.cId;
+						trackingId = _p.cId;
+
+						cooldown.Start(0.2);
+						attackReady = false;
+					}
+
+					attackPlayers.Add(_p.cId);
 				}
 			};
 
@@ -69,7 +85,27 @@ namespace enemy
 				if (body.GetParent().GetType() == typeof(Player))
 				{
 					Player _p = (Player)body.GetParent();
+
+					attackPlayers.Remove(_p.cId);
+
+					if (attackingId == _p.cId)
+						if (attackPlayers.Count != 0)
+						{
+							attackingId = attackPlayers.FirstOrDefault();
+							trackingId = attackingId;
+						}
+						else
+						{
+							attackingId = -1;
+							cooldown.Stop();
+							attackReady = false;
+						}
 				}
+			};
+
+			cooldown.Timeout += () =>
+			{
+				attackReady = true;
 			};
 
 			ServerManager.GetGame(gId).SendAll(new packets.EnemyPacket(enemyId, this).Serialize());
@@ -85,30 +121,64 @@ namespace enemy
 
 			if (trackingId != -1 && ServerManager.GetClient(trackingId) != null)
 			{
-				if (ServerManager.GetClient(trackingId).player.curRoom != roomId)
-				{
-					if (collidingPlayers.Count == 1) return;
-
-					collidingPlayers.Remove(trackingId);
-					collidingPlayers.Add(trackingId);
-					trackingId = collidingPlayers.FirstOrDefault();
-					return;
-				}
-
-				Vector2 pos = (ServerManager.GetClient(trackingId).player.Position - Position).Normalized();
-
-				Velocity = pos * (float)delta * 750;
-				MoveAndSlide();
-				//MoveAndCollide(pos * (float)delta * 10);
-
-				ServerManager.GetGame(gId).SendAll(new packets.EnemyPacket(enemyId, this).Serialize());
+				TrackPlayer(delta);
 			}
+
+			if (attackingId != -1 && ServerManager.GetClient(attackingId) != null)
+			{
+				AttackPlayer(delta);
+			}
+		}
+
+		private void AttackPlayer(double delta)
+		{
+			if (ServerManager.GetClient(attackingId).player.curRoom != roomId)
+			{
+				if (attackPlayers.Count == 1) return;
+
+				attackPlayers.Remove(attackingId);
+				attackPlayers.Add(attackingId);
+
+				attackingId = attackPlayers.FirstOrDefault();
+				trackingId = attackingId;
+				return;
+			}
+
+			if (!attackReady) return;
+
+			ServerManager.GetClient(attackingId).player.Damage(this, damage);
+
+			attackReady = false;
+
+			cooldown.Start(0.15);
+		}
+
+		private void TrackPlayer(double delta)
+		{
+			if (ServerManager.GetClient(trackingId).player.curRoom != roomId)
+			{
+				if (collidingPlayers.Count == 1) return;
+
+				collidingPlayers.Remove(trackingId);
+				collidingPlayers.Add(trackingId);
+				trackingId = collidingPlayers.FirstOrDefault();
+				return;
+			}
+
+			Vector2 pos = (ServerManager.GetClient(trackingId).player.Position - Position).Normalized();
+
+			Velocity = pos * (float)delta * 1000;
+			MoveAndSlide();
+			//MoveAndCollide(pos * (float)delta * 10);
+
+			ServerManager.GetGame(gId).SendAll(new packets.EnemyPacket(enemyId, this).Serialize());
 		}
 
 		public void Damage(int amt)
 		{
 			if (!active) return;
 			health -= amt;
+
 			if (health <= 0)
 			{
 				active = false;

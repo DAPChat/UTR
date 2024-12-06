@@ -45,3 +45,5 @@ shape = SubResource("CircleShape2D_vwan5")
 [node name="Sprite" type="AnimatedSprite2D" parent="."]
 scale = Vector2(0.178571, 0.178571)
 sprite_frames = SubResource("SpriteFrames_s3mr6")
+frame = 2
+frame_progress = 0.744341

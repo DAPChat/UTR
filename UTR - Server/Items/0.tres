@@ -5,7 +5,7 @@
 [resource]
 script = ExtResource("1_foy8c")
 type = 0
-baseDmg = 10.0
+baseDmg = 25.0
 lvlScale = 0
 range = 0
 cooldown = 0
