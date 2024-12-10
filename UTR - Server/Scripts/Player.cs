@@ -12,6 +12,9 @@ public partial class Player : CharacterBody2D
 	public int cId;
 	int gId;
 
+	public int outOrder;
+	public int inOrder;
+
 	bool noItem = true;
 	bool active = false;
 
@@ -44,6 +47,9 @@ public partial class Player : CharacterBody2D
 	{
 		cId = _cId;
 		gId = _gId;
+
+		outOrder = 0;
+		inOrder = -1;
 
 		health = 50;
 
@@ -96,7 +102,7 @@ public partial class Player : CharacterBody2D
 		// Player death
 
 		invincible = true;
-		invincibilityTimer.Start();
+		invincibilityTimer.Start(.25);
 
 		ServerManager.GetGame(gId).SendAll(new StatsPacket(cId, health, mana).Serialize());
 	}
@@ -144,15 +150,22 @@ public partial class Player : CharacterBody2D
 
 			if (!cooled) return;
 
-			cooled = false;
-			cooldownTimer.Start(tool.cooldown);
-
 			if (tool.type == 0)
 			{
 				SetCollider(4);
 				if (enemies.Count == 0) { return; }
-				enemies.FirstOrDefault().Damage(tool.baseDmg);
+				if (enemies[0].roomId != curRoom)
+				{
+					Enemy _temp = enemies[0];
+					enemies.Remove(_temp);
+					enemies.Add(_temp);
+					return;
+				}
+				enemies[0].Damage(tool.baseDmg);
 			}
+
+			cooled = false;
+			cooldownTimer.Start(tool.cooldown);
 		}
 		else if (item.type == 2)
 		{
@@ -182,6 +195,7 @@ public partial class Player : CharacterBody2D
 	public void Move(MovePacket move)
 	{
 		if (!active) return;
+		if (inOrder >= move.order) { GD.Print("Dropeed"); return; }
 		if (inMove == new Vector2(move.x, move.y)) return;
 
 		inMove = new (move.x, move.y);
@@ -195,6 +209,8 @@ public partial class Player : CharacterBody2D
 				Scale = new (1, 1);
 				RotationDegrees = 0f;
 			}
+
+		inOrder = move.order;
 	}
 
 	public override void _PhysicsProcess(double delta)
@@ -206,7 +222,9 @@ public partial class Player : CharacterBody2D
 
 		if (ServerManager.GetGame(gId) == null) return;
 
-		ServerManager.GetGame(gId).SendAll(new MovePacket(cId, Position.X, Position.Y, prevPos != Position ? (int)inMove.X : 0).Serialize());
+		if (!active) return;
+
+		ServerManager.GetGame(gId).SendAll(new MovePacket(cId, outOrder, Position.X, Position.Y, prevPos != Position ? (int)inMove.X : 0).Serialize());
 	}
 
 	public void Exit()

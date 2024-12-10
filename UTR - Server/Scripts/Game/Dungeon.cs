@@ -91,7 +91,7 @@ namespace game
 						dX = x + by;
 					}
 
-					dungeon.SetCell(new(dX, dY));
+					dungeon.SetCell(new(dX, dY), 0, new (0, 0), 2);
 				}
 			}
 		}

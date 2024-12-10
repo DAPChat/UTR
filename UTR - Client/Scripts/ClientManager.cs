@@ -85,7 +85,7 @@ public partial class ClientManager : Node
 			_sprite.Play("run_max");
 		}
 
-		client.udp.Send(new MovePacket(client.id, _inputVect.X, _inputVect.Y).Serialize());
+		client.udp.Send(new MovePacket(client.id, players[client.id].outOrder, _inputVect.X, _inputVect.Y).Serialize());
 
 		players[client.id].Velocity = players[client.id].Velocity.MoveToward(((Vector2)_inputVect).Normalized() * 100, 1500 * (float)delta);
 		try
@@ -140,22 +140,17 @@ public partial class ClientManager : Node
 	{
 		if (!players.ContainsKey(_move.playerId))
 		{
-			CharacterBody2D _tempPlayer = (CharacterBody2D)ResourceLoader.Load<PackedScene>("res://Scenes/player.tscn").Instantiate().Duplicate();
-			sceneTree.GetNode<Node2D>("Players").AddChild(_tempPlayer);
-
-			players[_move.playerId] = _tempPlayer as Player;
-			players[_move.playerId].Instantiate();
-
-			if (_move.playerId == client.id)
-			{
-				_tempPlayer.AddChild(camera);
-			}
+			CreatePlayer(_move.playerId);
 		}
 
 		if (!active && client.id == _move.playerId && _move.data != -2)
 		{
 			active = true;
 		}
+
+		if (_move.order <= players[_move.playerId].inOrder) { GD.Print("HLosst"); return; }
+
+		players[_move.playerId].inOrder = _move.order;
 
 		AnimatedSprite2D _pAnim = players[_move.playerId].GetNode<AnimatedSprite2D>("PlayerView");
 		Sprite2D _wpn = players[_move.playerId].GetNode<Sprite2D>("Item");
@@ -291,10 +286,29 @@ public partial class ClientManager : Node
 			Entity body = (Entity)ResourceLoader.Load<PackedScene>("res://Scenes/enemy.tscn").Instantiate().Duplicate();
 
 			sceneTree.GetNode<Node>("Enemies").AddChild(body);
-			body.Instantiate();
 			entities[_enemy.enemyId] = body;
+			body.Instantiate(_enemy.enemyId);
 		}
-		entities[_enemy.enemyId].Update(new(_enemy.x, _enemy.y), _enemy.health);
+		entities[_enemy.enemyId].Update(_enemy.order, new(_enemy.x, _enemy.y), _enemy.health);
+	}
+
+	public static Player GetPlayer(int _id)
+	{
+		return players[_id];
+	}
+
+	private static void CreatePlayer(int _id)
+	{
+		CharacterBody2D _tempPlayer = (CharacterBody2D)ResourceLoader.Load<PackedScene>("res://Scenes/player.tscn").Instantiate().Duplicate();
+		sceneTree.GetNode<Node2D>("Players").AddChild(_tempPlayer);
+
+		players[_id] = _tempPlayer as Player;
+		players[_id].Instantiate();
+
+		if (_id == client.id)
+		{
+			_tempPlayer.AddChild(camera);
+		}
 	}
 
 	public static void RemoveEntity(int _eId)
@@ -315,7 +329,7 @@ public partial class ClientManager : Node
 
 		_packet.data = TitleScene.reqId;
 
-		MovePlayer(new(_packet.playerId, 0, 0, -2));
+		CreatePlayer(_packet.playerId);
 
 		client.udp.Send(_packet.Serialize());
 	}

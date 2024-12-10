@@ -8,6 +8,8 @@ namespace enemy
 	{
 		int gId;
 
+		public int order;
+
 		List<int> collidingPlayers = new();
 		List<int> attackPlayers = new();
 
@@ -15,6 +17,7 @@ namespace enemy
 		public int enemyId;
 		public int roomId;
 		public int damage = 5;
+		public int speed = 1000;
 
 		public int trackingId = -1;
 		public int attackingId = -1;
@@ -22,15 +25,19 @@ namespace enemy
 		public bool active = false;
 
 		bool attackReady = false;
+		bool stateReady = true;
 		Timer cooldown;
+		Timer stateCd;
 
 		public void Instantiate(int _gId, int _id, int _rId)
 		{
 			gId = _gId;
 			enemyId = _id;
 			roomId = _rId;
+			order = 0;
 
 			cooldown = GetNode<Timer>("Cooldown");
+			stateCd = GetNode<Timer>("StateCooldown");
 
 			GetNode<Area2D>("TrackerArea").AreaEntered += (body) =>
 			{
@@ -108,6 +115,13 @@ namespace enemy
 				attackReady = true;
 			};
 
+			stateCd.Timeout += () =>
+			{
+				speed = 1000;
+				stateCd.Start();
+				stateReady = true;
+			};
+
 			ServerManager.GetGame(gId).SendAll(new packets.EnemyPacket(enemyId, this).Serialize());
 
 			active = true;
@@ -155,6 +169,8 @@ namespace enemy
 
 		private void TrackPlayer(double delta)
 		{
+			RandomNumberGenerator rand = new();
+
 			if (ServerManager.GetClient(trackingId).player.curRoom != roomId)
 			{
 				if (collidingPlayers.Count == 1) return;
@@ -167,7 +183,17 @@ namespace enemy
 
 			Vector2 pos = (ServerManager.GetClient(trackingId).player.Position - Position).Normalized();
 
-			Velocity = pos * (float)delta * 1000;
+			if (stateReady && rand.RandiRange(1,5) == 1)
+			{
+				speed = 4500;
+				stateReady = false;
+			}
+			else
+			{
+				stateReady = false;
+			}
+
+			Velocity = pos * (float)delta * speed;
 			MoveAndSlide();
 			//MoveAndCollide(pos * (float)delta * 10);
 

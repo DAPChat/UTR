@@ -28,6 +28,7 @@ namespace game
 		{
 			gameId = _gameId;
 			dun = new(10, 10, 10, GetNode<TileMapLayer>("DungeonT"), gameId);
+			exploredRooms.Add(dun.startRoom.playerId);
 
 			foreach (Client _c in _clients)
 			{
@@ -52,7 +53,7 @@ namespace game
 			_c.player = _tempPlayer as Player;
 			_c.player.Instantiate(_c.id, gameId);
 
-			SendAll(new MovePacket(_c.id, _tempPlayer.Position.X, _tempPlayer.Position.Y, 1).Serialize());
+			SendAll(new MovePacket(_c.id, _c.player.outOrder, _tempPlayer.Position.X, _tempPlayer.Position.Y, 1).Serialize());
 			
 			SendTo(_c.id, dun.startRoom.Serialize());
 			
@@ -98,6 +99,13 @@ namespace game
 		{
 			clients[_cId].player.curRoom = _rp.playerId;
 
+			foreach(Enemy e in GetNode("Enemies").GetChildren())
+			{
+				if (!GetActiveRooms().Contains(e.roomId))
+					e.ProcessMode = (ProcessModeEnum)4;
+				else e.ProcessMode = 0;
+			}
+
 			if (exploredRooms.Contains(_rp.playerId))
 			{
 				return;
@@ -139,6 +147,30 @@ namespace game
 
 			ServerManager.RemoveGame(gameId);
 			GetParent().QueueFree();
+		}
+
+		public List<int> GetActiveRooms()
+		{
+			List<int> aR = new();
+
+			foreach (var room in exploredRooms)
+			{
+				if (GetPlayersInRoom(room) > 0) aR.Add(room);
+			}
+
+			return aR;
+		}
+
+		public int GetPlayersInRoom(int _rId)
+		{
+			int count = 0;
+
+			foreach (var player in clients)
+			{
+				if (player.Value.player.curRoom == _rId) count++;
+			}
+
+			return count;
 		}
 
 		private void CreateQueue()

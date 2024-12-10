@@ -31,6 +31,6 @@ public partial class Inventory : Panel
 	{
 		if (_item == null) return;
 
-		GetNode<RichTextLabel>("Tooltip").Text = "Tooltip\n" + _item.ToString();
+		GetNode<RichTextLabel>("TooltipBg/Tooltip").Text = "Tooltip:\n" + _item.ToString();
 	}
 }

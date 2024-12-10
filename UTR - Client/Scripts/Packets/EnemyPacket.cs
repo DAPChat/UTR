@@ -2,6 +2,7 @@
 {
 	public class EnemyPacket : Packet
 	{
+		public int order;
 		public int enemyId;
 		public float x;
 		public float y;
@@ -28,12 +29,13 @@
 
 		public override byte[] Serialize()
 		{
-			return Serialize([6, playerId, data, enemyId, x, y, health]);
+			return Serialize([6, playerId, data, order, enemyId, x, y, health]);
 		}
 
 		public override void Deserialize(Buffer buff)
 		{
 			base.Deserialize(buff);
+			order = buff.ReadInt();
 			enemyId = buff.ReadInt();
 			x = buff.ReadFloat();
 			y = buff.ReadFloat();

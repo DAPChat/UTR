@@ -47,3 +47,4 @@ enabled=PackedStringArray("res://addons/resources_spreadsheet_view/plugin.cfg")
 2d_physics/layer_1="Environment"
 2d_physics/layer_2="Enemies"
 2d_physics/layer_3="Player"
+2d_physics/layer_4="EnemyEnv"

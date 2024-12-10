@@ -1,11 +1,13 @@
-[gd_scene load_steps=5 format=3 uid="uid://covs3s8f0furv"]
+[gd_scene load_steps=6 format=3 uid="uid://covs3s8f0furv"]
 
 [ext_resource type="Script" path="res://Scripts/Game/Game.cs" id="1_6w0mk"]
 [ext_resource type="PackedScene" uid="uid://bx7v68hn7okuo" path="res://Scenes/wall_tile.tscn" id="2_bvqxk"]
+[ext_resource type="PackedScene" uid="uid://cfad50uvuvoqv" path="res://Scenes/door_tile.tscn" id="3_0bisv"]
 
 [sub_resource type="TileSetScenesCollectionSource" id="TileSetScenesCollectionSource_q6j7i"]
 resource_name = "DungeonCollision"
 scenes/1/scene = ExtResource("2_bvqxk")
+scenes/2/scene = ExtResource("3_0bisv")
 
 [sub_resource type="TileSet" id="TileSet_tw3l5"]
 physics_layer_0/collision_layer = 1

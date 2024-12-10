@@ -100,3 +100,4 @@ use={
 [rendering]
 
 textures/canvas_textures/default_texture_filter=0
+environment/defaults/default_clear_color=Color(0.129558, 0.129559, 0.129558, 1)

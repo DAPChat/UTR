@@ -5,11 +5,14 @@ using packets;
 
 public partial class Player : CharacterBody2D
 {
+	public int outOrder;
+	public int inOrder;
 	public int health;
 
 	public void Instantiate()
 	{
-
+		outOrder = 0;
+		inOrder = -1;
 	}
 
 	public void SetActiveItem(SlotPacket _slot)

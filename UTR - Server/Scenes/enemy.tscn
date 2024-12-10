@@ -16,7 +16,7 @@ radius = 5.0
 
 [node name="Enemy" type="CharacterBody2D"]
 collision_layer = 2
-collision_mask = 7
+collision_mask = 15
 motion_mode = 1
 platform_floor_layers = 4294967041
 platform_wall_layers = 4
@@ -51,3 +51,8 @@ shape = SubResource("CircleShape2D_amhkf")
 [node name="Cooldown" type="Timer" parent="."]
 wait_time = 0.06
 one_shot = true
+
+[node name="StateCooldown" type="Timer" parent="."]
+wait_time = 0.5
+one_shot = true
+autostart = true
