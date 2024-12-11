@@ -10,3 +10,4 @@ freeze = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_rknnu")
+debug_color = Color(0.594104, 0.440163, 0.838174, 0.42)
