@@ -8,7 +8,7 @@ public partial class ClientManager : Node
 {
 	public static Client client { get; private set; }
 
-	static ClientManager sceneTree;
+	public static ClientManager sceneTree;
 
 	static Dictionary<int, Player> players = new();
 

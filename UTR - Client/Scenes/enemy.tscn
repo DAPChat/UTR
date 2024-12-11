@@ -104,7 +104,6 @@ animations = [{
 }]
 
 [node name="Enemy" type="RigidBody2D"]
-scale = Vector2(1.25, 1.25)
 gravity_scale = 0.0
 script = ExtResource("1_b6an4")
 
@@ -112,8 +111,9 @@ script = ExtResource("1_b6an4")
 shape = SubResource("CircleShape2D_vwan5")
 
 [node name="Sprite" type="AnimatedSprite2D" parent="."]
-scale = Vector2(0.178571, 0.178571)
+position = Vector2(-0.491076, -1.74207)
+scale = Vector2(0.200397, 0.200397)
 sprite_frames = SubResource("SpriteFrames_s3mr6")
-animation = &"idle"
-frame = 3
-frame_progress = 0.302114
+animation = &"run"
+frame = 6
+frame_progress = 0.207346

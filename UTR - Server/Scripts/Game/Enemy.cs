@@ -88,7 +88,7 @@ namespace enemy
 						attackingId = _p.cId;
 						trackingId = _p.cId;
 
-						cooldown.Start(0.2);
+						cooldown.Start(0.35);
 						attackReady = false;
 					}
 
@@ -186,7 +186,7 @@ namespace enemy
 
 			attackReady = false;
 
-			cooldown.Start(0.15);
+			cooldown.Start(0.4);
 		}
 
 		private void TrackPlayer(double delta)

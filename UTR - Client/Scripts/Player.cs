@@ -47,7 +47,13 @@ public partial class Player : CharacterBody2D
 
 	public void StateUpdate(int _s, int _data)
 	{
-		if (_s == 0)
+		if (_s == -1)
+		{
+			ClientManager.active = false;
+			ClientManager.sceneTree.GetNode<ColorRect>("UI/Death").Show();
+			ClientManager.sceneTree.ProcessMode = (ProcessModeEnum)4;
+		}
+		else if (_s == 0)
 		{
 			item.Play(curItem.item.item.simplename.ToLower() + "_use");
 		}

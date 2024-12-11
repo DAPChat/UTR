@@ -97,7 +97,7 @@ namespace game
 
 		public void ChangeRoom(int _cId, RoomPacket _rp)
 		{
-			clients[_cId].player.curRoom = _rp.playerId;
+			clients[_cId].player.curRoom = _rp == null ? -1 : _rp.playerId;
 
 			foreach(Enemy e in GetNode("Enemies").GetChildren())
 			{
@@ -106,7 +106,7 @@ namespace game
 				else e.Pause(false);
 			}
 
-			if (exploredRooms.Contains(_rp.playerId))
+			if (_rp == null || exploredRooms.Contains(_rp.playerId))
 			{
 				return;
 			}

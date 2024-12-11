@@ -62,7 +62,7 @@ public partial class ServerManager : Node
 			byte[] data = udpClient.EndReceive(result, ref _clientEnd);
 			udpClient.BeginReceive(ReceiveCallback, null);
 
-			packets.Packet _p = PacketManager.CreatePacket(data);
+			Packet _p = PacketManager.CreatePacket(data);
 
 			if (clients[_p.playerId].udp.end == null)
 			{
@@ -71,7 +71,8 @@ public partial class ServerManager : Node
 				return;
 			}
 
-			games[clients[_p.playerId].gameId].AddToQueue(_p);
+			Game _tempG = GetGame(clients[_p.playerId].gameId);
+			_tempG?.AddToQueue(_p);
 		}
 		catch (Exception e)
 		{

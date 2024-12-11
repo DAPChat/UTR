@@ -111,6 +111,10 @@ public partial class Player : CharacterBody2D
 		health -= _dmg;
 
 		// Player death
+		if (health <= 0)
+		{
+			if (Die()) return;
+		}
 
 		invincible = true;
 		invincibilityTimer.Start(.25);
@@ -120,6 +124,13 @@ public partial class Player : CharacterBody2D
 		knockedDir = (GlobalPosition - damager.GlobalPosition).Normalized();
 
 		ServerManager.GetGame(gId).SendAll(new StatsPacket(cId, health, mana, points).Serialize());
+	}
+
+	public bool Die()
+	{
+		ServerManager.GetGame(gId).SendTo(cId, new StatePacket(cId, 0, -1).Serialize());
+		ServerManager.GetGame(gId).Destroy(cId);
+		return true;
 	}
 
 	public void SetActiveSlot(int _slot)
@@ -250,6 +261,7 @@ public partial class Player : CharacterBody2D
 	public void Exit()
 	{
 		active = false;
+		ServerManager.GetGame(gId).ChangeRoom(cId, null);
 		ServerManager.GetGame(gId).SendAll(new Packet(cId, -2).Serialize());
 		QueueFree();
 	}

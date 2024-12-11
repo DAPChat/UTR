@@ -9,7 +9,7 @@ radius = 5.0
 radius = 350.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_w6l4f"]
-radius = 30.0
+radius = 25.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_amhkf"]
 radius = 5.0
@@ -50,7 +50,7 @@ collision_mask = 6
 shape = SubResource("CircleShape2D_amhkf")
 
 [node name="Cooldown" type="Timer" parent="."]
-wait_time = 0.06
+wait_time = 0.4
 one_shot = true
 
 [node name="StateCooldown" type="Timer" parent="."]
