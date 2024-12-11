@@ -20,6 +20,8 @@ public partial class Player : CharacterBody2D
 
 	bool cooled = true;
 	bool invincible = false;
+	bool knocked = false;
+	Vector2 knockedDir = new();
 
 	int maxHealth = 100;
 
@@ -42,6 +44,7 @@ public partial class Player : CharacterBody2D
 
 	Timer cooldownTimer;
 	Timer invincibilityTimer;
+	Timer knockbackTimer;
 
 	public void Instantiate(int _cId, int _gId)
 	{
@@ -51,7 +54,7 @@ public partial class Player : CharacterBody2D
 		outOrder = 0;
 		inOrder = -1;
 
-		health = 50;
+		health = maxHealth;
 
 		active = true;
 
@@ -81,6 +84,13 @@ public partial class Player : CharacterBody2D
 			invincible = false;
 		};
 
+		knockbackTimer = GetNode<Timer>("Knockback");
+
+		knockbackTimer.Timeout += () =>
+		{
+			knocked = false;
+		};
+
 		hotbar[0] = new(cId, ItemManager.GetItem(0), 0, 1, 1);
 		hotbar[1] = new(cId, ItemManager.GetItem(1), 1, 2, 1);
 		noItem = false;
@@ -103,6 +113,10 @@ public partial class Player : CharacterBody2D
 
 		invincible = true;
 		invincibilityTimer.Start(.25);
+
+		knocked = true;
+		knockbackTimer.Start();
+		knockedDir = (GlobalPosition - damager.GlobalPosition).Normalized();
 
 		ServerManager.GetGame(gId).SendAll(new StatsPacket(cId, health, mana).Serialize());
 	}
@@ -130,7 +144,6 @@ public partial class Player : CharacterBody2D
 			if (hotbar[activeSlot].item.type == 1) {
 				cooled = false;
 				cooldownTimer.Start(((Tool)hotbar[activeSlot].item.item).cooldown);
-				GD.Print(((Tool)hotbar[activeSlot].item.item).cooldown);
 			}
 		}
 
@@ -161,8 +174,10 @@ public partial class Player : CharacterBody2D
 					enemies.Add(_temp);
 					return;
 				}
-				enemies[0].Damage(tool.baseDmg);
+				enemies[0].Damage(tool.baseDmg, GlobalPosition);
 			}
+
+			ServerManager.GetGame(gId).SendAll(new StatePacket(cId, 0, 0).Serialize());
 
 			cooled = false;
 			cooldownTimer.Start(tool.cooldown);
@@ -195,7 +210,7 @@ public partial class Player : CharacterBody2D
 	public void Move(MovePacket move)
 	{
 		if (!active) return;
-		if (inOrder >= move.order) { GD.Print("Dropeed"); return; }
+		if (inOrder >= move.order) { return; }
 		if (inMove == new Vector2(move.x, move.y)) return;
 
 		inMove = new (move.x, move.y);
@@ -218,6 +233,9 @@ public partial class Player : CharacterBody2D
 		Vector2 prevPos = Position;
 
 		Velocity = Velocity.MoveToward(inMove.Normalized() * 100, 1500 * (float)GetPhysicsProcessDeltaTime());
+
+		if (knocked) Velocity += (new Vector2(100, 100) * knockedDir);
+
 		MoveAndSlide();
 
 		if (ServerManager.GetGame(gId) == null) return;

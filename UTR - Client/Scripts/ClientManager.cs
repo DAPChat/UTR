@@ -148,7 +148,7 @@ public partial class ClientManager : Node
 			active = true;
 		}
 
-		if (_move.order <= players[_move.playerId].inOrder) { GD.Print("HLosst"); return; }
+		if (_move.order <= players[_move.playerId].inOrder) { return; }
 
 		players[_move.playerId].inOrder = _move.order;
 
@@ -284,9 +284,8 @@ public partial class ClientManager : Node
 		if (!entities.ContainsKey(_enemy.enemyId))
 		{
 			Entity body = (Entity)ResourceLoader.Load<PackedScene>("res://Scenes/enemy.tscn").Instantiate().Duplicate();
-
-			sceneTree.GetNode<Node>("Enemies").AddChild(body);
 			entities[_enemy.enemyId] = body;
+			sceneTree.GetNode<Node>("Enemies").AddChild(body);
 			body.Instantiate(_enemy.enemyId);
 		}
 		entities[_enemy.enemyId].Update(_enemy.order, new(_enemy.x, _enemy.y), _enemy.health);
@@ -315,6 +314,11 @@ public partial class ClientManager : Node
 	{
 		entities[_eId].QueueFree();
 		entities.Remove(_eId);
+	}
+
+	public static Entity GetEntity(int _eId)
+	{
+		return entities[_eId];
 	}
 
 	public static void RemoveClient(int _id)

@@ -25,4 +25,23 @@ public partial class Player : CharacterBody2D
 
 		GetNode<Sprite2D>("Item").Texture = ResourceLoader.Load<Texture2D>(_slot.item.item.icon);
 	}
+
+	// Update States
+	/*
+	-1 -> dead
+	0 -> use item (anim)
+	1 -> damage (take -> kb)
+	 */
+
+	public void StateUpdate(int _s, int _data)
+	{
+		if (_s == 0)
+		{
+
+		}
+		else if (_s == 1)
+		{
+
+		}
+	}
 }

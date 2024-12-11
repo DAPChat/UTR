@@ -10,7 +10,7 @@ height = 12.0
 radius = 7.07107
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_j64tp"]
-radius = 3.0
+radius = 4.0
 
 [node name="Player" type="CharacterBody2D"]
 collision_layer = 4
@@ -44,4 +44,8 @@ one_shot = true
 
 [node name="Invincibility" type="Timer" parent="."]
 wait_time = 0.2
+one_shot = true
+
+[node name="Knockback" type="Timer" parent="."]
+wait_time = 0.05
 one_shot = true

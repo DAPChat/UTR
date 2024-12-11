@@ -102,8 +102,8 @@ namespace game
 			foreach(Enemy e in GetNode("Enemies").GetChildren())
 			{
 				if (!GetActiveRooms().Contains(e.roomId))
-					e.ProcessMode = (ProcessModeEnum)4;
-				else e.ProcessMode = 0;
+					e.Pause(true);
+				else e.Pause(false);
 			}
 
 			if (exploredRooms.Contains(_rp.playerId))

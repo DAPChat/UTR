@@ -22,12 +22,18 @@ namespace enemy
 		public int trackingId = -1;
 		public int attackingId = -1;
 
+		public bool prevTrack = false;
+
 		public bool active = false;
+
+		Vector2 knockedDir;
 
 		bool attackReady = false;
 		bool stateReady = true;
+		bool knocked = false;
 		Timer cooldown;
 		Timer stateCd;
+		Timer knockbackTimer;
 
 		public void Instantiate(int _gId, int _id, int _rId)
 		{
@@ -38,6 +44,7 @@ namespace enemy
 
 			cooldown = GetNode<Timer>("Cooldown");
 			stateCd = GetNode<Timer>("StateCooldown");
+			knockbackTimer = GetNode<Timer>("Knockback");
 
 			GetNode<Area2D>("TrackerArea").AreaEntered += (body) =>
 			{
@@ -122,6 +129,11 @@ namespace enemy
 				stateReady = true;
 			};
 
+			knockbackTimer.Timeout += () =>
+			{
+				knocked = false;
+			};
+
 			ServerManager.GetGame(gId).SendAll(new packets.EnemyPacket(enemyId, this).Serialize());
 
 			active = true;
@@ -133,10 +145,20 @@ namespace enemy
 
 			if (!active) return;
 
+			if (ServerManager.GetGame(gId) == null) return;
+
 			if (trackingId != -1 && ServerManager.GetClient(trackingId) != null)
 			{
 				TrackPlayer(delta);
+				if (!prevTrack)
+					ServerManager.GetGame(gId).SendAll(new packets.StatePacket(enemyId, 1, 1).Serialize());
 			}
+			else if (prevTrack)
+			{
+				ServerManager.GetGame(gId).SendAll(new packets.StatePacket(enemyId, 1, 0).Serialize());
+			}
+
+			prevTrack = trackingId != -1;
 
 			if (attackingId != -1 && ServerManager.GetClient(attackingId) != null)
 			{
@@ -185,7 +207,7 @@ namespace enemy
 
 			if (stateReady && rand.RandiRange(1,5) == 1)
 			{
-				speed = 4500;
+				speed = 5500;
 				stateReady = false;
 			}
 			else
@@ -194,16 +216,33 @@ namespace enemy
 			}
 
 			Velocity = pos * (float)delta * speed;
+
+			if (knocked) Velocity += (new Vector2(250, 250) * knockedDir);
+
 			MoveAndSlide();
 			//MoveAndCollide(pos * (float)delta * 10);
 
 			ServerManager.GetGame(gId).SendAll(new packets.EnemyPacket(enemyId, this).Serialize());
 		}
 
-		public void Damage(int amt)
+		public void Pause(bool _p)
+		{
+			if (_p)
+			{
+				ServerManager.GetGame(gId).SendAll(new packets.StatePacket(enemyId, 1, 0).Serialize());
+				ProcessMode = (ProcessModeEnum)4;
+			}
+			else ProcessMode = 0;
+		}
+
+		public void Damage(int amt, Vector2 dir)
 		{
 			if (!active) return;
 			health -= amt;
+
+			knocked = true;
+			knockbackTimer.Start();
+			knockedDir = (GlobalPosition - dir).Normalized();
 
 			if (health <= 0)
 			{

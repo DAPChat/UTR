@@ -11,10 +11,10 @@ namespace items
 		[Export]
 		public int baseDmg;
 		[Export]
-		public int lvlScale;
+		public float lvlScale;
 		[Export]
 		public int range;
 		[Export]
-		public int cooldown;
+		public float cooldown;
 	}
 }

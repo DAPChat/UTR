@@ -6,9 +6,12 @@ public partial class Entity : RigidBody2D
 	public int id;
 	public int order;
 	public int health;
+	public Vector2 position;
 
 	public void Instantiate(int _id)
 	{
+		GetNode<AnimatedSprite2D>("Sprite").Play("idle");
+
 		id = _id;
 		order = -1;
 	}
@@ -18,15 +21,27 @@ public partial class Entity : RigidBody2D
 		if (_order > order)
 		{
 			order = _order;
-			Position = _pos;
-			GD.Print(order, id, Position);
+			position = _pos;
 			health = _health;
 		}
-		else GD.Print("Nope");
 	}
 
-	public override void _PhysicsProcess(double delta)
+	public override void _Process(double delta)
 	{
-		GD.Print(id, Position);
+		Position = position;
+	}
+
+	public void StateChange(int _s, int _data)
+	{
+		AnimatedSprite2D sprite = GetNode<AnimatedSprite2D>("Sprite");
+
+		if (_s == 0)
+		{
+			sprite.Play("idle");
+		}
+		else if (_s == 1)
+		{
+			sprite.Play("run");
+		}
 	}
 }

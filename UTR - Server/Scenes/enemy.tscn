@@ -15,6 +15,7 @@ radius = 30.0
 radius = 5.0
 
 [node name="Enemy" type="CharacterBody2D"]
+scale = Vector2(1.25, 1.25)
 collision_layer = 2
 collision_mask = 15
 motion_mode = 1
@@ -56,3 +57,7 @@ one_shot = true
 wait_time = 0.5
 one_shot = true
 autostart = true
+
+[node name="Knockback" type="Timer" parent="."]
+wait_time = 0.075
+one_shot = true
