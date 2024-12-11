@@ -1,11 +1,10 @@
-[gd_scene load_steps=17 format=3 uid="uid://cf41briyf5dnu"]
+[gd_scene load_steps=16 format=3 uid="uid://cf41briyf5dnu"]
 
 [ext_resource type="Script" path="res://Scripts/Player.cs" id="1_1v8xi"]
 [ext_resource type="Texture2D" uid="uid://dveahimyvgi62" path="res://Assets/smolryo_spritesheet_orgres.png" id="1_ej3ew"]
 [ext_resource type="Texture2D" uid="uid://dfdj00crbnasl" path="res://Assets/pixil-frame-0 (15).png" id="3_pcc2n"]
 [ext_resource type="Texture2D" uid="uid://dbx5rvhe5v462" path="res://Assets/empty.png" id="4_5ghet"]
 [ext_resource type="Texture2D" uid="uid://ppgexqy8m4o" path="res://Assets/Consumable/HealthPotion.png" id="4_8udt8"]
-[ext_resource type="Texture2D" uid="uid://vhgg1as6tgn7" path="res://Assets/UltimaStar.png" id="5_1wc84"]
 [ext_resource type="Texture2D" uid="uid://c1qoo1woo028a" path="res://Assets/Weapons/sword.png" id="7_8s4at"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_5fpqd"]
@@ -97,9 +96,6 @@ animations = [{
 }, {
 "duration": 1.0,
 "texture": ExtResource("7_8s4at")
-}, {
-"duration": 1.0,
-"texture": ExtResource("5_1wc84")
 }],
 "loop": false,
 "name": &"sword_use",
