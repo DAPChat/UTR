@@ -275,8 +275,10 @@ public partial class ClientManager : Node
 	{
 		if (_stats.playerId != client.id) return;
 
-		sceneTree.GetNode<Label>("UI/Health").Text = _stats.health.ToString();// + "/" + players[_stats.playerId].health;
+		sceneTree.GetNode<Label>("UI/Health").Text = _stats.health.ToString() + "/100";// + "/" + players[_stats.playerId].health;
 		sceneTree.GetNode<HSlider>("UI/HealthSlider").Value = _stats.health;
+		sceneTree.GetNode<Label>("UI/Points").Text = "Points: " + _stats.points.ToString();// + "/" + players[_stats.playerId].health;
+
 	}
 
 	public static void MoveEntity(EnemyPacket _enemy)

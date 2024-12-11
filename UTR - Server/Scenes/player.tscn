@@ -9,8 +9,9 @@ height = 12.0
 [sub_resource type="CircleShape2D" id="CircleShape2D_m7028"]
 radius = 7.07107
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_j64tp"]
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_eye8o"]
 radius = 4.0
+height = 12.0
 
 [node name="Player" type="CharacterBody2D"]
 collision_layer = 4
@@ -36,8 +37,8 @@ collision_layer = 4
 collision_mask = 2
 
 [node name="Shape" type="CollisionShape2D" parent="WeaponArea"]
-position = Vector2(-4, 0)
-shape = SubResource("CircleShape2D_j64tp")
+position = Vector2(-8, 0)
+shape = SubResource("CapsuleShape2D_eye8o")
 
 [node name="Cooldown" type="Timer" parent="."]
 one_shot = true

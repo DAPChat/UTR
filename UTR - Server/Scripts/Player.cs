@@ -28,6 +28,7 @@ public partial class Player : CharacterBody2D
 	public int activeSlot = 0;
 	public int health;
 	public int mana;
+	public int points;
 
 	public int curRoom;
 
@@ -100,7 +101,7 @@ public partial class Player : CharacterBody2D
 		ServerManager.GetGame(gId).SendTo(cId, hotbar[1].Serialize());
 		ServerManager.GetGame(gId).SendAll(_sp.Serialize());
 
-		ServerManager.GetGame(gId).SendAll(new StatsPacket(cId, health, mana).Serialize());
+		ServerManager.GetGame(gId).SendAll(new StatsPacket(cId, health, mana, points).Serialize());
 	}
 
 	public void Damage(Enemy damager, int _dmg)
@@ -118,7 +119,7 @@ public partial class Player : CharacterBody2D
 		knockbackTimer.Start();
 		knockedDir = (GlobalPosition - damager.GlobalPosition).Normalized();
 
-		ServerManager.GetGame(gId).SendAll(new StatsPacket(cId, health, mana).Serialize());
+		ServerManager.GetGame(gId).SendAll(new StatsPacket(cId, health, mana, points).Serialize());
 	}
 
 	public void SetActiveSlot(int _slot)
@@ -180,7 +181,7 @@ public partial class Player : CharacterBody2D
 					enemies.Add(_temp);
 					return;
 				}
-				enemies[0].Damage(tool.baseDmg, GlobalPosition);
+				enemies[0].Damage(tool.baseDmg, GlobalPosition, cId);
 			}
 		}
 		else if (item.type == 2)
@@ -196,7 +197,7 @@ public partial class Player : CharacterBody2D
 
 			hotbar[activeSlot].count -= 1;
 
-			ServerManager.GetGame(gId).SendAll(new StatsPacket(cId, health, mana).Serialize());
+			ServerManager.GetGame(gId).SendAll(new StatsPacket(cId, health, mana, points).Serialize());
 			ServerManager.GetGame(gId).SendTo(cId, hotbar[activeSlot].Serialize());
 		}
 
@@ -257,6 +258,6 @@ public partial class Player : CharacterBody2D
 	{
 		Area2D _ar = GetNode<Area2D>("WeaponArea");
 		CollisionShape2D _sh = _ar.GetNode<CollisionShape2D>("Shape");
-		((CircleShape2D)_sh.Shape).Radius = size;
+		//((CapsuleShape2D)_sh.Shape).Radius = size;
 	}
 }

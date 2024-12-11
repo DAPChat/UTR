@@ -46,6 +46,8 @@ namespace enemy
 			stateCd = GetNode<Timer>("StateCooldown");
 			knockbackTimer = GetNode<Timer>("Knockback");
 
+			ServerManager.GetGame(gId).SendAll(new packets.EnemyPacket(enemyId, this).Serialize());
+
 			GetNode<Area2D>("TrackerArea").AreaEntered += (body) =>
 			{
 				if (body.GetParent().GetType() == typeof(Player))
@@ -133,8 +135,6 @@ namespace enemy
 			{
 				knocked = false;
 			};
-
-			ServerManager.GetGame(gId).SendAll(new packets.EnemyPacket(enemyId, this).Serialize());
 
 			active = true;
 		}
@@ -235,7 +235,7 @@ namespace enemy
 			else ProcessMode = 0;
 		}
 
-		public void Damage(int amt, Vector2 dir)
+		public void Damage(int amt, Vector2 dir, int atkId)
 		{
 			if (!active) return;
 			health -= amt;
@@ -244,9 +244,12 @@ namespace enemy
 			knockbackTimer.Start();
 			knockedDir = (GlobalPosition - dir).Normalized();
 
+			cooldown.Start();
+
 			if (health <= 0)
 			{
 				active = false;
+				ServerManager.GetClient(atkId).player.points++;
 				ServerManager.GetGame(gId).SendAll(new packets.EnemyPacket(enemyId, this, 0).Serialize());
 				QueueFree();
 			}

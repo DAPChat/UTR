@@ -101,7 +101,7 @@ offset_top = 24.0
 offset_right = 233.0
 offset_bottom = 341.0
 theme_override_fonts/normal_font = ExtResource("9_xxd7f")
-theme_override_font_sizes/normal_font_size = 32
+theme_override_font_sizes/normal_font_size = 16
 text = "Tooltip:"
 
 [node name="Slots" type="Control" parent="UI/Inventory"]
@@ -308,5 +308,17 @@ theme_override_colors/font_color = Color(0.792157, 0.619608, 0.431373, 1)
 theme_override_fonts/font = ExtResource("9_xxd7f")
 theme_override_font_sizes/font_size = 32
 text = "100/100"
+
+[node name="Points" type="Label" parent="UI"]
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -200.0
+offset_bottom = 65.0
+grow_horizontal = 0
+theme_override_fonts/font = ExtResource("9_xxd7f")
+theme_override_font_sizes/font_size = 32
+text = "Points: "
+vertical_alignment = 1
 
 [node name="Enemies" type="Node" parent="."]
