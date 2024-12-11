@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dqioe2c58qydi"
-path="res://.godot/imported/frame_0_delay-0.13s.png-542484118b3e193a3663ed61a48e76ba.ctex"
+uid="uid://du26yuvoeva2i"
+path="res://.godot/imported/3.png-0816cf95ec7f34e2bc0a1f04cf298e79.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Weapons/basicsword/frame_0_delay-0.13s.png"
-dest_files=["res://.godot/imported/frame_0_delay-0.13s.png-542484118b3e193a3663ed61a48e76ba.ctex"]
+source_file="res://Assets/Weapons/basicsword/3.png"
+dest_files=["res://.godot/imported/3.png-0816cf95ec7f34e2bc0a1f04cf298e79.ctex"]
 
 [params]
 
