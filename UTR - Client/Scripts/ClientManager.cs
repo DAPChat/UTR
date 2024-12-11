@@ -153,7 +153,7 @@ public partial class ClientManager : Node
 		players[_move.playerId].inOrder = _move.order;
 
 		AnimatedSprite2D _pAnim = players[_move.playerId].GetNode<AnimatedSprite2D>("PlayerView");
-		Sprite2D _wpn = players[_move.playerId].GetNode<Sprite2D>("Item");
+		//Sprite2D _wpn = players[_move.playerId].GetNode<Sprite2D>("Item");
 
 		if (_move.data != 0 && _move.playerId != client.id)
 		{

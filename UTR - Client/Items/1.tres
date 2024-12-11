@@ -9,6 +9,7 @@ value = 0
 name = "Health Potion"
 description = "The true american way"
 icon = "res://Assets/Consumable/HealthPotion.png"
+simplename = "healthpotion"
 maxStack = 10
 attributeType = PackedInt32Array()
 attributeValues = PackedInt32Array()

@@ -14,6 +14,8 @@ namespace items
 		[Export]
 		public string icon;
 		[Export]
+		public string simplename;
+		[Export]
 		public int maxStack;
 		[Export]
 		public int[] attributeType;

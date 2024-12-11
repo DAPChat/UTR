@@ -3,10 +3,10 @@
 [ext_resource type="Script" path="res://Scripts/Player.cs" id="1_1v8xi"]
 [ext_resource type="Texture2D" uid="uid://dveahimyvgi62" path="res://Assets/smolryo_spritesheet_orgres.png" id="1_ej3ew"]
 [ext_resource type="Texture2D" uid="uid://dfdj00crbnasl" path="res://Assets/pixil-frame-0 (15).png" id="3_pcc2n"]
-[ext_resource type="Texture2D" uid="uid://brxdjuqhx34p2" path="res://Assets/Weapons/basicsword/swing0.png" id="4_dj837"]
-[ext_resource type="Texture2D" uid="uid://c74r1o83qwnva" path="res://Assets/Weapons/basicsword/swing1.png" id="5_cv6so"]
-[ext_resource type="Texture2D" uid="uid://b7crvokjeo4db" path="res://Assets/Weapons/basicsword/swing2.png" id="6_o27x6"]
-[ext_resource type="Texture2D" uid="uid://bhk4jnvwlishn" path="res://Assets/Weapons/basicsword/swing3.png" id="7_8s4at"]
+[ext_resource type="Texture2D" uid="uid://dbx5rvhe5v462" path="res://Assets/empty.png" id="4_5ghet"]
+[ext_resource type="Texture2D" uid="uid://ppgexqy8m4o" path="res://Assets/Consumable/HealthPotion.png" id="4_8udt8"]
+[ext_resource type="Texture2D" uid="uid://vhgg1as6tgn7" path="res://Assets/UltimaStar.png" id="5_1wc84"]
+[ext_resource type="Texture2D" uid="uid://c1qoo1woo028a" path="res://Assets/Weapons/sword.png" id="7_8s4at"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_5fpqd"]
 radius = 4.0
@@ -71,19 +71,38 @@ animations = [{
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("4_dj837")
+"texture": ExtResource("4_5ghet")
+}],
+"loop": false,
+"name": &"empty",
+"speed": 5.0
 }, {
+"frames": [{
 "duration": 1.0,
-"texture": ExtResource("5_cv6so")
+"texture": ExtResource("4_8udt8")
+}],
+"loop": false,
+"name": &"healthpotion_use",
+"speed": 5.0
 }, {
+"frames": [{
 "duration": 1.0,
-"texture": ExtResource("6_o27x6")
+"texture": ExtResource("7_8s4at")
 }, {
 "duration": 1.0,
 "texture": ExtResource("7_8s4at")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_8s4at")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_8s4at")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_1wc84")
 }],
-"loop": true,
-"name": &"basicsword_use",
+"loop": false,
+"name": &"sword_use",
 "speed": 16.0
 }]
 
@@ -108,10 +127,9 @@ frame_progress = 0.0200604
 
 [node name="Item" type="AnimatedSprite2D" parent="."]
 y_sort_enabled = true
-position = Vector2(-1, -7)
-scale = Vector2(-0.0150746, 0.0150746)
+position = Vector2(-3, 0)
+scale = Vector2(-0.125, 0.125)
 sprite_frames = SubResource("SpriteFrames_eqrhq")
-animation = &"basicsword_use"
-frame_progress = 0.149274
+animation = &"sword_use"
 centered = false
 offset = Vector2(0, -64)

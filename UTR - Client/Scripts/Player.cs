@@ -9,21 +9,33 @@ public partial class Player : CharacterBody2D
 	public int inOrder;
 	public int health;
 
+	public SlotPacket curItem;
+
+	AnimatedSprite2D item;
+
 	public void Instantiate()
 	{
 		outOrder = 0;
 		inOrder = -1;
+
+		item = GetNode<AnimatedSprite2D>("Item");
+
+		item.AnimationFinished += () =>
+		{
+			item.Animation = curItem.item.item.simplename.ToLower() + "_use";
+			item.Frame = 0;
+		};
 	}
 
 	public void SetActiveItem(SlotPacket _slot)
 	{
 		if (_slot.count == 0)
 		{
-			GetNode<Sprite2D>("Item").Texture = null;
+			item.Animation = "empty";
 			return;
 		}
-
-		GetNode<Sprite2D>("Item").Texture = ResourceLoader.Load<Texture2D>(_slot.item.item.icon);
+		curItem = _slot;
+		item.Animation = _slot.item.item.simplename.ToLower() + "_use";
 	}
 
 	// Update States
@@ -37,7 +49,7 @@ public partial class Player : CharacterBody2D
 	{
 		if (_s == 0)
 		{
-
+			item.Play(curItem.item.item.simplename.ToLower() + "_use");
 		}
 		else if (_s == 1)
 		{

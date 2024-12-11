@@ -6,12 +6,13 @@
 script = ExtResource("1_osswx")
 type = 0
 baseDmg = 0
-lvlScale = 0
+lvlScale = 0.0
 range = 0
-cooldown = 0
+cooldown = 0.0
 name = "Sword"
 description = "Front towards enemy"
 icon = "res://Assets/Weapons/sword.png"
+simplename = "sword"
 maxStack = 0
 attributeType = PackedInt32Array()
 attributeValues = PackedInt32Array()

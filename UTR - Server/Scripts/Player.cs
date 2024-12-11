@@ -166,6 +166,12 @@ public partial class Player : CharacterBody2D
 			if (tool.type == 0)
 			{
 				SetCollider(4);
+
+				ServerManager.GetGame(gId).SendAll(new StatePacket(cId, 0, 0).Serialize());
+
+				cooled = false;
+				cooldownTimer.Start(tool.cooldown);
+
 				if (enemies.Count == 0) { return; }
 				if (enemies[0].roomId != curRoom)
 				{
@@ -176,11 +182,6 @@ public partial class Player : CharacterBody2D
 				}
 				enemies[0].Damage(tool.baseDmg, GlobalPosition);
 			}
-
-			ServerManager.GetGame(gId).SendAll(new StatePacket(cId, 0, 0).Serialize());
-
-			cooled = false;
-			cooldownTimer.Start(tool.cooldown);
 		}
 		else if (item.type == 2)
 		{
