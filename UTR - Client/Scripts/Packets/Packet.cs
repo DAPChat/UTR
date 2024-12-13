@@ -23,7 +23,10 @@ namespace packets
 		{
 			if (data == -2) ClientManager.RemoveClient(playerId);
 			else if (data == -1) ClientManager.SetClient(this);
-			else if (data == 0) ClientManager.gameRoomId = playerId;
+			else if (data == 0)
+			{
+				ClientManager.SetRoomId(playerId);
+			}
 		}
 
 		public virtual byte[] Serialize()

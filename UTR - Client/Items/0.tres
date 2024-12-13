@@ -13,6 +13,7 @@ name = "Sword"
 description = "Front towards enemy"
 icon = "res://Assets/Weapons/sword.png"
 simplename = "sword"
+audio = "res://Assets/Sounds/SFX/CatalystSwing.ogg"
 maxStack = 0
 attributeType = PackedInt32Array()
 attributeValues = PackedInt32Array()

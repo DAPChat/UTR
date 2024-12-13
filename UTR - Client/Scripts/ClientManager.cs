@@ -54,6 +54,12 @@ public partial class ClientManager : Node
 
 		Vector2I _inputVect = Vector2I.Zero;
 
+		if (players.GetValueOrDefault(client.id) == null)
+		{
+			active = false;
+			return;
+		}
+
 		AnimatedSprite2D _sprite = players[client.id].GetNode<AnimatedSprite2D>("PlayerView");
 
 		if (!_sprite.IsPlaying()) _sprite.Play("run_accel");
@@ -199,8 +205,8 @@ public partial class ClientManager : Node
 			{
 				if (dungeon.GetCellSourceId(new(i, j)) == 1) continue;
 				if (j == y || i == x || j == y + h || i == x + w)
-					dungeon.SetCell(new Vector2I(i, j), 0, new(0, 2));
-				else dungeon.SetCell(new Vector2I(i, j), 0, new(8, 3));
+					dungeon.SetCell(new Vector2I(i, j), 0, new(1, 0));
+				else dungeon.SetCell(new Vector2I(i, j), 0, new(7, 8));
 			}
 		}
 
@@ -275,7 +281,7 @@ public partial class ClientManager : Node
 
 		sceneTree.GetNode<Label>("UI/Health").Text = _stats.health.ToString() + "/100";// + "/" + players[_stats.playerId].health;
 		sceneTree.GetNode<HSlider>("UI/HealthSlider").Value = _stats.health;
-		sceneTree.GetNode<Label>("UI/Points").Text = "Points: " + _stats.points.ToString();// + "/" + players[_stats.playerId].health;
+		sceneTree.GetNode<Label>("UI/Points").Text = "Points: " + _stats.points.ToString();
 
 	}
 
@@ -336,5 +342,10 @@ public partial class ClientManager : Node
 		CreatePlayer(_packet.playerId);
 
 		client.udp.Send(_packet.Serialize());
+	}
+
+	public static void SetRoomId(int _id)
+	{
+		sceneTree.GetNode<Label>("UI/GameId").Text = "Room Id: " + _id;
 	}
 }

@@ -10,6 +10,7 @@ name = "Health Potion"
 description = "The true american way"
 icon = "res://Assets/Consumable/HealthPotion.png"
 simplename = "healthpotion"
+audio = "res://Assets/Sounds/SFX/TeleportPrep.ogg"
 maxStack = 10
 attributeType = PackedInt32Array()
 attributeValues = PackedInt32Array()

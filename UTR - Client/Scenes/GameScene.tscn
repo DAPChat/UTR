@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://doaccr1k3qtwt"]
+[gd_scene load_steps=19 format=3 uid="uid://doaccr1k3qtwt"]
 
 [ext_resource type="Script" path="res://Scripts/ClientManager.cs" id="1_vpr8p"]
 [ext_resource type="TileSet" uid="uid://55tbtm12gbs2" path="res://Assets/TileSet/GameScene.tres" id="2_seojb"]
@@ -11,6 +11,7 @@
 [ext_resource type="Texture2D" uid="uid://ce5jwel7ikoiq" path="res://Assets/Ultimate Dark Fantasy UI set v1.2/Player Bar/Player_Bar x2.png" id="6_bsowa"]
 [ext_resource type="Texture2D" uid="uid://b0f44cyalftrh" path="res://Assets/Ultimate Dark Fantasy UI set v1.2/Player Bar/health_filler3.png" id="7_vnmuf"]
 [ext_resource type="FontFile" uid="uid://biyckev5maadx" path="res://Assets/Fonts/alagard.ttf" id="9_xxd7f"]
+[ext_resource type="Script" path="res://Scripts/AudioMaster.cs" id="12_xtmyv"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_6bbq7"]
 bg_color = Color(0.137255, 0.137255, 0.137255, 0.858824)
@@ -321,6 +322,21 @@ theme_override_font_sizes/font_size = 32
 text = "Points: "
 vertical_alignment = 1
 
+[node name="GameId" type="Label" parent="UI"]
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -200.0
+offset_top = -65.0
+grow_horizontal = 0
+grow_vertical = 0
+theme_override_fonts/font = ExtResource("9_xxd7f")
+theme_override_font_sizes/font_size = 32
+text = "Room Id: "
+vertical_alignment = 1
+
 [node name="Death" type="ColorRect" parent="UI"]
 visible = false
 anchors_preset = 15
@@ -345,8 +361,12 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_fonts/font = ExtResource("9_xxd7f")
 theme_override_font_sizes/font_size = 64
-text = "Thou Hath Fallen"
+text = "You Died"
 horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="Enemies" type="Node" parent="."]
+
+[node name="AudioMaster" type="AudioStreamPlayer2D" parent="."]
+volume_db = 24.0
+script = ExtResource("12_xtmyv")

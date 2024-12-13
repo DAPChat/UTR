@@ -16,6 +16,8 @@ namespace items
 		[Export]
 		public string simplename;
 		[Export]
+		public string audio;
+		[Export]
 		public int maxStack;
 		[Export]
 		public int[] attributeType;
