@@ -7,9 +7,11 @@ namespace packets
 		public int order;
 		public float x, y;
 
+		public float cX, cY;
+
 		public MovePacket(Buffer _buff) : base(_buff) { }
 
-		public MovePacket(int _id, int _order, float _x, float _y, int _data = -1) : base(_id, _data)
+		public MovePacket(int _id, int _order, float _x, float _y, float _cX, float _cY, int _data = -1) : base(_id, _data)
 		{
 			order = _order;
 
@@ -17,11 +19,13 @@ namespace packets
 
 			x = _x;
 			y = _y;
+			cX = _cX;
+			cY = _cY;
 		}
 
 		public override byte[] Serialize()
 		{
-			return Serialize([1, playerId, data, order, x, y]);
+			return Serialize([1, playerId, data, order, x, y, cX, cY]);
 		}
 
 		public override void Deserialize(Buffer buff)
@@ -30,6 +34,8 @@ namespace packets
 			order = buff.ReadInt();
 			x = buff.ReadFloat();
 			y = buff.ReadFloat();
+			cX = buff.ReadFloat();
+			cY = buff.ReadFloat();
 		}
 
 		public override void Run(int _gId)

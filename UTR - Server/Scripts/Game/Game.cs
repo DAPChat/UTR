@@ -53,7 +53,7 @@ namespace game
 			_c.player = _tempPlayer as Player;
 			_c.player.Instantiate(_c.id, gameId);
 
-			SendAll(new MovePacket(_c.id, _c.player.outOrder, _tempPlayer.Position.X, _tempPlayer.Position.Y, 1).Serialize());
+			SendAll(new MovePacket(_c.id, _c.player.outOrder, _tempPlayer.Position.X, _tempPlayer.Position.Y, -1, -1, 1).Serialize());
 			SendTo(_c.id, new Packet(gameId, 0).Serialize());
 			SendTo(_c.id, dun.startRoom.Serialize());
 			

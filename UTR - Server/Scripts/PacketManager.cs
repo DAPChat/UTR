@@ -8,8 +8,6 @@ public static class PacketManager
 {
 	private static Dictionary<int, Func<Buffer, Packet>> packetL = new();
 
-	public static int statPacketOrder = 0;
-
 	public static void CompileAll()
 	{
 		packetL[0] = CreateCreator<Buffer, Packet>();

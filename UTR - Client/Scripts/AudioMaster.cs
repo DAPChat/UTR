@@ -1,9 +1,9 @@
 using Godot;
 using System;
 
-public partial class AudioMaster : AudioStreamPlayer2D
+public partial class AudioMaster : AudioStreamPlayer
 {
-	static AudioStreamPlayer2D pl;
+	static AudioStreamPlayer pl;
 
 	public override void _Ready()
 	{

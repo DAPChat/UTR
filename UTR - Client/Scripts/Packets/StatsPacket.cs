@@ -24,9 +24,9 @@
 		{
 			//base.Run(_gId);
 
-			if (pos < PacketManager.statPacketOrder) return;
+			if (pos < ClientManager.GetPlayer(playerId).statOrder) return;
 
-			PacketManager.statPacketOrder = pos;
+			ClientManager.GetPlayer(playerId).statOrder++;
 
 			ClientManager.UpdateStats(this);
 		}

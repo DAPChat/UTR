@@ -9,6 +9,8 @@ public partial class Player : CharacterBody2D
 	public int inOrder;
 	public int health;
 
+	public int statOrder;
+
 	public SlotPacket curItem;
 
 	AnimatedSprite2D item;
@@ -17,6 +19,7 @@ public partial class Player : CharacterBody2D
 	{
 		outOrder = 0;
 		inOrder = -1;
+		statOrder = -1;
 
 		item = GetNode<AnimatedSprite2D>("Item");
 
@@ -24,7 +27,6 @@ public partial class Player : CharacterBody2D
 		{
 			item.Animation = curItem.item.item.simplename.ToLower() + "_use";
 			item.Frame = 0;
-			item.Offset = new(-96, item.Offset.Y);
 		};
 	}
 
@@ -57,7 +59,6 @@ public partial class Player : CharacterBody2D
 		else if (_s == 0)
 		{
 			item.Play(curItem.item.item.simplename.ToLower() + "_use");
-			item.Offset = new(-128, item.Offset.Y);
 			AudioMaster.Play(curItem.item.item.audio);
 		}
 		else if (_s == 1)

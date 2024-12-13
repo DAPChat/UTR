@@ -367,6 +367,5 @@ vertical_alignment = 1
 
 [node name="Enemies" type="Node" parent="."]
 
-[node name="AudioMaster" type="AudioStreamPlayer2D" parent="."]
-volume_db = 24.0
+[node name="AudioMaster" type="AudioStreamPlayer" parent="."]
 script = ExtResource("12_xtmyv")

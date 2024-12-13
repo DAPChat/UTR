@@ -249,7 +249,7 @@ namespace enemy
 			if (health <= 0)
 			{
 				active = false;
-				ServerManager.GetClient(atkId).player.points++;
+				ServerManager.GetClient(atkId).player.EnemyKill();
 				ServerManager.GetGame(gId).SendAll(new packets.EnemyPacket(enemyId, this, 0).Serialize());
 				QueueFree();
 			}

@@ -14,6 +14,7 @@ public partial class Player : CharacterBody2D
 
 	public int outOrder;
 	public int inOrder;
+	public int statOrder;
 
 	bool noItem = true;
 	bool active = false;
@@ -54,6 +55,8 @@ public partial class Player : CharacterBody2D
 
 		outOrder = 0;
 		inOrder = -1;
+
+		statOrder = 0;
 
 		health = maxHealth;
 
@@ -260,7 +263,13 @@ public partial class Player : CharacterBody2D
 
 		if (!active) return;
 
-		ServerManager.GetGame(gId).SendAll(new MovePacket(cId, outOrder, Position.X, Position.Y, prevPos != Position ? (int)inMove.X : 0).Serialize());
+		ServerManager.GetGame(gId).SendAll(new MovePacket(cId, outOrder, Position.X, Position.Y, -1, -1, prevPos != Position ? (int)inMove.X : 0).Serialize());
+	}
+
+	public void EnemyKill()
+	{
+		points++;
+		ServerManager.GetGame(gId).SendAll(new StatsPacket(cId, health, mana, points).Serialize());
 	}
 
 	public void Exit()

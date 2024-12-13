@@ -4,7 +4,7 @@ using System;
 using packets;
 using System.Collections.Generic;
 
-public partial class ClientManager : Node
+public partial class ClientManager : Node2D
 {
 	public static Client client { get; private set; }
 
@@ -89,9 +89,16 @@ public partial class ClientManager : Node
 			_sprite.Play("run_max");
 		}
 
-		client.udp.Send(new MovePacket(client.id, players[client.id].outOrder, _inputVect.X, _inputVect.Y).Serialize());
+		client.udp.Send(new MovePacket(client.id, players[client.id].outOrder, _inputVect.X, _inputVect.Y, players[client.id].GetGlobalMousePosition().X, players[client.id].GetGlobalMousePosition().Y).Serialize());
 
 		players[client.id].Velocity = players[client.id].Velocity.MoveToward(((Vector2)_inputVect).Normalized() * 100, 1500 * (float)delta);
+
+		AnimatedSprite2D item = players[client.id].GetNode<AnimatedSprite2D>("Item");
+		Player _player = players[client.id];
+
+		item.LookAt(_player.GetGlobalMousePosition());
+		item.RotationDegrees = item.RotationDegrees - 205;
+
 		try
 		{
 			//players[client.id].MoveAndSlide();

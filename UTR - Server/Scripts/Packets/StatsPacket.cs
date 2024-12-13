@@ -22,8 +22,8 @@
 
 		public override byte[] Serialize()
 		{
-			pos = PacketManager.statPacketOrder;
-			PacketManager.statPacketOrder++;
+			pos = ServerManager.GetClient(playerId).player.statOrder;
+			ServerManager.GetClient(playerId).player.statOrder++;
 
 			return Serialize([5, playerId, data, pos, health, mana, points]);
 		}
