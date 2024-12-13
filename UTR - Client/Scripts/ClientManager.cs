@@ -15,7 +15,7 @@ public partial class ClientManager : Node
 	static Dictionary<int, Entity> entities = new();
 
 	public static bool active = false;
-	public static int curId;
+	public static int gameRoomId = -1;
 	public static List<Packet> packetQ = new();
 
 	private static bool readingQueue = false;
@@ -32,8 +32,6 @@ public partial class ClientManager : Node
 		dungeon = GetNode<TileMapLayer>("GameRoom");
 		inventory = GetNode<Panel>("UI/Inventory") as Inventory;
 		hotbar = GetNode<Panel>("UI/Hotbar") as Hotbar;
-
-		curId = GD.RandRange(1,999);
 
 		camera = new();
 		camera.Zoom = new(4, 4);

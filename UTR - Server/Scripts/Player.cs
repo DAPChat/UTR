@@ -177,22 +177,7 @@ public partial class Player : CharacterBody2D
 
 			if (tool.type == 0)
 			{
-				SetCollider(4);
-
-				ServerManager.GetGame(gId).SendAll(new StatePacket(cId, 0, 0).Serialize());
-
-				cooled = false;
-				cooldownTimer.Start(tool.cooldown);
-
-				if (enemies.Count == 0) { return; }
-				if (enemies[0].roomId != curRoom)
-				{
-					Enemy _temp = enemies[0];
-					enemies.Remove(_temp);
-					enemies.Add(_temp);
-					return;
-				}
-				enemies[0].Damage(tool.baseDmg, GlobalPosition, cId);
+				UseWeapon(tool);
 			}
 		}
 		else if (item.type == 2)
@@ -218,6 +203,26 @@ public partial class Player : CharacterBody2D
 			noItem = true;
 			ServerManager.GetGame(gId).SendAll(new SlotPacket(cId, ItemManager.GetItem(-1), activeSlot, 0, 2).Serialize());
 		}
+	}
+
+	public void UseWeapon(Tool tool)
+	{
+		SetCollider(4);
+
+		ServerManager.GetGame(gId).SendAll(new StatePacket(cId, 0, 0).Serialize());
+
+		cooled = false;
+		cooldownTimer.Start(tool.cooldown);
+
+		if (enemies.Count == 0) { return; }
+		if (enemies[0].roomId != curRoom)
+		{
+			Enemy _temp = enemies[0];
+			enemies.Remove(_temp);
+			enemies.Add(_temp);
+			return;
+		}
+		enemies[0].Damage(tool.baseDmg, GlobalPosition, cId);
 	}
 
 	public void Move(MovePacket move)
