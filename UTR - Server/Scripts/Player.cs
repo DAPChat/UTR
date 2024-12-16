@@ -232,6 +232,10 @@ public partial class Player : CharacterBody2D
 	{
 		if (!active) return;
 		if (inOrder >= move.order) { return; }
+
+		GetNode<Area2D>("WeaponArea").LookAt(new Vector2(move.cX, move.cY));
+		GetNode<Area2D>("WeaponArea").RotationDegrees -= 180;
+
 		if (inMove == new Vector2(move.x, move.y)) return;
 
 		inMove = new (move.x, move.y);
