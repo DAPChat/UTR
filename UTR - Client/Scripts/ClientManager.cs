@@ -347,6 +347,8 @@ public partial class ClientManager : Node2D
 
 	public static void RemoveClient(int _id)
 	{
+		if (_id == client.id) sceneTree.GetNode<ColorRect>("UI/Death").Show();
+
 		players[_id].QueueFree();
 		players.Remove(_id);
 	}
