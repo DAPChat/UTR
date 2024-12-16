@@ -96,8 +96,8 @@ public partial class ClientManager : Node2D
 		AnimatedSprite2D item = players[client.id].GetNode<AnimatedSprite2D>("Item");
 		Player _player = players[client.id];
 
-		item.LookAt(_player.GetGlobalMousePosition());
-		item.RotationDegrees = item.RotationDegrees - 205;
+		//item.LookAt(_player.GetGlobalMousePosition());
+		//item.RotationDegrees = item.RotationDegrees - 205;
 
 		try
 		{
