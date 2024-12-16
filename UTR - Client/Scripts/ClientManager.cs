@@ -285,6 +285,7 @@ public partial class ClientManager : Node2D
 
 	public static void SetPlayerItem(SlotPacket _slot)
 	{
+		if (GetPlayer(_slot.playerId) == null) return;
 		players[_slot.playerId].SetActiveItem(_slot);
 	}
 
