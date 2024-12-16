@@ -38,7 +38,7 @@ namespace game
 
 		public void Move(MovePacket _pa)
 		{
-			if (clients[_pa.playerId] == null) return;
+			if (clients.GetValueOrDefault(_pa.playerId) == null) return;
 
 			clients[_pa.playerId].player.Move(_pa);
 		}

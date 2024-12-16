@@ -219,14 +219,14 @@ public partial class Player : CharacterBody2D
 		cooldownTimer.Start(tool.cooldown);
 
 		if (enemies.Count == 0) { return; }
-		if (enemies[0].roomId != curRoom)
+		foreach (Enemy e in enemies)
 		{
-			Enemy _temp = enemies[0];
-			enemies.Remove(_temp);
-			enemies.Add(_temp);
-			return;
+			if (e.roomId != curRoom)
+			{
+				continue;
+			}
+			e.Damage(tool.baseDmg, GlobalPosition, cId);
 		}
-		enemies[0].Damage(tool.baseDmg, GlobalPosition, cId);
 	}
 
 	public void Move(MovePacket move)
