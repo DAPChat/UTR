@@ -36,7 +36,7 @@ namespace packets
 			// 1 -> enemy
 			if (ClientManager.GetPlayer(playerId) == null)
 			{
-				ClientManager.sceneTree.GetNode<ColorRect>("UI/Death").Show();
+				//ClientManager.sceneTree.GetNode<ColorRect>("UI/Death").Show();
 
 				return;
 			}
