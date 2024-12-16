@@ -15,7 +15,8 @@ namespace packets
 		{
 			order = _order;
 
-			ClientManager.GetPlayer(_id).outOrder++;
+			if (ClientManager.GetPlayer(_id) != null)
+				ClientManager.GetPlayer(_id).outOrder++;
 
 			x = _x;
 			y = _y;

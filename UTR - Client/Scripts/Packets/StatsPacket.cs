@@ -24,6 +24,8 @@
 		{
 			//base.Run(_gId);
 
+			if (ClientManager.GetPlayer(playerId) == null) return;
+
 			if (pos < ClientManager.GetPlayer(playerId).statOrder) return;
 
 			ClientManager.GetPlayer(playerId).statOrder++;

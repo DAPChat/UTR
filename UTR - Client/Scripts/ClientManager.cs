@@ -312,7 +312,7 @@ public partial class ClientManager : Node2D
 
 	public static Player GetPlayer(int _id)
 	{
-		return players[_id];
+		return players.GetValueOrDefault(_id);
 	}
 
 	private static void CreatePlayer(int _id)
@@ -331,13 +331,17 @@ public partial class ClientManager : Node2D
 
 	public static void RemoveEntity(int _eId)
 	{
-		entities[_eId].QueueFree();
+		Entity e = GetEntity(_eId);
+
+		if (e == null) return;
+
+		e.QueueFree();
 		entities.Remove(_eId);
 	}
 
 	public static Entity GetEntity(int _eId)
 	{
-		return entities[_eId];
+		return entities.GetValueOrDefault(_eId);
 	}
 
 	public static void RemoveClient(int _id)
