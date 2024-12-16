@@ -185,6 +185,12 @@ public partial class ClientManager : Node2D
 			_pAnim.Play("run_accel");
 		}
 
+		AnimatedSprite2D item = players[_move.playerId].GetNode<AnimatedSprite2D>("Item");
+		Player _player = players[_move.playerId];
+
+		item.LookAt(_player.GetGlobalMousePosition());
+		item.RotationDegrees = item.RotationDegrees - 205;
+
 		players[_move.playerId].SetDeferred(Node2D.PropertyName.Position, new Vector2(_move.x, _move.y));
 	}
 
