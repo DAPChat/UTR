@@ -39,6 +39,7 @@ public partial class Player : CharacterBody2D
 	public SlotPacket[] hotbar = new SlotPacket[5];
 
 	public Vector2 inMove = new();
+	public Vector2 mouse = new();
 
 	// Temp Solution (Replace the following w/ spawning a new shape
 	//Area2D area;
@@ -236,6 +237,8 @@ public partial class Player : CharacterBody2D
 		GetNode<Area2D>("WeaponArea").LookAt(new Vector2(move.cX, move.cY));
 		GetNode<Area2D>("WeaponArea").RotationDegrees -= 180;
 
+		mouse = new Vector2(move.cX, move.cY);
+
 		if (inMove == new Vector2(move.x, move.y)) return;
 
 		inMove = new (move.x, move.y);
@@ -267,7 +270,7 @@ public partial class Player : CharacterBody2D
 
 		if (!active) return;
 
-		ServerManager.GetGame(gId).SendAll(new MovePacket(cId, outOrder, Position.X, Position.Y, -1, -1, prevPos != Position ? (int)inMove.X : 0).Serialize());
+		ServerManager.GetGame(gId).SendAll(new MovePacket(cId, outOrder, Position.X, Position.Y, mouse.X, mouse.Y, prevPos != Position ? (int)inMove.X : 0).Serialize());
 	}
 
 	public void EnemyKill()
