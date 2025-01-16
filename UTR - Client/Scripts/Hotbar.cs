@@ -10,7 +10,7 @@ public partial class Hotbar : Panel
 		_p.GetNode<TextureRect>("Sprite").Texture = ResourceLoader.Load<Texture2D>(_item.item.icon);
 		_p.GetNode<Label>("Count").Text = _amt.ToString();
 
-		(_p as Slot).Instance(_item);
+		(_p as Slot).Instance(_item, 2, _slot);
 	}
 
 	public void RemoveSlot(int _slot)
@@ -19,6 +19,6 @@ public partial class Hotbar : Panel
 		_p.GetNode<TextureRect>("Sprite").Texture = null;
 		_p.GetNode<Label>("Count").Text = "";
 
-		//(_p as Slot).MouseEntered -= Slot.SetTooltip((_p as Slot).item);
+		(_p as Slot).item = null;
 	}
 }

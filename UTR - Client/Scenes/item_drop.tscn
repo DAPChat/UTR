@@ -1,0 +1,3 @@
+[gd_scene format=3 uid="uid://t3v2x2x7hlph"]
+
+[node name="ItemDrop" type="Sprite2D"]

@@ -10,17 +10,21 @@ public partial class Player : CharacterBody2D
 	public int health;
 
 	public int statOrder;
+	public int slotOrder;
 
 	public SlotPacket curItem;
 
 	AnimatedSprite2D item;
+	AudioStreamPlayer2D audio;
 
 	public void Instantiate()
 	{
 		outOrder = 0;
 		inOrder = -1;
 		statOrder = -1;
+		slotOrder = -1;
 
+		audio = GetNode<AudioStreamPlayer2D>("Audio");
 		item = GetNode<AnimatedSprite2D>("Item");
 
 		item.AnimationFinished += () =>
@@ -48,6 +52,14 @@ public partial class Player : CharacterBody2D
 	1 -> damage (take -> kb)
 	 */
 
+	private void PlayAudio(string path)
+	{
+		if (audio == null) return;
+
+		audio.Stream = ResourceLoader.Load<AudioStream>(path);
+		audio.Play();
+	}
+
 	public void StateUpdate(int _s, int _data)
 	{
 		if (_s == -1)
@@ -59,7 +71,7 @@ public partial class Player : CharacterBody2D
 		else if (_s == 0)
 		{
 			item.Play(curItem.item.item.simplename.ToLower() + "_use");
-			AudioMaster.Play(curItem.item.item.audio);
+			PlayAudio(curItem.item.item.audio);
 		}
 		else if (_s == 1)
 		{

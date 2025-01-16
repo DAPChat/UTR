@@ -126,11 +126,13 @@ public partial class ClientManager : Node2D
 			_in = 4;
 		if (@event.IsActionPressed("slot_5"))
 			_in = 5;
-		if (@event.IsActionPressed("use"))
+		if (@event.IsActionPressed("moveItem"))
 			_in = 6;
+		if (@event.IsActionPressed("use"))
+			_in = 7;
 
 		if (_in != -1)
-			client.udp.Send(new InputPacket(client.id, _in).Serialize());
+			client.udp.Send(new InputPacket(client.id, _in, (inventory.Visible && inventory.activeHover != null) ? inventory.activeHover.slot : -1, (inventory.Visible && inventory.activeHover != null) ? inventory.activeHover.loc : -1).Serialize());
 	}
 
 	private static void ReadQueue()

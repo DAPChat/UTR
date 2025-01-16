@@ -1,4 +1,5 @@
-﻿using items;
+﻿using Godot;
+using items;
 using System.Linq;
 
 namespace packets
@@ -8,6 +9,8 @@ namespace packets
 		public Item item;
 		public int slot;
 		public int count;
+
+		public int order;
 
 		public SlotPacket(Buffer _buff) : base(_buff) {}
 
@@ -20,7 +23,10 @@ namespace packets
 
 		public override byte[] Serialize()
 		{
-			return Concat(Serialize([4, playerId, data, slot, count]), item.Serialize());
+			order = ServerManager.GetClient(playerId).player.slotOrder;
+			ServerManager.GetClient(playerId).player.slotOrder++;
+
+			return Concat(Serialize([4, playerId, data, slot, count, order]), item.Serialize());
 		}
 
 		public override void Deserialize(Buffer buff)
@@ -28,7 +34,13 @@ namespace packets
 			base.Deserialize(buff);
 			slot = buff.ReadInt();
 			count = buff.ReadInt();
+			order = buff.ReadInt();
 			item = new(buff);
+		}
+
+		public override string ToString()
+		{
+			return "{" + item + ": " + slot + ": " + count + "}";
 		}
 	}
 }

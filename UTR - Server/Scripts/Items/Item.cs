@@ -54,6 +54,29 @@ namespace items
 			}
 		}
 
+		public override string ToString()
+		{
+			return item.name;
+		}
+
+		public bool IsEqual(Item other)
+		{
+			bool equal = true;
+
+			if (other == null) return false;
+			if (other.instanceAttrValues.Length != instanceAttrValues.Length) return false;
+			if (other.item.name != item.name) return false;
+			
+			for (int i = 0; i < other.instanceAttrValues.Length; i++)
+			{
+				if (other.instanceAttrValues[i] != instanceAttrValues[i]) return false;
+			}
+
+			if (!equal) ServerManager.Print("Not");
+
+			return equal;
+		}
+
 		public static int GetItemType(ItemBase _item)
 		{
 			int type = 0;

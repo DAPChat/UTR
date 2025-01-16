@@ -251,6 +251,13 @@ namespace enemy
 				active = false;
 				ServerManager.GetClient(atkId).player.EnemyKill();
 				ServerManager.GetGame(gId).SendAll(new packets.EnemyPacket(enemyId, this, 0).Serialize());
+
+				ItemDrop drop = ResourceLoader.Load<PackedScene>("res://Scenes/item_drop.tscn").Instantiate<ItemDrop>();
+				drop.Instantiate(items.ItemManager.GetItem(1));
+				drop.Position = Position;
+
+				ServerManager.GetGame(gId).AddChild(drop);
+
 				QueueFree();
 			}
 		}

@@ -15,6 +15,7 @@ public partial class Player : CharacterBody2D
 	public int outOrder;
 	public int inOrder;
 	public int statOrder;
+	public int slotOrder;
 
 	bool noItem = true;
 	bool active = false;
@@ -58,6 +59,7 @@ public partial class Player : CharacterBody2D
 		inOrder = -1;
 
 		statOrder = 0;
+		slotOrder = 0;
 
 		health = maxHealth;
 
@@ -227,6 +229,162 @@ public partial class Player : CharacterBody2D
 			}
 			e.Damage(tool.baseDmg, GlobalPosition, cId);
 		}
+	}
+
+	public bool AddItem(Item _item, bool send)
+	{
+		int nullIndex = -1;
+		int ind = -1;
+
+		for (int i = inventory.Length-1; i >= 0; i--)
+		{
+			SlotPacket slot = inventory[i];
+
+			if (slot == null)
+			{
+				nullIndex = i;
+				continue;
+			}
+
+			if (slot.item.IsEqual(_item) && slot.count < slot.item.item.maxStack)
+			{
+				slot.count++;
+				ind = i;
+				nullIndex = -1;
+				break;
+			}
+		}
+
+		if (nullIndex != -1)
+		{
+			ind = nullIndex;
+			inventory[nullIndex] = new SlotPacket(cId, _item, nullIndex, 1, 0);
+		}
+
+		if (ind != -1)
+		{
+			if (send) ServerManager.GetGame(gId).SendTo(cId, inventory[ind].Serialize());
+
+			return true;
+		}
+
+		return false;
+	}
+
+	public void MoveItem(int _to, int _from, int _loc)
+	{
+		if (_to < 6)
+		{
+			_to--;
+			// Item from inventory to hotbar or hotbar to hotbar
+			if (_loc == 2)
+			{
+				if (hotbar[_from] == null)
+				{
+					return;
+				}
+
+				// hot to hot
+				if (_from == _to) return;
+
+				(hotbar[_to], hotbar[_from]) = (hotbar[_from], hotbar[_to]);
+
+				if (hotbar[_from] != null)
+				{
+					(hotbar[_to].slot, hotbar[_from].slot) = (hotbar[_from].slot, hotbar[_to].slot);
+				}
+				else hotbar[_to].slot = _from;
+			}
+			else
+			{
+				if (inventory[_from] == null) return;
+
+				// inv to hot
+				(hotbar[_to], inventory[_from]) = (inventory[_from], hotbar[_to]);
+
+				if (inventory[_from] != null)
+				{
+					(hotbar[_to].slot, inventory[_from].slot) = (inventory[_from].slot, hotbar[_to].slot);
+					(hotbar[_to].data, inventory[_from].data) = (inventory[_from].data, hotbar[_to].data);
+				}
+				else
+				{
+					hotbar[_to].slot = _from;
+					hotbar[_to].data = 1;
+				}
+			}
+
+			if (_to == activeSlot || (_loc == 2 && _from == activeSlot)) { noItem = true; SetActiveSlot(activeSlot + 1); }
+		} 
+		else if (_to == 6 && _loc == 2)
+		{
+			if (hotbar[_from] == null) return;
+
+			int toRemove = 0;
+
+			for (int i = 0; i < hotbar[_from].count; i++)
+			{
+				if (!AddItem(hotbar[_from].item, false))
+				{
+					break;
+				}
+				else
+				{
+					toRemove++;
+				}
+			}
+
+			hotbar[_from].count -= toRemove;
+
+			if (hotbar[_from].count <= 0)
+			{
+				hotbar[_from] = null;
+			}
+		}
+
+		string inv = "Hotbar: ";
+
+		for (int i = 0; i < hotbar.Length; i++)
+		{
+			SlotPacket item = hotbar[i];
+
+			SlotPacket sp;
+
+			if (item == null) sp = new SlotPacket(cId, ItemManager.GetItem(-1), i, 0, 1);
+			else sp = item;
+
+			sp.slot = i;
+
+			hotbar[i] = item == null ? null : sp;
+
+			inv += sp;
+
+			ServerManager.GetGame(gId).SendTo(cId, sp.Serialize());
+		}
+
+		//GD.Print(inv);
+
+		inv = "Inventory: ";
+
+		for (int i = 0; i < inventory.Length; i++)
+		{
+			SlotPacket item = inventory[i];
+
+			SlotPacket sp;
+
+			if (item == null) sp = new SlotPacket(cId, ItemManager.GetItem(-1), i, 0, 0);
+			else sp = item;
+
+			sp.slot = i;
+
+			inv += sp;
+
+			inventory[i] = item == null ? null : sp;
+
+			ServerManager.GetGame(gId).SendTo(cId, sp.Serialize());
+		}
+
+		//GD.Print(inv);
 	}
 
 	public void Move(MovePacket move)
