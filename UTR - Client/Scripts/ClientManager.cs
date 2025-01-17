@@ -190,9 +190,12 @@ public partial class ClientManager : Node2D
 		if (_move.playerId != client.id)
 		{
 			AnimatedSprite2D item = players[_move.playerId].GetNode<AnimatedSprite2D>("Item");
+			AnimatedSprite2D over = players[_move.playerId].GetNode<AnimatedSprite2D>("Overlay");
 
 			item.LookAt(new Vector2(_move.cX, _move.cY));
 			item.RotationDegrees = item.RotationDegrees - 205;
+
+			over.GlobalRotationDegrees = item.GlobalRotationDegrees;
 		}
 
 		players[_move.playerId].SetDeferred(Node2D.PropertyName.Position, new Vector2(_move.x, _move.y));

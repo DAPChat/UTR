@@ -2,6 +2,7 @@ using Godot;
 using System;
 
 using packets;
+using items;
 
 public partial class Player : CharacterBody2D
 {
@@ -15,6 +16,7 @@ public partial class Player : CharacterBody2D
 	public SlotPacket curItem;
 
 	AnimatedSprite2D item;
+	AnimatedSprite2D overlay;
 	AudioStreamPlayer2D audio;
 
 	public void Instantiate()
@@ -25,12 +27,19 @@ public partial class Player : CharacterBody2D
 		slotOrder = -1;
 
 		audio = GetNode<AudioStreamPlayer2D>("Audio");
+		overlay = GetNode<AnimatedSprite2D>("Overlay");
 		item = GetNode<AnimatedSprite2D>("Item");
 
 		item.AnimationFinished += () =>
 		{
 			item.Animation = curItem.item.item.simplename.ToLower() + "_use";
 			item.Frame = 0;
+		};
+
+		overlay.AnimationFinished += () =>
+		{
+			overlay.Hide();
+			overlay.Animation = "empty";
 		};
 	}
 
@@ -71,6 +80,13 @@ public partial class Player : CharacterBody2D
 		else if (_s == 0)
 		{
 			item.Play(curItem.item.item.simplename.ToLower() + "_use");
+
+			if (curItem.item.type == 1)
+			{
+				//overlay.Show();
+				overlay.Play("sword_swing");
+			}
+
 			PlayAudio(curItem.item.item.audio);
 		}
 		else if (_s == 1)

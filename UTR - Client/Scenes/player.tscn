@@ -1,4 +1,4 @@
-[gd_scene load_steps=31 format=3 uid="uid://cf41briyf5dnu"]
+[gd_scene load_steps=32 format=3 uid="uid://cf41briyf5dnu"]
 
 [ext_resource type="Script" path="res://Scripts/Player.cs" id="1_1v8xi"]
 [ext_resource type="Texture2D" uid="uid://dveahimyvgi62" path="res://Assets/smolryo_spritesheet_orgres.png" id="1_ej3ew"]
@@ -73,57 +73,8 @@ animations = [{
 "speed": 8.0
 }]
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_aw6ag"]
-atlas = ExtResource("4_ucv84")
-region = Rect2(0, 0, 300, 150)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_s1uhi"]
-atlas = ExtResource("4_ucv84")
-region = Rect2(0, 150, 300, 150)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_2jwqj"]
-atlas = ExtResource("4_ucv84")
-region = Rect2(0, 300, 300, 150)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_scc4d"]
-atlas = ExtResource("4_ucv84")
-region = Rect2(0, 450, 300, 150)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_wj3f3"]
-atlas = ExtResource("6_41lp5")
-region = Rect2(0, 0, 170, 170)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_mlq6f"]
-atlas = ExtResource("6_41lp5")
-region = Rect2(0, 170, 170, 170)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_pykjx"]
-atlas = ExtResource("6_41lp5")
-region = Rect2(0, 340, 170, 170)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_1lsur"]
-atlas = ExtResource("6_41lp5")
-region = Rect2(0, 510, 170, 170)
-
 [sub_resource type="SpriteFrames" id="SpriteFrames_eqrhq"]
 animations = [{
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_aw6ag")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_s1uhi")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_2jwqj")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_scc4d")
-}],
-"loop": true,
-"name": &"crystal_swing",
-"speed": 24.0
-}, {
 "frames": [{
 "duration": 1.0,
 "texture": ExtResource("4_5ghet")
@@ -139,23 +90,6 @@ animations = [{
 "loop": false,
 "name": &"healthpotion_use",
 "speed": 5.0
-}, {
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_wj3f3")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_mlq6f")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_pykjx")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_1lsur")
-}],
-"loop": true,
-"name": &"sword_swing",
-"speed": 24.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -181,6 +115,83 @@ animations = [{
 "speed": 24.0
 }]
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_45g0d"]
+atlas = ExtResource("4_ucv84")
+region = Rect2(0, 0, 300, 150)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cdrgr"]
+atlas = ExtResource("4_ucv84")
+region = Rect2(0, 150, 300, 150)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0ot4k"]
+atlas = ExtResource("4_ucv84")
+region = Rect2(0, 300, 300, 150)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jv63g"]
+atlas = ExtResource("4_ucv84")
+region = Rect2(0, 450, 300, 150)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dc0gs"]
+atlas = ExtResource("6_41lp5")
+region = Rect2(0, 0, 170, 170)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kasxo"]
+atlas = ExtResource("6_41lp5")
+region = Rect2(0, 170, 170, 170)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qft2u"]
+atlas = ExtResource("6_41lp5")
+region = Rect2(0, 340, 170, 170)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_23jl5"]
+atlas = ExtResource("6_41lp5")
+region = Rect2(0, 510, 170, 170)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_c13of"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_45g0d")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cdrgr")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0ot4k")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jv63g")
+}],
+"loop": false,
+"name": &"crystal_swing",
+"speed": 12.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("4_5ghet")
+}],
+"loop": true,
+"name": &"empty",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_dc0gs")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_kasxo")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qft2u")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_23jl5")
+}],
+"loop": false,
+"name": &"sword_swing",
+"speed": 12.0
+}]
+
 [node name="Player" type="CharacterBody2D"]
 collision_layer = 4
 collision_mask = 3
@@ -202,10 +213,17 @@ frame_progress = 0.0200604
 
 [node name="Item" type="AnimatedSprite2D" parent="."]
 y_sort_enabled = true
-position = Vector2(15, -3)
 scale = Vector2(-0.125, 0.125)
 sprite_frames = SubResource("SpriteFrames_eqrhq")
-animation = &"crystal_swing"
-frame_progress = 0.580772
+animation = &"sword_use"
 centered = false
-offset = Vector2(32, -56)
+offset = Vector2(32, -64)
+
+[node name="Overlay" type="AnimatedSprite2D" parent="."]
+visible = false
+scale = Vector2(-0.125, 0.125)
+sprite_frames = SubResource("SpriteFrames_c13of")
+animation = &"crystal_swing"
+offset = Vector2(64, 0)
+
+[node name="Audio" type="AudioStreamPlayer2D" parent="."]
