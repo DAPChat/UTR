@@ -92,5 +92,21 @@ namespace items
 
 			return type;
 		}
+
+		public static int FindStat(int[] _objArr, int _obj)
+		{
+			int index = -1;
+
+			for (int i = 0; i < _objArr.Length; i++)
+			{
+				if (_objArr[i] == _obj)
+				{
+					index = i;
+					break;
+				}
+			}
+
+			return index;
+		}
 	}
 }

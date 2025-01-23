@@ -10,7 +10,7 @@ using System.Linq;
 public partial class Player : CharacterBody2D
 {
 	public int cId;
-	int gId;
+	public int gId;
 
 	public int outOrder;
 	public int inOrder;
@@ -183,7 +183,7 @@ public partial class Player : CharacterBody2D
 
 			if (tool.type == 0)
 			{
-				UseWeapon(tool);
+				UseWeapon(item);
 			}
 		}
 		else if (item.type == 2)
@@ -211,8 +211,10 @@ public partial class Player : CharacterBody2D
 		}
 	}
 
-	public void UseWeapon(Tool tool)
+	public void UseWeapon(Item _item)
 	{
+		Tool tool = (Tool)_item.item;
+
 		SetCollider(4);
 
 		ServerManager.GetGame(gId).SendAll(new StatePacket(cId, 0, 0).Serialize());
@@ -227,7 +229,13 @@ public partial class Player : CharacterBody2D
 			{
 				continue;
 			}
-			e.Damage(tool.baseDmg, GlobalPosition, cId);
+
+			float damage = tool.baseDmg;
+
+			if (_item.instanceAttrType.Length > 0 && Item.FindStat(_item.instanceAttrType, 0) != -1)
+				damage += tool.lvlScale * _item.instanceAttrValues[Item.FindStat(_item.instanceAttrType, 0)];
+
+			e.Damage((int)damage, GlobalPosition, cId);
 		}
 	}
 

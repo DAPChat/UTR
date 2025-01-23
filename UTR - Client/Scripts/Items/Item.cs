@@ -77,6 +77,11 @@ namespace items
 			s += item.name + "\n";
 			s += item.description + "\n";
 
+			if (instanceAttrValues.Length > 0)
+			{
+				s += "Level: " + instanceAttrValues[0] + "\n";
+			}
+
 			return s;
 		}
 	}

@@ -6,7 +6,7 @@
 script = ExtResource("1_foy8c")
 type = 0
 baseDmg = 25
-lvlScale = 0.0
+lvlScale = 15.0
 range = 0
 cooldown = 0.35
 name = "Sword"

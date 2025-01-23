@@ -2,11 +2,12 @@
 
 [ext_resource type="Script" path="res://Scripts/ItemDrop.cs" id="1_h3hip"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_jdw8d"]
+[sub_resource type="CircleShape2D" id="CircleShape2D_5asfy"]
+radius = 4.0
 
 [node name="ItemDrop" type="Area2D"]
 collision_mask = 4
 script = ExtResource("1_h3hip")
 
 [node name="ItemCollision" type="CollisionShape2D" parent="."]
-shape = SubResource("RectangleShape2D_jdw8d")
+shape = SubResource("CircleShape2D_5asfy")

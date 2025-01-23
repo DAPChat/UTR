@@ -1,4 +1,5 @@
 ﻿using Godot;
+using items;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -256,7 +257,18 @@ namespace enemy
 				drop.Instantiate(items.ItemManager.GetItem(1));
 				drop.Position = Position;
 
-				ServerManager.GetGame(gId).AddChild(drop);
+
+				if (new RandomNumberGenerator().RandiRange(0, 20) == 20)
+				{
+					drop = ResourceLoader.Load<PackedScene>("res://Scenes/item_drop.tscn").Instantiate<ItemDrop>();
+					drop.Instantiate(ItemManager.GetItem(0));
+					drop.Position = Position;
+
+					drop.item.instanceAttrType = [0];
+					drop.item.instanceAttrValues = [5];
+				}
+
+				ServerManager.GetGame(gId).EntityDrop(drop);
 
 				QueueFree();
 			}

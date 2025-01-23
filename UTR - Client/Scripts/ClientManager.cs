@@ -3,6 +3,7 @@ using System;
 
 using packets;
 using System.Collections.Generic;
+using items;
 
 public partial class ClientManager : Node2D
 {
@@ -13,6 +14,9 @@ public partial class ClientManager : Node2D
 	static Dictionary<int, Player> players = new();
 
 	static Dictionary<int, Entity> entities = new();
+
+	static Dictionary<int, ItemDrop> items = new();
+	static List<int> cancelAdd = new();
 
 	public static bool active = false;
 	public static int gameRoomId = -1;
@@ -321,6 +325,42 @@ public partial class ClientManager : Node2D
 	public static Player GetPlayer(int _id)
 	{
 		return players.GetValueOrDefault(_id);
+	}
+
+	public static void AddDrop(int id, Item item, float x, float y)
+	{
+		ItemDrop _drop = ResourceLoader.Load<PackedScene>("res://Scenes/item_drop.tscn").Instantiate<ItemDrop>();
+
+		_drop.Position = new Vector2(x, y);
+		_drop.Texture = ResourceLoader.Load<Texture2D>(item.item.icon);
+
+		items[id] = _drop;
+
+		if (cancelAdd.Contains(id))
+		{
+			GD.Print("Restrict");
+			cancelAdd.Remove(id);
+			return;
+		}
+
+		sceneTree.GetNode<Node>("Items").AddChild(items[id]);
+	}
+
+	public static void RemoveDrop(int id)
+	{
+		if (GetItem(id) != null)
+		{
+			items[id].QueueFree();
+			items.Remove(id);
+		}
+		else
+		{
+			cancelAdd.Add(id);
+		}
+	}
+
+	public static ItemDrop GetItem(int id) {
+		return items.GetValueOrDefault(id);
 	}
 
 	private static void CreatePlayer(int _id)

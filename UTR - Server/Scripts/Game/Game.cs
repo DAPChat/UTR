@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using enemy;
 using Godot;
+using items;
 using packets;
 
 namespace game
@@ -23,6 +24,7 @@ namespace game
 		private bool createQC = false;
 
 		public List<int> enemyIds = new();
+		public List<int> itemIds = new();
 
 		public void Instantiate(int _gameId, Client[] _clients)
 		{
@@ -58,7 +60,7 @@ namespace game
 			SendAll(new MovePacket(_c.id, _c.player.outOrder, _tempPlayer.Position.X, _tempPlayer.Position.Y, -1, -1, 1).Serialize());
 			SendTo(_c.id, new Packet(gameId, 0).Serialize());
 			SendTo(_c.id, dun.startRoom.Serialize());
-			
+
 			foreach (int i in exploredRooms)
 			{
 				SendTo(_c.id, dun.rooms[i].Serialize());
@@ -161,6 +163,20 @@ namespace game
 			}
 
 			return aR;
+		}
+
+		public void EntityDrop(ItemDrop _drop)
+		{
+			int id = 0;
+
+			while (itemIds.Count > 0 && itemIds.Contains(id))
+				id++;
+
+			itemIds.Add(id);
+			_drop.id = id;
+			AddChild(_drop);
+
+			SendAll(new ItemPacket(id, _drop.item, _drop.Position.X, _drop.Position.Y).Serialize());
 		}
 
 		public int GetPlayersInRoom(int _rId)
