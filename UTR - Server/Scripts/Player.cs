@@ -122,6 +122,8 @@ public partial class Player : CharacterBody2D
 			if (Die()) return;
 		}
 
+		ServerManager.GetGame(gId).SendAll(new StatePacket(cId, 0, 1).Serialize());
+
 		invincible = true;
 		invincibilityTimer.Start(.25);
 
@@ -234,6 +236,11 @@ public partial class Player : CharacterBody2D
 
 			if (_item.instanceAttrType.Length > 0 && Item.FindStat(_item.instanceAttrType, 0) != -1)
 				damage += tool.lvlScale * _item.instanceAttrValues[Item.FindStat(_item.instanceAttrType, 0)];
+			if (_item.instanceAttrType.Length > 0 && Item.FindStat(_item.instanceAttrType, 1) != -1)
+			{
+				damage *= new RandomNumberGenerator().RandiRange(1, 100) <= _item.instanceAttrValues[Item.FindStat(_item.instanceAttrType, 1)] ? 2 : 1;
+				GD.Print(damage);
+			}
 
 			e.Damage((int)damage, GlobalPosition, cId);
 		}

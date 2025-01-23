@@ -1,7 +1,9 @@
-[gd_scene load_steps=17 format=3 uid="uid://dl8yxrbhvp4fr"]
+[gd_scene load_steps=25 format=3 uid="uid://dl8yxrbhvp4fr"]
 
 [ext_resource type="Script" path="res://Scripts/Entity/Enemy.cs" id="1_b6an4"]
 [ext_resource type="Texture2D" uid="uid://dw7qksnxntx2s" path="res://Assets/pixil-frame-0 (11).png" id="1_bi6vh"]
+[ext_resource type="Texture2D" uid="uid://dbx5rvhe5v462" path="res://Assets/empty.png" id="3_pnolw"]
+[ext_resource type="Texture2D" uid="uid://yp53aqxtxmx" path="res://Assets/Effects/WarriorNebulaBlast.png" id="4_c3d5o"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_vwan5"]
 radius = 5.0
@@ -103,6 +105,57 @@ animations = [{
 "speed": 10.0
 }]
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_8bwc7"]
+atlas = ExtResource("4_c3d5o")
+region = Rect2(0, 540, 90, 90)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_drroj"]
+atlas = ExtResource("4_c3d5o")
+region = Rect2(0, 630, 90, 90)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kdvqp"]
+atlas = ExtResource("4_c3d5o")
+region = Rect2(0, 720, 90, 90)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_h62eu"]
+atlas = ExtResource("4_c3d5o")
+region = Rect2(0, 810, 90, 90)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7j82c"]
+atlas = ExtResource("4_c3d5o")
+region = Rect2(0, 900, 90, 90)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_utvj3"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_pnolw")
+}],
+"loop": true,
+"name": &"empty",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8bwc7")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_drroj")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_kdvqp")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_h62eu")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7j82c")
+}],
+"loop": false,
+"name": &"hit",
+"speed": 12.0
+}]
+
 [node name="Enemy" type="RigidBody2D"]
 gravity_scale = 0.0
 script = ExtResource("1_b6an4")
@@ -116,3 +169,8 @@ scale = Vector2(0.25, 0.25)
 sprite_frames = SubResource("SpriteFrames_s3mr6")
 animation = &"run"
 frame_progress = 0.524994
+
+[node name="Overlay" type="AnimatedSprite2D" parent="."]
+scale = Vector2(0.125, 0.125)
+sprite_frames = SubResource("SpriteFrames_utvj3")
+animation = &"hit"

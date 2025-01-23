@@ -8,9 +8,20 @@ public partial class Entity : RigidBody2D
 	public int health;
 	public Vector2 position;
 
+	AnimatedSprite2D overlay;
+
 	public void Instantiate(int _id)
 	{
 		GetNode<AnimatedSprite2D>("Sprite").Play("idle");
+
+		overlay = GetNode<AnimatedSprite2D>("Overlay");
+
+		overlay.Animation = "empty";
+
+		overlay.AnimationFinished += () =>
+		{
+			overlay.Animation = "empty";
+		};
 
 		id = _id;
 		order = -1;
@@ -42,6 +53,11 @@ public partial class Entity : RigidBody2D
 		else if (_s == 1)
 		{
 			sprite.Play("run");
+		}
+		else if (_s == 2)
+		{
+			overlay.Animation = "hit";
+			overlay.Play();
 		}
 	}
 }

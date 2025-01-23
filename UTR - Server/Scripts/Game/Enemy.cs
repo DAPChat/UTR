@@ -1,5 +1,6 @@
 ﻿using Godot;
 using items;
+using packets;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -264,14 +265,16 @@ namespace enemy
 					drop.Instantiate(ItemManager.GetItem(0));
 					drop.Position = Position;
 
-					drop.item.instanceAttrType = [0];
-					drop.item.instanceAttrValues = [5];
+					drop.item.instanceAttrType = [0, 1];
+					drop.item.instanceAttrValues = [5, 25];
 				}
 
 				ServerManager.GetGame(gId).EntityDrop(drop);
 
 				QueueFree();
 			}
+
+			ServerManager.GetGame(gId).SendAll(new StatePacket(enemyId, 1, 2).Serialize());
 		}
 	}
 }

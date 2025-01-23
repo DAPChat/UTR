@@ -30,6 +30,8 @@ public partial class Player : CharacterBody2D
 		overlay = GetNode<AnimatedSprite2D>("Overlay");
 		item = GetNode<AnimatedSprite2D>("Item");
 
+		overlay.Animation = "empty";
+
 		item.AnimationFinished += () =>
 		{
 			item.Animation = curItem.item.item.simplename.ToLower() + "_use";
@@ -38,7 +40,6 @@ public partial class Player : CharacterBody2D
 
 		overlay.AnimationFinished += () =>
 		{
-			overlay.Hide();
 			overlay.Animation = "empty";
 		};
 	}
@@ -81,17 +82,13 @@ public partial class Player : CharacterBody2D
 		{
 			item.Play(curItem.item.item.simplename.ToLower() + "_use");
 
-			if (curItem.item.type == 1)
-			{
-				//overlay.Show();
-				overlay.Play("sword_swing");
-			}
-
 			PlayAudio(curItem.item.item.audio);
 		}
 		else if (_s == 1)
 		{
-
+			overlay.Animation = "hit";
+			overlay.Frame = 0;
+			overlay.Play();
 		}
 	}
 }
