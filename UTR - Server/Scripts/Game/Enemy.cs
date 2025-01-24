@@ -21,6 +21,9 @@ namespace enemy
 		public int damage = 5;
 		public int speed = 1000;
 
+		int defSpeed;
+		int sfSpeed;
+
 		public int trackingId = -1;
 		public int attackingId = -1;
 
@@ -43,6 +46,14 @@ namespace enemy
 			enemyId = _id;
 			roomId = _rId;
 			order = 0;
+
+			RandomNumberGenerator rand = new RandomNumberGenerator();
+
+			speed = rand.RandiRange(900, 2500);
+			defSpeed = speed;
+			sfSpeed = speed * 5;
+			damage = rand.RandiRange(4, 15);
+			health += rand.RandiRange(-10, 100);
 
 			cooldown = GetNode<Timer>("Cooldown");
 			stateCd = GetNode<Timer>("StateCooldown");
@@ -90,7 +101,7 @@ namespace enemy
 						attackingId = _p.cId;
 						trackingId = _p.cId;
 
-						cooldown.Start(0.35);
+						cooldown.Start(0.3);
 						attackReady = false;
 					}
 
@@ -128,7 +139,7 @@ namespace enemy
 
 			stateCd.Timeout += () =>
 			{
-				speed = 1000;
+				speed = defSpeed;
 				stateCd.Start();
 				stateReady = true;
 			};
@@ -188,7 +199,7 @@ namespace enemy
 
 			attackReady = false;
 
-			cooldown.Start(0.4);
+			cooldown.Start(0.35);
 		}
 
 		private void TrackPlayer(double delta)
@@ -209,7 +220,7 @@ namespace enemy
 
 			if (stateReady && rand.RandiRange(1,5) == 1)
 			{
-				speed = 5500;
+				speed = sfSpeed;
 				stateReady = false;
 			}
 			else
@@ -252,21 +263,21 @@ namespace enemy
 			{
 				active = false;
 				ServerManager.GetClient(atkId).player.EnemyKill();
-				ServerManager.GetGame(gId).SendAll(new packets.EnemyPacket(enemyId, this, 0).Serialize());
+				ServerManager.GetGame(gId).SendAll(new EnemyPacket(enemyId, this, 0).Serialize());
 
 				ItemDrop drop = ResourceLoader.Load<PackedScene>("res://Scenes/item_drop.tscn").Instantiate<ItemDrop>();
 				drop.Instantiate(items.ItemManager.GetItem(1));
 				drop.Position = Position;
 
 
-				if (new RandomNumberGenerator().RandiRange(0, 20) == 20)
+				if (new RandomNumberGenerator().RandiRange(0, 50) == 50)
 				{
 					drop = ResourceLoader.Load<PackedScene>("res://Scenes/item_drop.tscn").Instantiate<ItemDrop>();
 					drop.Instantiate(ItemManager.GetItem(0));
 					drop.Position = Position;
 
 					drop.item.instanceAttrType = [0, 1];
-					drop.item.instanceAttrValues = [5, 25];
+					drop.item.instanceAttrValues = [5, 10];
 				}
 
 				ServerManager.GetGame(gId).EntityDrop(drop);

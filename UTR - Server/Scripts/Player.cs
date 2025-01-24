@@ -239,7 +239,6 @@ public partial class Player : CharacterBody2D
 			if (_item.instanceAttrType.Length > 0 && Item.FindStat(_item.instanceAttrType, 1) != -1)
 			{
 				damage *= new RandomNumberGenerator().RandiRange(1, 100) <= _item.instanceAttrValues[Item.FindStat(_item.instanceAttrType, 1)] ? 2 : 1;
-				GD.Print(damage);
 			}
 
 			e.Damage((int)damage, GlobalPosition, cId);
@@ -314,18 +313,34 @@ public partial class Player : CharacterBody2D
 			{
 				if (inventory[_from] == null) return;
 
-				// inv to hot
-				(hotbar[_to], inventory[_from]) = (inventory[_from], hotbar[_to]);
-
-				if (inventory[_from] != null)
+				if (hotbar[_to] != null && inventory[_from].item.IsEqual(hotbar[_to].item) && hotbar[_to].count < hotbar[_to].item.item.maxStack)
 				{
-					(hotbar[_to].slot, inventory[_from].slot) = (inventory[_from].slot, hotbar[_to].slot);
-					(hotbar[_to].data, inventory[_from].data) = (inventory[_from].data, hotbar[_to].data);
+					if (hotbar[_to].count + inventory[_from].count > hotbar[_to].item.item.maxStack)
+					{
+						inventory[_from].count -= (hotbar[_to].item.item.maxStack - hotbar[_to].count);
+						hotbar[_to].count = hotbar[_to].item.item.maxStack;
+					}
+					else
+					{
+						hotbar[_to].count += inventory[_from].count;
+						inventory[_from].count = 0;
+					}
 				}
 				else
 				{
-					hotbar[_to].slot = _from;
-					hotbar[_to].data = 1;
+					// inv to hot
+					(hotbar[_to], inventory[_from]) = (inventory[_from], hotbar[_to]);
+
+					if (inventory[_from] != null)
+					{
+						(hotbar[_to].slot, inventory[_from].slot) = (inventory[_from].slot, hotbar[_to].slot);
+						(hotbar[_to].data, inventory[_from].data) = (inventory[_from].data, hotbar[_to].data);
+					}
+					else
+					{
+						hotbar[_to].slot = _from;
+						hotbar[_to].data = 1;
+					}
 				}
 			}
 
