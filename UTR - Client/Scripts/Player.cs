@@ -80,6 +80,7 @@ public partial class Player : CharacterBody2D
 		}
 		else if (_s == 0)
 		{
+			if (item == null) return;
 			item.Play(curItem.item.item.simplename.ToLower() + "_use");
 
 			PlayAudio(curItem.item.item.audio);
