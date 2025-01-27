@@ -32,7 +32,20 @@ public static class PacketManager
 	public static Packet CreatePacket(byte[] buff)
 	{
 		Buffer _tempBuff = new(buff);
-		
-		return packetL[_tempBuff.ReadInt()](_tempBuff);
+
+		try
+		{
+			return packetL[_tempBuff.ReadInt()](_tempBuff);
+		}
+		catch (Exception ex)
+		{
+			string s = "";
+			foreach (var b in buff)
+			{
+				s += b;
+			}
+			ClientManager.Print(s);
+		}
+		return null;
 	}
 }
