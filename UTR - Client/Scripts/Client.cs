@@ -172,6 +172,7 @@ public class Client
 				if (!instance.active) return;
 
 				byte[] data = udpClient.EndReceive(result, ref end);
+
 				udpClient.BeginReceive(ReceiveCallback, null);
 
 				ClientManager.packetQ.Add(PacketManager.CreatePacket(data));

@@ -270,7 +270,7 @@ namespace enemy
 				drop.Position = Position;
 
 
-				if (new RandomNumberGenerator().RandiRange(0, 50) == 50)
+				if (new RandomNumberGenerator().RandiRange(1, 25) == 1)
 				{
 					drop = ResourceLoader.Load<PackedScene>("res://Scenes/item_drop.tscn").Instantiate<ItemDrop>();
 					drop.Instantiate(ItemManager.GetItem(0));
