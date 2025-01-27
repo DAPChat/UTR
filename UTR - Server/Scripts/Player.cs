@@ -5,7 +5,6 @@ using packets;
 using items;
 using enemy;
 using System.Collections.Generic;
-using System.Linq;
 
 public partial class Player : CharacterBody2D
 {

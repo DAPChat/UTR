@@ -40,10 +40,10 @@ namespace packets
 
 		public override void Run()
 		{
-			if (order <= ClientManager.GetPlayer(playerId).slotOrder) return;
 
 			if (data == 2)
 			{
+				//if (order <= ClientManager.GetPlayer(playerId).slotOrder) return;
 				ClientManager.SetPlayerItem(this);
 				return;
 			}

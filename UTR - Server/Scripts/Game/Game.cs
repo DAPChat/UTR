@@ -125,7 +125,7 @@ namespace game
 		{
 			if (!(_rp.h == 1 && _rp.w == 1)) return;
 
-			for (int i = 0; i < new RandomNumberGenerator().RandiRange(5,10); i++)
+			for (int i = 0; i < new RandomNumberGenerator().RandiRange(5,10+(clients.Count*2)); i++)
 			{
 				Enemy enemy = (Enemy)ResourceLoader.Load<PackedScene>("res://Scenes/enemy.tscn").Instantiate<Enemy>().Duplicate();
 				enemy.Position = new Vector2(GD.RandRange(_rp.x * 16 * 16 + 32, _rp.x * 16 * 16 + 16 * 15), GD.RandRange(_rp.y * 16 * 16 + 32, _rp.y * 16 * 16 + 16 * 15));

@@ -174,3 +174,5 @@ frame_progress = 0.524994
 scale = Vector2(0.125, 0.125)
 sprite_frames = SubResource("SpriteFrames_utvj3")
 animation = &"hit"
+frame = 4
+frame_progress = 1.0
