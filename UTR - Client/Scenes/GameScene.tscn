@@ -1,17 +1,17 @@
 [gd_scene load_steps=19 format=3 uid="uid://doaccr1k3qtwt"]
 
-[ext_resource type="Script" path="res://Scripts/ClientManager.cs" id="1_vpr8p"]
+[ext_resource type="Script" uid="uid://ch7lrp221g3j6" path="res://Scripts/ClientManager.cs" id="1_vpr8p"]
 [ext_resource type="TileSet" uid="uid://55tbtm12gbs2" path="res://Assets/TileSet/GameScene.tres" id="2_seojb"]
-[ext_resource type="Script" path="res://Scripts/Inventory.cs" id="3_5xvom"]
+[ext_resource type="Script" uid="uid://d0ljwtpmetm73" path="res://Scripts/Inventory.cs" id="3_5xvom"]
 [ext_resource type="PackedScene" uid="uid://c0na7p5itoucg" path="res://Scenes/slot.tscn" id="3_00363"]
 [ext_resource type="Texture2D" uid="uid://nyfgosjvacj" path="res://Assets/Ultimate Dark Fantasy UI set v1.2/inventory/80x50 alt frame holder.png" id="4_71i4t"]
 [ext_resource type="Texture2D" uid="uid://dcqi1q1gpnud1" path="res://Assets/Ultimate Dark Fantasy UI set v1.2/inventory/32x32 Item holder.png" id="5_r33hr"]
-[ext_resource type="Script" path="res://Scripts/Hotbar.cs" id="5_tr0ex"]
+[ext_resource type="Script" uid="uid://blj4svcs16tax" path="res://Scripts/Hotbar.cs" id="5_tr0ex"]
 [ext_resource type="Texture2D" uid="uid://bhheuehbvae81" path="res://Assets/Ultimate Dark Fantasy UI set v1.2/Slider/x2/Slider_components3.png" id="6_0viuj"]
 [ext_resource type="Texture2D" uid="uid://ce5jwel7ikoiq" path="res://Assets/Ultimate Dark Fantasy UI set v1.2/Player Bar/Player_Bar x2.png" id="6_bsowa"]
 [ext_resource type="Texture2D" uid="uid://b0f44cyalftrh" path="res://Assets/Ultimate Dark Fantasy UI set v1.2/Player Bar/health_filler3.png" id="7_vnmuf"]
 [ext_resource type="FontFile" uid="uid://biyckev5maadx" path="res://Assets/Fonts/alagard.ttf" id="9_xxd7f"]
-[ext_resource type="Script" path="res://Scripts/AudioMaster.cs" id="12_xtmyv"]
+[ext_resource type="Script" uid="uid://d3q2iw2o6w003" path="res://Scripts/AudioMaster.cs" id="12_xtmyv"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_6bbq7"]
 bg_color = Color(0.137255, 0.137255, 0.137255, 0.858824)

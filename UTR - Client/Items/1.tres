@@ -1,6 +1,6 @@
-[gd_resource type="Resource" script_class="Consumable" load_steps=2 format=3 uid="uid://m1f380doxmux"]
+[gd_resource type="Resource" load_steps=2 format=3 uid="uid://m1f380doxmux"]
 
-[ext_resource type="Script" path="res://Scripts/Items/Consumable.cs" id="1_wh850"]
+[ext_resource type="Script" uid="uid://dc4tr7mpi1bs" path="res://Scripts/Items/Consumable.cs" id="1_wh850"]
 
 [resource]
 script = ExtResource("1_wh850")

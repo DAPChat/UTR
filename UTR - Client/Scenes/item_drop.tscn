@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://t3v2x2x7hlph"]
 
 [ext_resource type="Texture2D" uid="uid://ppgexqy8m4o" path="res://Assets/Consumable/HealthPotion.png" id="1_cphnd"]
-[ext_resource type="Script" path="res://Scripts/ItemDrop.cs" id="1_pqmqb"]
+[ext_resource type="Script" uid="uid://b1mxcmd6w8yj5" path="res://Scripts/ItemDrop.cs" id="1_pqmqb"]
 
 [node name="ItemDrop" type="Sprite2D"]
 scale = Vector2(0.125, 0.125)

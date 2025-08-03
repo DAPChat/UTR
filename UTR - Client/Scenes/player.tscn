@@ -1,6 +1,6 @@
 [gd_scene load_steps=28 format=3 uid="uid://cf41briyf5dnu"]
 
-[ext_resource type="Script" path="res://Scripts/Player.cs" id="1_1v8xi"]
+[ext_resource type="Script" uid="uid://cncbkg5wbfjh8" path="res://Scripts/Player.cs" id="1_1v8xi"]
 [ext_resource type="Texture2D" uid="uid://dveahimyvgi62" path="res://Assets/smolryo_spritesheet_orgres.png" id="1_ej3ew"]
 [ext_resource type="Texture2D" uid="uid://dfdj00crbnasl" path="res://Assets/pixil-frame-0 (15).png" id="3_pcc2n"]
 [ext_resource type="Texture2D" uid="uid://dbx5rvhe5v462" path="res://Assets/empty.png" id="4_5ghet"]

@@ -1,6 +1,6 @@
 [gd_scene load_steps=25 format=3 uid="uid://dl8yxrbhvp4fr"]
 
-[ext_resource type="Script" path="res://Scripts/Entity/Enemy.cs" id="1_b6an4"]
+[ext_resource type="Script" uid="uid://c34vje6qhfd2m" path="res://Scripts/Entity/Enemy.cs" id="1_b6an4"]
 [ext_resource type="Texture2D" uid="uid://dw7qksnxntx2s" path="res://Assets/pixil-frame-0 (11).png" id="1_bi6vh"]
 [ext_resource type="Texture2D" uid="uid://dbx5rvhe5v462" path="res://Assets/empty.png" id="3_pnolw"]
 [ext_resource type="Texture2D" uid="uid://yp53aqxtxmx" path="res://Assets/Effects/WarriorNebulaBlast.png" id="4_c3d5o"]
